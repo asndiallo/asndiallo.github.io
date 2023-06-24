@@ -124,3 +124,28 @@ nav a {
 nav a:hover {
   color: var(--magenta);
 }
+.button {
+  background-color: var(--magenta);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.button:hover {
+  background-color: var(--hotmag);
+  color: var(--white);
+}
+@media (min-width: 768px) {
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  nav li:first-child {
+    flex-basis: auto;
+    text-align: left;
+    margin-right: auto;
+  }
+}
