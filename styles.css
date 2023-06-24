@@ -149,3 +149,21 @@ nav a:hover {
     margin-right: auto;
   }
 }
+/****************************************************
+ * Footer styles
+ ****************************************************/
+footer {
+  text-align: center;
+  font-size: 80%;
+}
+footer ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  font-size: 250%;
+}
