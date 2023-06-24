@@ -249,17 +249,21 @@ footer ul {
 }
 
 @media (min-width: 550px) {
-  article {
+  #projects article {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(10, 1fr);
   }
-  .text-article {
+  #projects img {
+    grid-column: 1/6;
+    grid-row: 1/2;
+  }
+  #projects .text-article {
+    grid-column: 5/11;
+    grid-row: 1/2;
     order: 2;
     text-align: right;
   }
   #projects ul {
     justify-content: flex-end;
-    gap: 1rem;
   }
 }
