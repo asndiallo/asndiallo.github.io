@@ -43,6 +43,10 @@ a:hover {
   text-decoration: none;
 }
 
+img {
+  width: 100%;
+}
+
 /****************************************************
  * Intro styes
  ****************************************************/
@@ -237,10 +241,25 @@ footer ul {
 
 #projects img {
   margin: 2rem 0 4rem 0;
-  width: 50%;
   border-left: 1px solid var(--aqua);
   border-top: 1px solid var(--aqua);
   border-radius: 25px;
   padding: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 550px) {
+  article {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .text-article {
+    order: 2;
+    text-align: right;
+  }
+  #projects ul {
+    justify-content: flex-end;
+    gap: 1rem;
+  }
 }
