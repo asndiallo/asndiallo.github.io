@@ -135,6 +135,8 @@ nav a:hover {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  font-family: var(--mono);
+  text-decoration: none;
 }
 .button:hover {
   background-color: var(--hotmag);
