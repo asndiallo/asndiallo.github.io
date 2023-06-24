@@ -249,6 +249,10 @@ footer ul {
 }
 
 @media (min-width: 550px) {
+  #projects {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
   #projects article {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
