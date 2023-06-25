@@ -1,3 +1,6 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Oxygen&family=Oxygen+Mono&display=swap');
+
 /* variables declared here - these are the colors for our pages, as well as the font stacks and sizes. */
 :root {
   --black: #171321;
