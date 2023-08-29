@@ -17,7 +17,7 @@ This is a simple portfolio website created by Assane Diallo to showcase his proj
 To view the website locally, follow these steps:
 
 1. Clone the repository:
-   `git clone https://github.com/asndiallo/portfolio.git`
+   `git clone https://github.com/asndiallo/asndiallo.github.io.git`
 2. Open the index.html file in your preferred web browser.
 
 ## Technologies Used
