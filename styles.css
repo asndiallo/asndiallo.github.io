@@ -76,6 +76,20 @@ img {
   font-weight: normal;
 }
 
+#job-title::after {
+  content: "|";
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--white);
+  }
+}
 /****************************************************
  * Contact styles
  ****************************************************/
