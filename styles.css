@@ -75,6 +75,10 @@ img {
   font-size: 4rem;
   font-weight: normal;
 }
+#intro p em {
+  font-style: var(--sans);
+  color: var(--aqua);
+}
 
 #job-title::after {
   content: "|";
