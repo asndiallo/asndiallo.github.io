@@ -1,4 +1,4 @@
-const jobTitles = ['Full-Stack Developer', 'Machine Learning Engineer'];
+const jobTitles = ['Full-Stack Developer', 'ML Engineer'];
 let index = 0;
 let charIndex = 0;
 let isDeleting = false;
