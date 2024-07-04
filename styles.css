@@ -50,6 +50,22 @@ img {
   width: 100%;
 }
 
+.icon-list {
+  display: flex;
+  gap: 1rem; /* Adjust the gap between icons as needed */
+  list-style-type: none;
+}
+
+.icon-list li {
+  display: inline-block;
+}
+
+.icon-list img {
+  width: 50px; /* Set the desired width for the icons */
+  height: 50px; /* Set the desired height for the icons */
+  object-fit: contain; /* Ensure the icon maintains its aspect ratio */
+}
+
 /****************************************************
  * Intro styes
  ****************************************************/
@@ -81,7 +97,7 @@ img {
 }
 
 #job-title::after {
-  content: "|";
+  content: '|';
   animation: blink-caret 0.75s step-end infinite;
 }
 
