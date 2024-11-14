@@ -3,301 +3,168 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Assane Diallo's Portfolio</title>
-    <meta
-      name="description"
-      content="Welcome to Assane Diallo's Portfolio Website. I'm a Full-Stack Developer specializing in
-      web development with expertise in Node.js, Ruby on Rails, Python, HTML, and CSS.
-      Explore my projects and contact me for new opportunities."
-    />
-    <meta property="og:title" content="Assane Diallo's Portfolio" />
-    <meta
-      property="og:description"
-      content="Full-Stack Developer specializing in web development with expertise in Node.js, Ruby on Rails, Python, HTML, and CSS."
-    />
-    <meta property="og:image" content="./assets/imgs/assane.jpeg" />
-    <meta property="og:url" content="https://asndiallo.github.io/portfolio/" />
-    <meta property="og:type" content="website" />
-    <link href="./assets/css/fontawesome.css" rel="stylesheet" />
-    <link href="./assets/css/brands.css" rel="stylesheet" />
-    <link href="./assets/css/solid.css" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.svg" />
-    <script src="./assets/js/scripts.js" defer></script>
+    <title>Assane Diallo | Backend Engineer</title>
+    <style>
+      :root {
+        --primary: #2563eb;
+        --text: #1f2937;
+        --bg: #f9fafb;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background: var(--bg);
+        max-width: 65ch;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      nav {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .project {
+        margin-bottom: 3rem;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .tech-stack {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .tech {
+        background: var(--bg);
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+      }
+
+      footer {
+        margin-top: 4rem;
+        text-align: center;
+        font-size: 0.875rem;
+      }
+    </style>
   </head>
   <body>
     <nav>
-      <ul>
-        <li>
-          <h1>
-            <a href="index.html"
-              ><i class="fa-solid fa-code" aria-hidden="true"></i
-              ><span> Assane Diallo</span></a
-            >
-          </h1>
-        </li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li>
-          <a href="https://www.linkedin.com/in/assane-diallo/" target="_blank"
-            ><i class="fa-brands fa-linkedin" aria-hidden="true"></i
-            ><span class="sr-only">LinkedIn</span></a
-          >
-        </li>
-        <li>
-          <a href="https://github.com/asndiallo" target="_blank">
-            <i class="fa-brands fa-github" aria-hidden="true"></i
-            ><span class="sr-only">Github</span></a
-          >
-        </li>
-        <li>
-          <a
-            href="https://github.com/asndiallo/asndiallo.github.io/raw/develop/assets/docs/assane_diallo_fullstack-developer.pdf"
-            target="_blank"
-            class="button"
-            >Resume</a
-          >
-        </li>
-      </ul>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="https://github.com/asndiallo" target="_blank" rel="noopener"
+        >GitHub</a
+      >
+      <a
+        href="https://www.linkedin.com/in/assane-diallo/"
+        target="_blank"
+        rel="noopener"
+        >LinkedIn</a
+      >
+      <a href="#contact">Contact</a>
+      <a
+        href="https://github.com/asndiallo/asndiallo.github.io/raw/develop/assets/docs/assane_diallo_software_engineer_cv.pdf"
+        target="_blank"
+        rel="noopener"
+        >Resume</a
+      >
     </nav>
-    <section id="intro">
-      <p class="name">Hi, my name is <span>Assane Diallo.</span></p>
-      <h2 id="job-title"></h2>
-      <p>
-        I am a versatile web developer skilled in Node.js, Ruby on Rails,
-        Python, HTML, and CSS.
-        <br />
-        In addition to my web development expertise, I am a dedicated Machine
-        Learning Engineer passionate about leveraging AI technologies to tackle
-        real-world challenges, with a special focus on
-        <em>AI in Medical Practice</em>.
-      </p>
-      <p>
-        I have had the privilege to contribute to impactful projects, such as
-        <a href="https://www.pando2.com/en" target="_blank">Pando2</a>,
-        enhancing air quality monitoring with advanced data analytics.
-      </p>
-    </section>
-    <div class="gradient"></div>
-    <div class="section-dkblue">
-      <section id="projects">
-        <h2>Projects I'm proud of</h2>
-        <article>
-          <div class="text-article">
-            <h4>Latest Project (In Progress)</h4>
-            <h3>YoBool</h3>
-            <p class="blackbox">
-              YoBool is a community-driven application designed to facilitate
-              the booking of excess baggage space and the posting of travel ads.
-              Emphasizing eco-responsibility and security, YoBool connects
-              travelers looking to optimize their luggage space. As the backend
-              developer, I utilized Ruby on Rails in API-only mode to ensure a
-              scalable and secure architecture, employing PostgreSQL for
-              database management, Redis for caching and docker for deployment.
-              The frontend is developed using React. This project highlights my
-              expertise in backend development, API integration, and
-              collaboration on full-stack applications.
-              <a href="https://staging.yobool.com/" target="_blank">here</a>.
-            </p>
-            <h4>Technologies used include:</h4>
-            <ul class="icon-list">
-              <li>
-                <img
-                  src="assets/icons/rails-svgrepo-com.svg"
-                  alt="Ruby on Rails Icon"
-                />
-              </li>
-              <li>
-                <img
-                  src="assets/icons/postgresql-svgrepo-com.svg"
-                  alt="PostgreSQL Icon"
-                />
-              </li>
-              <li>
-                <img
-                  src="assets/icons/redis-svgrepo-com.svg"
-                  alt="Redis Icon"
-                />
-              </li>
-              <li>
-                <img
-                  src="assets/icons/docker-svgrepo-com.svg"
-                  alt="Docker Icon"
-                />
-              </li>
 
-              <li>
-                <img
-                  src="assets/icons/react-javascript-js-framework-facebook-svgrepo-com.svg"
-                  alt="React Icon"
-                />
-              </li>
-            </ul>
+    <main>
+      <section id="about">
+        <h1>Hey! I'm Assane 👋</h1>
+        <p>
+          Backend engineer who loves building robust APIs, scaling systems and
+          occasionally dabbles in AI. Currently crafting the backend for YoBool
+          with Ruby on Rails. When I'm not coding, you'll find me watching FC
+          Barcelona matches or planning my next trip to Asia! 🌏
+        </p>
+        <p>
+          I have a Master's in Data Engineering & AI, but these days I'm all
+          about making Rails apps that don't break when users do unexpected
+          things (trust me, they always find a way! 😅).
+        </p>
+      </section>
+
+      <section id="projects">
+        <h2>Some Things I've Built</h2>
+
+        <article class="project">
+          <h3>YoBool - Where Luggage Space Meets Community</h3>
+          <p>
+            Currently building the backend for a peer-to-peer luggage space
+            sharing platform. Think Airbnb, but for your suitcase's empty space!
+            Built with Rails 7 API-mode because sometimes REST is best.
+          </p>
+          <div class="tech-stack">
+            <span class="tech">Ruby on Rails</span>
+            <span class="tech">PostgreSQL</span>
+            <span class="tech">React Native</span>
+            <span class="tech">Docker</span>
           </div>
-          <img
-            src="./assets/imgs/yobool.png"
-            alt="Screenshot of the YoBool project."
-          />
         </article>
-        <article class="reverse">
-          <div class="text-article">
-            <h4>Professional Project</h4>
-            <h3>Isa Hair Salon</h3>
-            <p class="blackbox">
-              I created Isa Hair Salon's fully-responsive website from scratch,
-              highlighting my expertise in front-end development. With a clean
-              and modern design, I crafted the user interface, implemented
-              interactive elements using JavaScript, and ensured seamless
-              responsiveness across devices. Experience the elegant design and
-              smooth functionality of the website
-              <a href="https://isahairbraiding.com/" target="_blank">here</a>.
-            </p>
-            <h4>Technologies used include:</h4>
-            <ul class="icon-list">
-              <li>
-                <img
-                  src="assets/icons/html-5-svgrepo-com.svg"
-                  alt="HTML Icon"
-                />
-              </li>
-              <li>
-                <img src="assets/icons/css-3-svgrepo-com.svg" alt="CSS Icon" />
-              </li>
-              <li>
-                <img
-                  src="assets/icons/javascript-svgrepo-com.svg"
-                  alt="JavaScript Icon"
-                />
-              </li>
-            </ul>
+
+        <article class="project">
+          <h3>AIclinix - AI for Healthcare</h3>
+          <p>
+            A Rails app helping healthcare professionals with AI-powered
+            diagnostics. Because who doesn't want their doctor to have an AI
+            sidekick? Built with Rails and a lot of coffee ☕
+          </p>
+          <div class="tech-stack">
+            <span class="tech">Ruby on Rails</span>
+            <span class="tech">PostgreSQL</span>
+            <span class="tech">Machine Learning</span>
           </div>
-          <img
-            src="./assets/imgs/isahairsalon.png"
-            alt="Screenshot of Isa Hair Salon."
-          />
         </article>
-        <article>
-          <div class="text-article">
-            <h4>Fun Project (AI-enabled)</h4>
-            <h3>Pantry Pal: Your AI Cooking Assistant</h3>
-            <p class="blackbox">
-              Pantry Pal is an intelligent recipe suggestion app that utilizes
-              AI (GPT-3.5 LLM by OpenAI) to provide delightful cooking
-              experiences. It offers recipe suggestions based on user-submitted
-              ingredients, making cooking effortless and enjoyable. Explore the
-              server-side code
-              <a
-                href="https://github.com/asndiallo/pantry-pal-server.git"
-                target="_blank"
-                >here.</a
-              >
-            </p>
-            <h4>Technologies used include:</h4>
-            <ul class="icon-list">
-              <li>
-                <img
-                  src="assets/icons/nodejs-icon-svgrepo-com.svg"
-                  alt="Node.js Icon"
-                />
-              </li>
-              <li>
-                <img
-                  src="assets/icons/html-5-svgrepo-com.svg"
-                  alt="HTML Icon"
-                />
-              </li>
-              <li>
-                <img src="assets/icons/css-3-svgrepo-com.svg" alt="CSS Icon" />
-              </li>
-            </ul>
+
+        <article class="project">
+          <h3>IntelliAPI - Making ML Models Accessible</h3>
+          <p>
+            A Django-based REST framework that makes machine learning models
+            accessible through simple endpoints. Because ML models should be
+            easy to use, not just easy to build!
+          </p>
+          <div class="tech-stack">
+            <span class="tech">Django</span>
+            <span class="tech">Python</span>
+            <span class="tech">REST API</span>
           </div>
-          <img
-            src="./assets/imgs/pantryPalPreview.png"
-            alt="Screenshot of the Pantry Pal project."
-          />
-        </article>
-        <article class="reverse">
-          <div class="text-article">
-            <h4>School project</h4>
-            <h3>Express Food</h3>
-            <p class="blackbox">
-              "Express-Food" is a school project from my Master's program in
-              Paris, focusing on developing a food delivery app for high-quality
-              meals delivered within 20 minutes. I specialized in backend
-              development using Django and MongoDB for seamless database
-              management. Collaborating with a frontend specialist using React,
-              we prioritized speed and simplicity for a user-friendly
-              experience. This project showcases my expertise in efficient
-              backend systems for real-time food delivery. Explore the code
-              <a
-                href="https://github.com/asndiallo/express-food"
-                target="_blank"
-                >here.</a
-              >
-            </p>
-            <h4>Technologies used include:</h4>
-            <ul class="icon-list">
-              <li>
-                <img
-                  src="assets/icons/django-svgrepo-com.svg"
-                  alt="Django Icon"
-                />
-              </li>
-              <li>
-                <img
-                  src="assets/icons/mongodb-svgrepo-com.svg"
-                  alt="MongoDB Icon"
-                />
-              </li>
-              <li>
-                <img
-                  src="assets/icons/react-javascript-js-framework-facebook-svgrepo-com.svg"
-                  alt="React Icon"
-                />
-              </li>
-            </ul>
-          </div>
-          <img
-            src="assets/imgs/express-food.png"
-            alt="Screenshot of the project Express Food."
-          />
         </article>
       </section>
-    </div>
-    <div class="gradient"></div>
-    <div class="section-plum">
+
       <section id="contact">
-        <h2>Contact me</h2>
+        <h2>Let's Connect!</h2>
         <p>
-          I'm open to exciting opportunities in both front-end, back-end
-          development, as well as AI & ML. Let's connect and explore the amazing
-          possibilities together.
-        </p>
-        <p>
-          <a href="mailto:asn.diallo@outlook.com" class="button">Email me</a>
+          Looking for a backend engineer who can handle both SQL queries and dad
+          jokes? Drop me a line at
+          <a href="mailto:asn.diallo@outlook.com">asn.diallo@outlook.com</a>
         </p>
       </section>
-    </div>
-    <div class="gradient"></div>
+    </main>
+
     <footer>
-      <h2>Assane DIALLO &middot; Tech Alchemist</h2>
-      <p></p>
-      <ul>
-        <li>
-          <a href="https://www.linkedin.com/in/assane-diallo/" target="_blank">
-            <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-            <span class="sr-only">LinkedIn (Full Stack & ML Engineer)</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/asndiallo" target="_blank">
-            <i class="fa-brands fa-github" aria-hidden="true"></i>
-            <span class="sr-only">Github (Full Stack & ML Engineer)</span>
-          </a>
-        </li>
-      </ul>
-      <p><small>&copy; 2024 Assane Diallo. All rights reserved.</small></p>
+      <p>
+        Built with ☕️ and minimal JavaScript (actually, none at all!) by Assane
+        Diallo
+      </p>
     </footer>
   </body>
 </html>
