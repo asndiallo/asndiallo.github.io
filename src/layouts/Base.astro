@@ -13,6 +13,7 @@ import {
   localeMeta,
   locales,
 } from "../i18n/index.ts";
+import { themeInitScript } from "../lib/inline-scripts.ts";
 
 interface Props {
   title: string;
@@ -55,13 +56,8 @@ const xDefault = translations.find((a) => a.locale === defaultLocale) ?? transla
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Apply a saved theme before first paint, so there is no flash. -->
-    <script is:inline>
-      try {
-        const theme = localStorage.getItem("theme");
-        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
-      } catch {}
-    </script>
+    <!-- Apply a saved theme before first paint, so there is no flash. Hashed into the CSP. -->
+    <script is:inline set:html={themeInitScript} />
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
