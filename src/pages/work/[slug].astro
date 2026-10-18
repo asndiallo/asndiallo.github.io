@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import CtaWhatsApp from "../../components/CtaWhatsApp.astro";
+import { site } from "../../config.ts";
+import { getDictionary } from "../../i18n/index.ts";
+import Page from "../../layouts/Page.astro";
+
+export const getStaticPaths = (async () =>
+  (await getCollection("work")).map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }))) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { business, city, summary, website, services, results, quote, image } = entry.data;
+const { Content } = await render(entry);
+const t = getDictionary("en");
+const title = `${business}, ${city}: what changed`;
+
+const breadcrumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${site.url}/` },
+    { "@type": "ListItem", position: 2, name: "Client work", item: `${site.url}/work/` },
+    { "@type": "ListItem", position: 3, name: business, item: `${site.url}/work/${entry.id}/` },
+  ],
+};
+---
+
+<Page
+  title={`${business}: case study | Assane Diallo`.slice(0, 60)}
+  description={summary}
+  h1={title}
+  lead={summary}
+  ogType="article"
+  jsonLd={[breadcrumbs]}
+>
+  <p class="mt-2 text-sm"><a href="/work/">All client work</a></p>
+  {
+    image && (
+      <Image
+        src={image.src}
+        alt={image.alt}
+        widths={[640, 1280]}
+        sizes="(min-width: 1024px) 960px, 100vw"
+        loading="eager"
+        class="mt-10 w-full max-w-4xl rounded-2xl border border-line"
+      />
+    )
+  }
+  <div class="mt-10 grid gap-10 lg:grid-cols-[2fr_1fr]">
+    <div class="prose">
+      <Content />
+    </div>
+    <aside class="space-y-6 self-start rounded-2xl bg-wash p-6" aria-label="Project facts">
+      <div>
+        <h2 class="text-lg">What I did</h2>
+        <ul class="mt-2 list-disc space-y-1 pl-5">{services.map((s) => <li>{s}</li>)}</ul>
+      </div>
+      {
+        results.length > 0 && (
+          <div>
+            <h2 class="text-lg">Results</h2>
+            <dl class="mt-2 space-y-2">
+              {results.map((r) => (
+                <div>
+                  <dt class="text-sm text-muted">{r.label}</dt>
+                  <dd class="font-serif text-2xl font-bold">{r.value}</dd>
+                  <dd class="text-xs text-muted">Source: {r.source}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )
+      }
+      {website && <p><a href={website}>Visit the {business} website</a></p>}
+    </aside>
+  </div>
+  {
+    quote && (
+      <figure class="measure mt-12 border-l-8 border-sun pl-6">
+        <blockquote class="font-serif text-2xl">“{quote.text}”</blockquote>
+        <figcaption class="mt-2 text-muted">{quote.author}</figcaption>
+      </figure>
+    )
+  }
+  <div class="mt-12"><CtaWhatsApp t={t} /></div>
+</Page>
