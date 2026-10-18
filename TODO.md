@@ -47,18 +47,16 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 - [ ] **/work/**: intro line; **/engineering/**: lightly edited from your old portfolio (YoBool now also mentions auth, Stripe Connect and the React Native app, from your resume)
 - [ ] **OG image** text (`scripts/generate-og.ts`)
 
-### Domain (follow DOMAIN-SETUP.md)
+### Hosting, domain and email (status in DOMAIN-SETUP.md)
+- [ ] Click the Cloudflare verification email sent to asndiallo98@gmail.com (then Claude creates the hello@ rule)
+- [ ] Dashboard: workers.dev subdomain `assane-diallo`
+- [ ] Dashboard: API token "Edit Cloudflare Workers", then `gh secret set CLOUDFLARE_API_TOKEN`
+- [ ] Dashboard: DMARC Management → Add the DMARC record (`p=none`)
+- [ ] Review the preview URL, then say "go live" (custom domain, www redirect, github.io redirect, merge)
 - [ ] Spaceship: 2FA, WHOIS privacy, registrar lock, auto-renew (renews 2027-10-18)
-- [ ] GitHub: verify `assane-diallo.com` in account settings (TXT record)
-- [ ] GitHub: custom domain in Settings → Pages, then Enforce HTTPS
-- [ ] Cloudflare: GitHub Pages A/AAAA records + `www` CNAME, proxy **off**
-- [ ] Cloudflare Email Routing: `hello@assane-diallo.com` → Gmail. **Confirm routing works** (the site already shows this address)
-- [ ] DMARC Management on, `p=none` to start
 - [ ] Decide how to *send* as hello@ (Workspace, Spacemail, Zoho…). Until then, replies come from Gmail
-- [ ] `pnpm verify:domain` passes
 
 ### Infrastructure
-- [ ] **Pages source** → GitHub Actions (Settings → Pages), then run the "Deploy to GitHub Pages" workflow. I can do the switch with `gh api` when you say go.
 - [ ] Go-live approval. Then add the `push` trigger to `deploy.yml` if you want automatic deploys.
 
 ## Optional (the site works without these)

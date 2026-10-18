@@ -38,15 +38,13 @@ For local builds, put env values in `.env` (git-ignored). For deploys, set them 
 
 ## Deploy
 
-GitHub Actions builds `dist/` and publishes it to GitHub Pages (`.github/workflows/deploy.yml`).
+Hosting is **Cloudflare Workers static assets** (`wrangler.jsonc`). The architecture, status, go-live steps and rollback are in **[DOMAIN-SETUP.md](DOMAIN-SETUP.md)**.
 
-1. One time: Settings → Pages → Source: **GitHub Actions**. For the custom domain, DNS, HTTPS and email, follow **[DOMAIN-SETUP.md](DOMAIN-SETUP.md)**.
-2. Actions → "Deploy to GitHub Pages" → **Run workflow**.
-3. After each deploy, a non-blocking `verify-domain` job runs `pnpm verify:domain`, which checks HTTPS, the www and github.io redirects, and the canonical URLs, sitemap and robots.txt. Run it locally any time.
-
-Deploys are manual until the site is ready to go live. To deploy on every push to `develop`, add the `push` trigger shown in the workflow comment.
-
-CI (`.github/workflows/ci.yml`) runs the full `pnpm check` on every push and pull request.
+- **Pull requests:** CI runs the full `pnpm check`. PRs from this repo also get a **preview URL** (`pr-<n>-assane-diallo.<subdomain>.workers.dev`), posted as a comment.
+- **Production:** Actions → **Deploy** → *Run workflow*. It reruns every check, then deploys exactly the build that passed (`wrangler deploy`). Once `SITE_LIVE=true`, it also publishes the redirect-only site to `asndiallo.github.io` and runs `pnpm verify:domain`.
+- **Rollback:** `pnpm exec wrangler rollback`.
+- **Headers and redirects:** `public/_headers` (HSTS, CSP frame rules, caching) and `public/_redirects` (301s). Scripts and styles are covered by a hash-based CSP that Astro generates per page. The only inline script lives in `src/lib/inline-scripts.ts`.
+- **Secrets:** `CLOUDFLARE_API_TOKEN` (yours, "Edit Cloudflare Workers" scoped to the account and zone) and `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Languages and theme
 
