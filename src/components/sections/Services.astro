@@ -1,0 +1,36 @@
+---
+import { pricing } from "../../config.ts";
+import type { Dictionary } from "../../i18n/en.ts";
+import Section from "../Section.astro";
+
+interface Props {
+  t: Dictionary;
+}
+const { services, pricing: prices } = Astro.props.t.home;
+const websiteTier = prices.tiers.website.name;
+const ids = pricing.tiers.at(-1)?.includes ?? [];
+const inEveryTier = (id: (typeof ids)[number]) =>
+  pricing.tiers.every((tier) => (tier.includes as readonly string[]).includes(id));
+---
+
+<Section id="services" heading={services.h2}>
+  <ul class="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-2">
+    {
+      ids.map((id) => (
+        <li class="measure">
+          <h3>
+            {services.items[id].title}
+            {!inEveryTier(id) && <span class="sr-only"> ({websiteTier})</span>}
+          </h3>
+          <p class="mt-1 text-muted">{services.items[id].body}</p>
+          {!inEveryTier(id) && (
+            <p class="mt-2 inline-block rounded-full bg-wash px-3 py-0.5 text-sm" aria-hidden="true">
+              {websiteTier}
+            </p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+  <p class="measure mt-10 text-muted">{services.websiteOnly}</p>
+</Section>

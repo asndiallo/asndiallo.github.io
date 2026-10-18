@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from "astro";
+import Home from "../../components/Home.astro";
+import { defaultLocale, type Locale, publishedLocales } from "../../i18n/index.ts";
+
+// Builds /fr/ (and any other locale) only once it is listed in publishedLocales.
+export const getStaticPaths = (() =>
+  publishedLocales
+    .filter((lang) => lang !== defaultLocale)
+    .map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Locale;
+---
+
+<Home locale={lang} />
