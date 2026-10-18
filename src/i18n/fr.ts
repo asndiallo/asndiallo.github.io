@@ -2,8 +2,8 @@ import type { Dictionary } from "./en.ts";
 import type { DeepPartial } from "./index.ts";
 
 /**
- * French copy. Missing keys fall back to English, so add "fr" to publishedLocales
- * (src/i18n/locales.ts) only once every page section here is translated.
+ * French copy. Missing keys fall back to English. Publish only once every section is
+ * translated: see "Publish the French version" in README.md.
  */
 export const fr: DeepPartial<Dictionary> = {
   lang: "fr",
