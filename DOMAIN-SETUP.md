@@ -4,7 +4,7 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 
 ## Architecture
 
-```
+```text
             visitors
                │  https://assane-diallo.com   (www.assane-diallo.com → 301 → apex)
                ▼
@@ -34,15 +34,15 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 ## Status
 
 | | Item | By | When |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | ✅ | Domain registered at Spaceship (expires 2027-10-18); nameservers on Cloudflare | you | before |
 | ✅ | Zone `assane-diallo.com` active on Cloudflare (Free plan) | you | before |
 | ✅ | Email Routing enabled. Cloudflare created 3 MX records, SPF `v=spf1 include:_spf.mx.cloudflare.net ~all` and DKIM `cf2024-1._domainkey` | Claude | 2026-10-18 |
 | ✅ | Destination address `asndiallo98@gmail.com` added | Claude | 2026-10-18 |
 | ✅ | DMARC Management enabled | Claude | 2026-10-18 |
 | ✅ | GitHub secret `CLOUDFLARE_ACCOUNT_ID` | Claude | 2026-10-18 |
-| ⏳ | **Click the verification email** Cloudflare sent to the Gmail | you | |
-| ⏳ | Routing rule `hello@ → Gmail`. Cloudflare refuses it until the address is verified (error 2054) | Claude, after the click | |
+| ✅ | Gmail destination verified | you | 2026-10-18 |
+| ✅ | Routing rule `hello@assane-diallo.com → asndiallo98@gmail.com` (catch-all stays off: other addresses are rejected) | Claude | 2026-10-18 |
 | ⏳ | **Dashboard steps 1–3 below** (subdomain, API token, DMARC record) | you | |
 | ⏳ | First deploy, then review the preview URL | Claude | |
 | ⏳ | Go-live (section below) | Claude, on your go | |
@@ -78,7 +78,7 @@ Each step is shown before it runs.
 **Sending as hello@ is not set up.** Email Routing only forwards. Options:
 
 | Option | Cost (as listed 2026-10-18) | Notes |
-|---|---|---|
+| --- | --- | --- |
 | Gmail "Send mail as" with SMTP | Free | **Not recommended.** Google removes "Send as" for non-Google addresses in **January 2027** and may already block new setups. |
 | Google Workspace Business Starter | **$7.00/user/month** ($3.50 introductory, Nov 1 2026 – Feb 1 2027) | A real mailbox with Gmail's interface. Replaces Email Routing (MX → Google). |
 | Spacemail (Spaceship) | about **$0.79–$0.98/mailbox/month**, higher on renewal | Cheapest mailbox. Replaces Email Routing. |
@@ -116,7 +116,7 @@ curl -sI https://www.assane-diallo.com/ | grep -i location   # https://assane-di
 ## Rollback
 
 | Problem | What to do |
-|---|---|
+| --- | --- |
 | A deploy broke the site | `pnpm exec wrangler rollback` (or in the dashboard, Worker → Deployments → roll back). Previous versions stay available. |
 | The domain must go dark | Remove the `routes` entry and run the Deploy workflow, or delete the Custom Domain in the dashboard. Leave Email Routing alone; it's independent of the website. |
 | github.io redirect is wrong | Unset `SITE_LIVE` and re-run Deploy, or switch Pages off in the repo's Settings → Pages. |
@@ -127,7 +127,7 @@ curl -sI https://www.assane-diallo.com/ | grep -i location   # https://assane-di
 - **Deploy fails with an auth error.** The `CLOUDFLARE_API_TOKEN` secret is missing or lacks the "Edit Cloudflare Workers" permissions on your account and zone.
 - **"You need to register a workers.dev subdomain".** Dashboard step 1.
 - **Custom domain fails to attach.** Cloudflare refuses a Custom Domain on a hostname that already has a CNAME record. Remove any manual `@` record first.
-- **`ERR_TOO_MANY_REDIRECTS` on www.** Check that only one redirect rule exists for `www` and that the `www` record is proxied (orange cloud).
+- **`ERR_TOO_MANY_REDIRECTS` on `www`.** Check that only one redirect rule exists for `www` and that the `www` record is proxied (orange cloud).
 - **Routing rule error 2054.** The destination address isn't verified yet (click the email).
 - **CSP errors in the browser console.** An inline script was added outside `src/lib/inline-scripts.ts`. Bundle it with a normal `<script>` instead.
 
