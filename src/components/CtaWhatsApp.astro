@@ -1,6 +1,7 @@
 ---
 import type { Dictionary } from "../i18n/index.ts";
 import { whatsappHref } from "../lib/contact.ts";
+import Link from "./Link.astro";
 import Todo from "./Todo.astro";
 
 interface Props {
@@ -18,12 +19,12 @@ const style =
 
 {
   href ? (
-    <a class={style} href={href} data-cta="whatsapp">
+    <Link class={style} href={href} data-cta="whatsapp">
       <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z" />
       </svg>
       {t.cta.whatsapp}
-    </a>
+    </Link>
   ) : (
     <span class={`${style} flex-col gap-1`} data-cta="whatsapp">
       {t.cta.whatsapp}

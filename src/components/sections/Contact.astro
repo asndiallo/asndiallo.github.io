@@ -4,6 +4,7 @@ import { bookingHref } from "../../lib/contact.ts";
 import ContactForm from "../ContactForm.astro";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
 import EmailLink from "../EmailLink.astro";
+import Link from "../Link.astro";
 import Section from "../Section.astro";
 import Todo from "../Todo.astro";
 
@@ -21,7 +22,7 @@ const booking = bookingHref();
   <ul class="mt-6 space-y-2">
     <li><EmailLink>{t.cta.email}</EmailLink></li>
     <li>
-      {booking ? <a href={booking}>{t.cta.booking}</a> : <>{t.cta.booking}: <Todo label="booking link in src/config.ts" /></>}
+      {booking ? <Link href={booking}>{t.cta.booking}</Link> : <>{t.cta.booking}: <Todo label="booking link in src/config.ts" /></>}
     </li>
   </ul>
   <ContactForm t={t} locale={locale} />

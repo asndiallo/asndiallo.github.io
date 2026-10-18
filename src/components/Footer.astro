@@ -2,6 +2,7 @@
 import { SITE_NAME, site } from "../config.ts";
 import { type Dictionary, type Locale, staticRoutes } from "../i18n/index.ts";
 import { entryPath, getLocalized } from "../lib/content.ts";
+import Link from "./Link.astro";
 
 interface Props {
   t: Dictionary;
@@ -31,8 +32,8 @@ const verticals = await getLocalized("verticals", locale);
     </ul>
     <ul class="space-y-2">
       <li><a href={staticRoutes.engineering.en} hreflang="en">{t.footer.engineering}</a></li>
-      <li><a href={site.social.linkedin} rel="me">LinkedIn</a></li>
-      <li><a href={site.social.github} rel="me">GitHub</a></li>
+      <li><Link href={site.social.linkedin} rel="me">LinkedIn</Link></li>
+      <li><Link href={site.social.github} rel="me">GitHub</Link></li>
     </ul>
   </div>
   <p class="container-page pb-8 text-sm text-muted">© {new Date().getFullYear()} {SITE_NAME}</p>

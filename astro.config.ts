@@ -1,9 +1,11 @@
 import { createHash } from "node:crypto";
+import { satteri } from "@astrojs/markdown-satteri";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import { SITE_URL } from "./src/config.ts";
 import { defaultLocale, locales } from "./src/i18n/locales.ts";
 import { languageRedirectScript, themeInitScript } from "./src/lib/inline-scripts.ts";
+import { externalLinksPlugin } from "./src/lib/markdown-external-links.ts";
 
 const sha256 = (source: string) =>
   `sha256-${createHash("sha256").update(source).digest("base64")}` as const;
@@ -28,6 +30,8 @@ export default defineConfig({
     },
   },
   build: { format: "directory" },
+  // External links in markdown open in a new tab (components use components/Link.astro).
+  markdown: { processor: satteri({ hastPlugins: [externalLinksPlugin] }) },
   i18n: {
     locales: [...locales],
     defaultLocale,

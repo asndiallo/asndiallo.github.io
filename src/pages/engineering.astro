@@ -1,4 +1,5 @@
 ---
+import Link from "../components/Link.astro";
 import { site } from "../config.ts";
 import Page from "../layouts/Page.astro";
 import { personSchema } from "../lib/schema.ts";
@@ -85,7 +86,7 @@ const earlier = [
             <ul class="mt-2 space-y-1">
               {p.links.map((l) => (
                 <li>
-                  <a href={l.href}>{l.label}</a>
+                  <Link href={l.href}>{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -98,8 +99,8 @@ const earlier = [
   <section aria-labelledby="connect-h" class="mt-14">
     <h2 id="connect-h">Let's connect</h2>
     <p class="measure mt-4">
-      Looking for a software engineer? Find me on <a href={site.social.linkedin}>LinkedIn</a> or{" "}
-      <a href={site.social.github}>GitHub</a>.
+      Looking for a software engineer? Find me on <Link href={site.social.linkedin}>LinkedIn</Link> or{" "}
+      <Link href={site.social.github}>GitHub</Link>.
     </p>
   </section>
 </Page>
