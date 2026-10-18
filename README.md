@@ -66,7 +66,7 @@ The site is in English (`/`) and French (`/fr/`), for African-owned businesses i
 business: "Business name"
 location: City, ST              # or "Online shop"
 vertical: braiding-salons       # braiding-salons | restaurants | online-shop | other
-status: complete                # or in-progress (shows a badge and a "results coming" note)
+status: complete                # or in-progress: hidden in production, shown in PR previews (SHOW_IN_PROGRESS=true)
 homepage: true                  # false keeps it off the home page cards (e.g. online shops)
 summary: "One plain sentence, ≤ 155 characters."
 consent: true                   # required: the build fails without it
