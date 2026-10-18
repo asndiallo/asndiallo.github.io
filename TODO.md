@@ -6,20 +6,19 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 ## Before launch
 
 ### Contact facts (`src/config.ts`)
-- [ ] **WhatsApp number**: a business line, digits only, with country code (e.g. `15551234567`). Not a personal number. It powers every "Message me on WhatsApp" button.
-- [ ] **Email**: the old site used `asn.diallo@outlook.com`. Keep it, or use a business address?
-- [ ] **Booking link** for the free 15-minute check-up (Cal.com, Calendly, or a Google Calendar appointment page)
+- [x] Email: set. It's never in the HTML; the "Email me" link is assembled in the browser.
+- [x] Booking link: set (Google Calendar appointment page)
+- [ ] **WhatsApp number**: currently `19125726366`, which is the personal number from your old resume. It isn't printed as text, but anyone can read it from the `wa.me` links. Keep it, or switch to a business line (e.g. a free WhatsApp Business number on Google Voice)?
 
 ### Isa's African Hair Braiding case study (`src/content/work/isa-african-hair-braiding.md`)
-- [ ] **Before**: what their Google profile and website looked like before. Calls or direction requests per month, if known.
-- [ ] **Google profile work**: what you changed (categories, photos, services, booking link)
-- [ ] **Booking tool**: which one you set up
-- [ ] **After**: results over a stated period, only numbers the owner approves, each with its source (e.g. Google Business Profile insights). If there are no numbers yet, I'll remove the "After" section rather than leave it empty.
+- [x] Before / what I did / booking (Telegram booking-request alerts) / 3-month results: filled in from your notes and her Google Business Profile performance screen
+- [ ] **Confirm the owner is OK with these numbers being public** (calls, directions, website clicks, views, search terms)
 - [ ] **Quote** from the owner, optional and only with permission
-- [ ] **Confirm** the owner is OK with the home-page screenshot of isabraiding.com being shown (`src/assets/work/isa-braiding.png`, taken 2026-10-18)
+- [ ] **Confirm** she's OK with the homepage screenshot of isabraiding.com (`src/assets/work/isa-braiding.png`, taken 2026-10-18)
+- [ ] Optional: a before/after comparison (e.g. calls in the 3 months after claiming vs. now) would make a stronger story than totals alone
 
 ### Vertical pages
-- [ ] **Booking platform** for braiding salons: "A booking link that works on a phone [TODO: confirm platform option]". Name a tool you support, or say "your existing tool"?
+- [ ] **Booking platform** for braiding salons: "A booking link that works on a phone [TODO: confirm platform option]". Suggestion based on the Isa work: "your existing booking tool, or a free booking request form that alerts you on WhatsApp or Telegram". OK?
 - [ ] **Ordering/catering platform** for restaurants: same question
 
 ### About page (`src/pages/about.astro`)
