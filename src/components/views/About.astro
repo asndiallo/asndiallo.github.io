@@ -1,8 +1,12 @@
 ---
+import { getImage } from "astro:assets";
+import portrait from "../../assets/people/assane-diallo.jpg";
+import { SITE_URL } from "../../config.ts";
 import { getDictionary, type Locale, staticRoutes } from "../../i18n/index.ts";
 import Page from "../../layouts/Page.astro";
 import { personSchema } from "../../lib/schema.ts";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
+import Portrait from "../Portrait.astro";
 import Todo from "../Todo.astro";
 
 interface Props {
@@ -11,6 +15,9 @@ interface Props {
 const { locale } = Astro.props;
 const t = getDictionary(locale);
 const copy = t.aboutPage;
+// A plain JPEG for structured data: search engines want a stable, widely supported image URL.
+const schemaPhoto = await getImage({ src: portrait, width: 800, format: "jpg" });
+const person = { ...personSchema, image: new URL(schemaPhoto.src, SITE_URL).href };
 ---
 
 <Page
@@ -20,11 +27,16 @@ const copy = t.aboutPage;
   locale={locale}
   alternates={staticRoutes.about}
   ogType="profile"
-  jsonLd={[{ "@context": "https://schema.org", "@type": "ProfilePage", mainEntity: personSchema }]}
+  jsonLd={[{ "@context": "https://schema.org", "@type": "ProfilePage", mainEntity: person }]}
 >
-  <div class="measure mt-10 space-y-4 text-lg">
-    {copy.paragraphs.map((p) => <p>{p}</p>)}
-    <p><Todo label={copy.ownWords} /></p>
+  <div class="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_20rem] lg:gap-16">
+    <div class="w-56 sm:w-64 lg:order-last lg:w-full">
+      <Portrait alt={t.photoAlt} size="lg" eager />
+    </div>
+    <div class="measure space-y-4 text-lg">
+      {copy.paragraphs.map((p) => <p>{p}</p>)}
+      <p><Todo label={copy.ownWords} /></p>
+    </div>
   </div>
   <p class="mt-12">
     {copy.engineering}{" "}
