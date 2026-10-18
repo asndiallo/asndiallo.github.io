@@ -1,9 +1,9 @@
 name: Deploy
 
-# Manual until go-live. Afterwards, also deploy on every push to develop:
-#   push:
-#     branches: [develop]
+# Every push to develop deploys (after all checks pass); can also be run by hand.
 on:
+  push:
+    branches: [develop]
   workflow_dispatch:
 
 permissions:
