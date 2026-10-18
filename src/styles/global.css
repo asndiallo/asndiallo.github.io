@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/*
+ * Tokens. Contrast on white: ink 15.6:1, muted 7.4:1, brand 6.6:1 (AA for text and buttons).
+ * sun is decorative only (shapes, never text on white).
+ */
+@theme {
+  --color-ink: #16213a;
+  --color-muted: #4b5568;
+  --color-paper: #ffffff;
+  --color-wash: #edf4f1;
+  --color-line: #d5dde3;
+  --color-brand: #0b6b4c;
+  --color-brand-strong: #07503a;
+  --color-sun: #e8a33d;
+  --color-todo: #8a4b00;
+  --color-todo-bg: #fff6e5;
+
+  --font-sans:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif;
+  --font-serif:
+    "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", P052,
+    "Noto Serif", Georgia, serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 1rem;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif text-ink;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 1.6rem + 3.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  a {
+    @apply text-brand underline decoration-1 underline-offset-[0.2em];
+  }
+
+  a:hover {
+    @apply text-brand-strong decoration-2;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* !important is intentional: reduced motion must win over any component transition. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      /* biome-ignore lint/complexity/noImportantStyles: user preference must override. */
+      transition-duration: 0.01ms !important;
+      /* biome-ignore lint/complexity/noImportantStyles: user preference must override. */
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+
+  .measure {
+    max-width: 65ch;
+  }
+
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-semibold no-underline transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-brand text-white hover:bg-brand-strong hover:text-white;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-brand bg-paper text-brand hover:bg-wash hover:text-brand-strong;
+  }
+
+  /* Markdown bodies (case studies). */
+  .prose {
+    max-width: 65ch;
+  }
+  .prose > * + * {
+    margin-top: 1em;
+  }
+  .prose h2 {
+    @apply mt-10 text-2xl;
+  }
+  .prose ul {
+    @apply list-disc pl-6;
+  }
+  .prose li + li {
+    margin-top: 0.4em;
+  }
+}
