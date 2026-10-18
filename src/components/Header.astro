@@ -38,9 +38,23 @@ const switchHref = alternates[other] ?? staticRoutes.home[other];
         hreflang={other}
         lang={t.language.switchLang}
         aria-label={t.language.switchLabel}
+        data-lang-choice={other}
         class="text-[0.95rem] font-semibold">{t.language.switchTo}</a
       >
       <ThemeToggle t={t} />
     </div>
   </div>
 </header>
+
+<script>
+  // An explicit language choice wins over the device language on later visits to the home page.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-lang-choice]")) {
+    link.addEventListener("click", () => {
+      try {
+        localStorage.setItem("lang", link.dataset.langChoice ?? "");
+      } catch {
+        // Storage blocked (private mode): the choice simply isn't remembered.
+      }
+    });
+  }
+</script>

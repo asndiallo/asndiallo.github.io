@@ -1,5 +1,5 @@
 ---
-import { getDictionary, type Locale, staticRoutes } from "../i18n/index.ts";
+import { defaultLocale, getDictionary, type Locale, staticRoutes } from "../i18n/index.ts";
 import Base from "../layouts/Base.astro";
 import { professionalServiceSchema } from "../lib/schema.ts";
 import AboutShort from "./sections/AboutShort.astro";
@@ -27,6 +27,7 @@ const { meta } = t.home;
   description={meta.description}
   locale={locale}
   alternates={staticRoutes.home}
+  detectLanguage={locale === defaultLocale}
   jsonLd={[professionalServiceSchema(meta.description)]}
 >
   <Hero t={t} />
