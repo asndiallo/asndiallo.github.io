@@ -1,0 +1,4 @@
+# Real 301 redirects (Cloudflare Workers static assets).
+# Docs: https://developers.cloudflare.com/workers/static-assets/redirects/
+# The old portfolio's about page (removed in Nov 2024).
+/about.html /about/ 301

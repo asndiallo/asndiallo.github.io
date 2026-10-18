@@ -12,7 +12,9 @@
       "!**/.astro",
       "!**/.lighthouseci",
       "!**/test-results",
-      "!**/playwright-report"
+      "!**/playwright-report",
+      "!**/dist-legacy",
+      "!**/.wrangler"
     ]
   },
   "formatter": {
