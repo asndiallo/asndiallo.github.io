@@ -2,6 +2,7 @@
 import type { Dictionary } from "../../i18n/index.ts";
 import { bookingHref } from "../../lib/contact.ts";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
+import Link from "../Link.astro";
 import Todo from "../Todo.astro";
 
 interface Props {
@@ -23,9 +24,9 @@ const booking = bookingHref();
         <CtaWhatsApp t={t} />
         {
           booking ? (
-            <a class="btn btn-secondary" href={booking}>
+            <Link class="btn btn-secondary" href={booking}>
               {t.cta.booking}
-            </a>
+            </Link>
           ) : (
             <span class="btn btn-secondary flex-col gap-1">
               {t.cta.booking}

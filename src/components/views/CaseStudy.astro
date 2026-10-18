@@ -6,6 +6,7 @@ import { getDictionary, staticRoutes } from "../../i18n/index.ts";
 import Page from "../../layouts/Page.astro";
 import { entryAlternates, entryLocale, entryPath } from "../../lib/content.ts";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
+import Link from "../Link.astro";
 
 interface Props {
   entry: CollectionEntry<"work">;
@@ -97,7 +98,7 @@ const breadcrumbs = {
           </div>
         )
       }
-      {website && <p><a href={website}>{t.caseStudy.visit(business)}</a></p>}
+      {website && <p><Link href={website}>{t.caseStudy.visit(business)}</Link></p>}
     </aside>
   </div>
   {

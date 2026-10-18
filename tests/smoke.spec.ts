@@ -248,6 +248,27 @@ test("links inside sentences keep their spaces", async ({ page }) => {
   }
 });
 
+test("external links open in a new tab, safely, with a screen-reader hint", async ({ page }) => {
+  const siteHost = new URL(SITE).host;
+  for (const path of await sitemapPaths(page)) {
+    await page.goto(path);
+    const wrong = await page.locator("a[href^='http']").evaluateAll(
+      (links, host) =>
+        links
+          .filter((a) => new URL(a.getAttribute("href") ?? "").host !== host)
+          .filter(
+            (a) =>
+              a.getAttribute("target") !== "_blank" ||
+              !(a.getAttribute("rel") ?? "").includes("noopener") ||
+              !a.querySelector(".sr-only"),
+          )
+          .map((a) => a.getAttribute("href")),
+      siteHost,
+    );
+    expect(wrong, path).toEqual([]);
+  }
+});
+
 test("no work-in-progress case study is published", async ({ page }) => {
   // Production builds leave out status: in-progress entries (only PR previews include them).
   for (const path of await sitemapPaths(page)) {

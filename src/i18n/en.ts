@@ -8,6 +8,7 @@ export const en = {
   money,
   /** Label separator; French puts a non-breaking space before the colon. */
   colon: ":",
+  newTab: "(opens in a new tab)",
   photoAlt: "Assane Diallo, wearing round glasses and a navy turtleneck",
   nav: {
     label: "Main",
