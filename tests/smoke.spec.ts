@@ -145,6 +145,14 @@ test("nothing personal is published", async ({ page }) => {
       expect(text, `${path} contains "${banned}"`).not.toContain(banned);
     }
   }
+  // The email is assembled in the browser; it must never be in the served HTML (scraper spam).
+  for (const path of await sitemapPaths(page)) {
+    const html = await (await page.request.get(path)).text();
+    expect(html, path).not.toMatch(/[\w.+-]+@[\w-]+\.[a-z]{2,}/i);
+  }
+  await page.goto("/");
+  await expect(page.locator("a[data-email]")).toHaveAttribute("href", /^mailto:/);
+
   const resume = await page.request.get("/assets/docs/assane_diallo_software_engineer_cv.pdf");
   expect(resume.status()).toBe(404);
 });

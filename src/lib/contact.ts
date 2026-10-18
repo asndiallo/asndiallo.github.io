@@ -6,6 +6,11 @@ export const whatsappHref = (message: string): string | null =>
     ? null
     : `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
 
-export const mailtoHref = (): string | null => (isTodo(site.email) ? null : `mailto:${site.email}`);
+/**
+ * The email never appears in the HTML as text or as a mailto: link, to keep it away from scrapers.
+ * It ships reversed and base64-encoded, and EmailLink.astro decodes it in the browser.
+ */
+export const encodedEmail = (): string | null =>
+  isTodo(site.email) ? null : btoa([...site.email].reverse().join(""));
 
 export const bookingHref = (): string | null => (isTodo(site.bookingUrl) ? null : site.bookingUrl);

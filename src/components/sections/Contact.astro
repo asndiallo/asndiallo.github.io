@@ -1,9 +1,9 @@
 ---
-import { site } from "../../config.ts";
 import type { Dictionary } from "../../i18n/en.ts";
-import { bookingHref, mailtoHref } from "../../lib/contact.ts";
+import { bookingHref } from "../../lib/contact.ts";
 import ContactForm from "../ContactForm.astro";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
+import EmailLink from "../EmailLink.astro";
 import Section from "../Section.astro";
 import Todo from "../Todo.astro";
 
@@ -11,7 +11,6 @@ interface Props {
   t: Dictionary;
 }
 const { t } = Astro.props;
-const mailto = mailtoHref();
 const booking = bookingHref();
 ---
 
@@ -19,10 +18,7 @@ const booking = bookingHref();
   <p class="measure mt-4 text-lg">{t.home.contact.body}</p>
   <div class="mt-8"><CtaWhatsApp t={t} variant="inverse" /></div>
   <ul class="mt-6 space-y-2">
-    <li>
-      {t.cta.email}:{" "}
-      {mailto ? <a href={mailto}>{site.email}</a> : <Todo label="email in src/config.ts" />}
-    </li>
+    <li><EmailLink>{t.cta.email}</EmailLink></li>
     <li>
       {booking ? <a href={booking}>{t.cta.booking}</a> : <>{t.cta.booking}: <Todo label="booking link in src/config.ts" /></>}
     </li>
