@@ -15,7 +15,8 @@ module.exports = {
       staticDistDir: "./dist",
       maxAutodiscoverUrls: 0, // 0 = audit every HTML page, not just the first five
       staticDirFileDiscoveryDepth: 4, // default 2 misses /fr/pour/<vertical>/ and /fr/realisations/<case>/
-      numberOfRuns: 1,
+      // Median of 3 runs per page: a single run on a shared CI machine is too noisy to gate on.
+      numberOfRuns: 3,
     },
     assert: {
       assertMatrix: [
