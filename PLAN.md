@@ -26,6 +26,7 @@ Status: **approved with the decisions below; in progress.**
 | D16 | Djidiawax                                                                  | Case study in progress: product/category pages, technical SEO and speed, Google Shopping, conversion. Owner consent assumed from the decision; to confirm.                                                                                                                                                                                               |
 | D17 | Domain                                                                     | `https://assane-diallo.com` (apex) in `src/config.ts` only. Spaceship registrar, Cloudflare DNS (proxy off), GitHub Pages. `CNAME` generated (GitHub ignores it with Actions deploys). `pnpm verify:domain` runs after deploys. Manual steps in DOMAIN-SETUP.md.                                                                                         |
 | D18 | Hosting | **Supersedes D3/D17's GitHub Pages hosting.** Cloudflare Workers static assets (Cloudflare's recommendation for new static sites): `_headers`, `_redirects`, hash-based CSP, preview URL per PR, deploy gated on CI. github.io serves a redirect-only build. Cloudflare changes are made with the `cf` CLI with per-step approval; the API token is created and stored by the owner. |
+| D19 | Proof and launch | Home shows only case studies with approved results, never placeholder cards. Personal relationships are disclosed on the card and the page (`disclosure` field: Isa is Assane's cousin). Go-live approved 2026-10-18. |
 
 ---
 
