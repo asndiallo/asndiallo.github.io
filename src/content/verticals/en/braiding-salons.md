@@ -17,7 +17,7 @@ setup:
   items:
     - A Google profile with the right categories and your best photos
     - A simple page for each major style you want to be found for (for example, knotless braids in your city)
-    - "A booking link that works on a phone [TODO: confirm platform option]"
+    - "A booking link that works on a phone"
     - A short review request you can send after each appointment
 wontDo:
   h2: What I won't do

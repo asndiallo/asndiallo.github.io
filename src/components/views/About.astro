@@ -7,7 +7,6 @@ import Page from "../../layouts/Page.astro";
 import { personSchema } from "../../lib/schema.ts";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
 import Portrait from "../Portrait.astro";
-import Todo from "../Todo.astro";
 
 interface Props {
   locale: Locale;
@@ -35,7 +34,6 @@ const person = { ...personSchema, image: new URL(schemaPhoto.src, SITE_URL).href
     </div>
     <div class="measure space-y-4 text-lg">
       {copy.paragraphs.map((p) => <p>{p}</p>)}
-      <p><Todo label={copy.ownWords} /></p>
     </div>
   </div>
   <p class="mt-12">

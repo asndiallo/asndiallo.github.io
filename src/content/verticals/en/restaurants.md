@@ -18,7 +18,7 @@ setup:
   items:
     - A Google profile with the right categories, your menu, and your best photos
     - A simple page for your signature dishes and catering (for example, jollof rice in your city)
-    - "A link to order or book catering that works on a phone [TODO: confirm platform option]"
+    - "A link to order or book catering that works on a phone"
     - A short review request you can send after an order or event
 wontDo:
   h2: What I won't do

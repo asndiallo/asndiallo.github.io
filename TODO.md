@@ -28,17 +28,14 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 ### French version
 
 - [ ] **Review all French copy**: `src/i18n/fr.ts` and the `fr/` content files. Drafted by me for francophone owners in the US; US search examples stay in English ("braiding near me").
-- [ ] French about page: 2–4 sentences in your own words (marked on `/fr/a-propos/`)
 
 ### Vertical pages
 
-- [ ] **Booking platform** for braiding salons: "A booking link that works on a phone [TODO: confirm platform option]". Suggestion based on the Isa work: "your existing booking tool, or a free booking request form that alerts you on WhatsApp or Telegram". OK?
-- [ ] **Ordering/catering platform** for restaurants: same question (the French pages carry the same two markers)
+- [x] Booking line on vertical pages: kept generic ("A booking link that works on a phone")
 
 ### About page (`src/pages/about.astro`)
 
-- [ ] 2–4 sentences in your own words on why this work matters to you (EN)
-- [ ] The same in French (FR)
+- [x] Your own words on why this work matters (EN and FR), shown as the last About paragraph
 
 ### Copy to approve
 
