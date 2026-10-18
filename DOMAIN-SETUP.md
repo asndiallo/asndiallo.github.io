@@ -43,8 +43,12 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 | ✅ | GitHub secret `CLOUDFLARE_ACCOUNT_ID` | Claude | 2026-10-18 |
 | ✅ | Gmail destination verified | you | 2026-10-18 |
 | ✅ | Routing rule `hello@assane-diallo.com → asndiallo98@gmail.com` (catch-all stays off: other addresses are rejected) | Claude | 2026-10-18 |
-| ⏳ | **Dashboard steps 1–3 below** (subdomain, API token, DMARC record) | you | |
-| ⏳ | First deploy, then review the preview URL | Claude | |
+| ✅ | workers.dev subdomain `assane-diallo` | you | 2026-10-18 |
+| ✅ | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers") | you | 2026-10-18 |
+| ⏳ | **DMARC record**: dashboard step 3 below | you | |
+| ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): https://assane-diallo.assane-diallo.workers.dev | Claude | 2026-10-18 |
+| ✅ | PR previews working: https://pr-1-assane-diallo.assane-diallo.workers.dev | CI | 2026-10-18 |
+| ⏳ | **Review the preview**, then say "go live" | you | |
 | ⏳ | Go-live (section below) | Claude, on your go | |
 
 ## Your dashboard steps (about 5 minutes)
