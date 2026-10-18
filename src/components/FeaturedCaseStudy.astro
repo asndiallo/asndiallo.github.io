@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import type { Dictionary } from "../i18n/index.ts";
+import { entryPath } from "../lib/content.ts";
+
+/**
+ * One case study as a wide panel: screenshot beside the story and its approved numbers.
+ * Used on the home page while there is a single case study with results.
+ */
+interface Props {
+  t: Dictionary;
+  entry: CollectionEntry<"work">;
+}
+const { t, entry } = Astro.props;
+const { business, location, summary, image, disclosure, results } = entry.data;
+const stats = results.slice(0, 3);
+const source = results[0]?.source;
+// On wide screens the image fills the panel's height (cover), so it renders about 720px wide.
+const imageSizes = "(min-width: 768px) 720px, 100vw";
+---
+
+<article
+  class="grid overflow-hidden rounded-2xl border border-line bg-paper md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+>
+  {
+    image && (
+      <Image
+        src={image.src}
+        alt={image.alt}
+        widths={[480, 720, 960, 1280]}
+        sizes={imageSizes}
+        class="aspect-[16/10] h-full w-full border-b border-line object-cover object-left-top md:aspect-auto md:border-r md:border-b-0"
+      />
+    )
+  }
+  <div class="flex flex-col p-6 sm:p-8">
+    <h3 class="text-2xl">{business}</h3>
+    <p class="mt-1 text-sm text-muted">{location}</p>
+    {disclosure && <p class="mt-1 text-sm text-muted" data-disclosure>{disclosure}</p>}
+    <p class="mt-4">{summary}</p>
+
+    <dl class="mt-6 grid grid-cols-3 gap-4 border-y border-line py-5">
+      {
+        stats.map((r) => (
+          // Label first for screen readers; shown under the number, top-aligned across columns.
+          <div class="flex flex-col-reverse justify-end">
+            <dt class="mt-1 text-sm leading-snug text-muted">{r.label}</dt>
+            <dd class="font-serif text-3xl leading-none font-bold sm:text-4xl">{r.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    {
+      source && (
+        <p class="mt-3 text-xs text-muted">
+          {t.caseStudy.source}
+          {t.colon} {source}
+        </p>
+      )
+    }
+    <a class="mt-6 self-start font-semibold" href={entryPath("work", entry)}
+      >{t.caseStudy.readMore(business)}</a
+    >
+  </div>
+</article>

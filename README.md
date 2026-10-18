@@ -24,6 +24,8 @@ The first time, run `pnpm exec playwright install chromium`. Lighthouse uses you
 
 `pnpm build` ends with a list of every `[TODO]` placeholder still on the site. It warns but never fails.
 
+**Dev server shows a stale error** (for example `LocalImageUsedWrongly … cannot be a string filepath`, or a case study missing) after content files move or the content schema changes: restart `pnpm dev`. If it persists, clear Astro's cache: `rm -rf .astro && pnpm dev`. Production builds start clean, so they're not affected.
+
 ## Configuration
 
 | What                                              | Where                                                                                                                     |
