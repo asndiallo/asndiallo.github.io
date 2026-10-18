@@ -140,6 +140,9 @@
   .prose ul {
     @apply list-disc pl-6;
   }
+  .prose ol {
+    @apply list-decimal pl-6;
+  }
   .prose li + li {
     margin-top: 0.4em;
   }
