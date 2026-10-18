@@ -42,9 +42,9 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 | ✅ | GitHub secret `CLOUDFLARE_ACCOUNT_ID` | Claude | 2026-10-18 |
 | ✅ | workers.dev subdomain `assane-diallo` | you | 2026-10-18 |
 | ✅ | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers") | you | 2026-10-18 |
-| ✅ | One DMARC record: `v=DMARC1; p=none; sp=none; adkim=r; aspf=r; rua=` hello@assane-diallo.com + Cloudflare DMARC Management; `ruf=` hello@ (duplicate from the Zoho setup merged) | Claude | 2026-10-18 |
-| ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): https://assane-diallo.assane-diallo.workers.dev | Claude | 2026-10-18 |
-| ✅ | PR previews working: https://pr-1-assane-diallo.assane-diallo.workers.dev | CI | 2026-10-18 |
+| ✅ | One DMARC record: `v=DMARC1; p=none; sp=none; adkim=r; aspf=r; rua=` <hello@assane-diallo.com> + Cloudflare DMARC Management; `ruf=` hello@ (duplicate from the Zoho setup merged) | Claude | 2026-10-18 |
+| ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): <https://assane-diallo.assane-diallo.workers.dev> | Claude | 2026-10-18 |
+| ✅ | PR previews working: <https://pr-1-assane-diallo.assane-diallo.workers.dev> | CI | 2026-10-18 |
 | ✅ | Preview reviewed; go-live approved | you | 2026-10-18 |
 | ✅ | **Live**: Custom Domain `assane-diallo.com` on the Worker (Google Trust Services certificate), `workers.dev` off | Claude | 2026-10-18 |
 | ✅ | www → apex 301 (proxied `AAAA www 100::` + Redirect Rule), Always Use HTTPS on, minimum TLS 1.2 | Claude | 2026-10-18 |
