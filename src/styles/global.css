@@ -1,20 +1,24 @@
 @import "tailwindcss";
 
 /*
- * Tokens. Contrast on white: ink 15.6:1, muted 7.4:1, brand 6.6:1 (AA for text and buttons).
- * sun is decorative only (shapes, never text on white).
+ * Tokens: light-dark(light, dark), picked by color-scheme (system, or the visitor's choice
+ * via html[data-theme]). Every text pair is WCAG AA in both themes; the lowest is 5.8:1
+ * (light brand on wash) and 7.3:1 (dark brand on wash). sun is decorative only, never text.
  */
 @theme {
-  --color-ink: #16213a;
-  --color-muted: #4b5568;
-  --color-paper: #ffffff;
-  --color-wash: #edf4f1;
-  --color-line: #d5dde3;
-  --color-brand: #0b6b4c;
-  --color-brand-strong: #07503a;
+  --color-ink: light-dark(#16213a, #e6ecf1);
+  --color-muted: light-dark(#4b5568, #a8b5c2);
+  --color-paper: light-dark(#ffffff, #0f1a24);
+  --color-wash: light-dark(#edf4f1, #162633);
+  --color-line: light-dark(#d5dde3, #2a3b49);
+  --color-brand: light-dark(#0b6b4c, #4cc79a);
+  --color-brand-strong: light-dark(#07503a, #7ad9b5);
+  --color-on-brand: light-dark(#ffffff, #06251a);
+  --color-band: light-dark(#0b6b4c, #12402f);
+  --color-on-band: light-dark(#ffffff, #e6ecf1);
   --color-sun: #e8a33d;
-  --color-todo: #8a4b00;
-  --color-todo-bg: #fff6e5;
+  --color-todo: light-dark(#8a4b00, #ffd28f);
+  --color-todo-bg: light-dark(#fff6e5, #3a2a12);
 
   --font-sans:
     system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif;
@@ -25,9 +29,17 @@
 
 @layer base {
   html {
-    color-scheme: light;
+    color-scheme: light dark;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 1rem;
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
   }
 
   body {
@@ -108,7 +120,7 @@
   }
 
   .btn-primary {
-    @apply bg-brand text-white hover:bg-brand-strong hover:text-white;
+    @apply bg-brand text-on-brand hover:bg-brand-strong hover:text-on-brand;
   }
 
   .btn-secondary {
