@@ -1,0 +1,12 @@
+---
+import Todo from "./Todo.astro";
+
+/** Plain text in which any "[TODO: …]" is rendered as a visible placeholder. */
+interface Props {
+  text: string;
+}
+const parts = Astro.props.text.split(/(\[TODO(?::[^\]]*)?\])/);
+const label = (part: string) => part.replace(/^\[TODO:?\s*|\]$/g, "") || "to be added";
+---
+
+{parts.map((part) => (part.startsWith("[TODO") ? <Todo label={label(part)} /> : part))}

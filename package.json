@@ -1,0 +1,41 @@
+{
+  "name": "asndiallo.github.io",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/report-todos.ts",
+    "preview": "astro preview",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "astro check",
+    "test:e2e": "playwright test",
+    "lhci": "lhci autorun",
+    "linkcheck": "node scripts/linkcheck.ts",
+    "og": "node scripts/generate-og.ts",
+    "check": "pnpm lint && pnpm typecheck && pnpm build && pnpm test:e2e && pnpm lhci && pnpm linkcheck",
+    "verify:domain": "node scripts/verify-domain.ts",
+    "build:legacy": "node scripts/build-legacy-redirects.ts"
+  },
+  "dependencies": {
+    "@astrojs/markdown-satteri": "0.4.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.4.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@biomejs/biome": "^2.5.15",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "linkinator": "^8.1.0",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3",
+    "wrangler": "4.151.1"
+  }
+}

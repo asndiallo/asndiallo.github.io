@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Vertical from "../../../components/views/Vertical.astro";
+import { staticPathsFor } from "../../../lib/content.ts";
+
+export const getStaticPaths = () => staticPathsFor("verticals", "fr");
+
+interface Props {
+  entry: CollectionEntry<"verticals">;
+}
+---
+
+<Vertical entry={Astro.props.entry} />

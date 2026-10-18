@@ -1,0 +1,20 @@
+{
+  // Cloudflare Workers static assets: no Worker script, Cloudflare serves dist/ directly.
+  // Docs: https://developers.cloudflare.com/workers/static-assets/
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "assane-diallo",
+  "compatibility_date": "2026-10-18",
+  "assets": {
+    "directory": "./dist",
+    // dist/404.html for unknown paths, with a real 404 status.
+    "not_found_handling": "404-page",
+    // /about → /about/ (Astro builds directory-style pages).
+    "html_handling": "auto-trailing-slash"
+  },
+  // Live on the apex domain. Cloudflare creates its DNS record and certificate.
+  // www → apex is a zone Redirect Rule (see DOMAIN-SETUP.md), not part of this Worker.
+  "routes": [{ "pattern": "assane-diallo.com", "custom_domain": true }],
+  // One public address: no workers.dev copy of the site. PR previews keep their version URLs.
+  "workers_dev": false,
+  "preview_urls": true
+}

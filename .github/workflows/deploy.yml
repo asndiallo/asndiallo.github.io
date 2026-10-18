@@ -1,0 +1,87 @@
+name: Deploy
+
+# Every push to develop deploys (after all checks pass); can also be run by hand.
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  # Lint, typecheck, build, Playwright, Lighthouse, link check. Uploads the tested dist/.
+  checks:
+    uses: ./.github/workflows/ci.yml
+
+  # The site: Cloudflare Workers static assets (wrangler.jsonc).
+  site:
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: ${{ vars.SITE_LIVE == 'true' && 'https://assane-diallo.com' || '' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist/
+      - name: Deploy to Cloudflare
+        run: pnpm exec wrangler deploy --message "${{ github.sha }}"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_SEND_METRICS: "false"
+
+  # The old address (asndiallo.github.io) on GitHub Pages: a redirect-only site that forwards
+  # every path to the same path on the new domain. Only once the new domain is live.
+  legacy-redirects:
+    needs: checks
+    if: vars.SITE_LIVE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist/
+      - run: node scripts/build-legacy-redirects.ts
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist-legacy
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  # Checks the live domain (HTTPS, redirects, headers, canonical URLs). Informational only:
+  # a failure never blocks or rolls back the deploy.
+  verify-domain:
+    needs: [site, legacy-redirects]
+    if: vars.SITE_LIVE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      # The script only needs Node and curl, so no dependency install.
+      - run: node scripts/verify-domain.ts

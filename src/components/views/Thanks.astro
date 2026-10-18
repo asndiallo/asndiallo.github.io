@@ -1,0 +1,21 @@
+---
+import { getDictionary, type Locale, staticRoutes } from "../../i18n/index.ts";
+import Page from "../../layouts/Page.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+---
+
+<Page
+  title={t.thanks.meta.title}
+  description={t.thanks.meta.description}
+  h1={t.thanks.h1}
+  lead={t.thanks.lead}
+  locale={locale}
+  noindex
+>
+  <p class="mt-8"><a href={staticRoutes.home[locale]}>{t.thanks.back}</a></p>
+</Page>

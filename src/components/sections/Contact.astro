@@ -1,0 +1,29 @@
+---
+import type { Dictionary, Locale } from "../../i18n/index.ts";
+import { bookingHref } from "../../lib/contact.ts";
+import ContactForm from "../ContactForm.astro";
+import CtaWhatsApp from "../CtaWhatsApp.astro";
+import EmailLink from "../EmailLink.astro";
+import Link from "../Link.astro";
+import Section from "../Section.astro";
+import Todo from "../Todo.astro";
+
+interface Props {
+  t: Dictionary;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+const booking = bookingHref();
+---
+
+<Section id="contact" heading={t.home.contact.h2} band="brand">
+  <p class="measure mt-4 text-lg">{t.home.contact.body}</p>
+  <div class="mt-8"><CtaWhatsApp t={t} variant="inverse" /></div>
+  <ul class="mt-6 space-y-2">
+    <li><EmailLink>{t.cta.email}</EmailLink></li>
+    <li>
+      {booking ? <Link href={booking}>{t.cta.booking}</Link> : <>{t.cta.booking}: <Todo label="booking link in src/config.ts" /></>}
+    </li>
+  </ul>
+  <ContactForm t={t} locale={locale} />
+</Section>

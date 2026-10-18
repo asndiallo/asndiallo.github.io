@@ -1,0 +1,37 @@
+---
+import { getDictionary, type Locale, staticRoutes } from "../../i18n/index.ts";
+import Page from "../../layouts/Page.astro";
+import { getLocalized } from "../../lib/content.ts";
+import CaseStudyCard from "../CaseStudyCard.astro";
+import CtaWhatsApp from "../CtaWhatsApp.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const entries = await getLocalized("work", locale);
+// Only the first card is eager: it's the one above the fold on phones, where most visitors are.
+---
+
+<Page
+  title={t.work.meta.title}
+  description={t.work.meta.description}
+  h1={t.work.h1}
+  lead={t.work.lead}
+  locale={locale}
+  alternates={staticRoutes.work}
+>
+  {
+    entries.length > 0 ? (
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {entries.map((entry, i) => (
+          <CaseStudyCard t={t} entry={entry} headingLevel="h2" eager={i === 0} />
+        ))}
+      </div>
+    ) : (
+      <p class="measure mt-10">{t.work.empty}</p>
+    )
+  }
+  <div class="mt-12"><CtaWhatsApp t={t} /></div>
+</Page>

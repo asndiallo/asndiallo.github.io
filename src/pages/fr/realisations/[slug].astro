@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from "astro:content";
+import CaseStudy from "../../../components/views/CaseStudy.astro";
+import { staticPathsFor } from "../../../lib/content.ts";
+
+export const getStaticPaths = () => staticPathsFor("work", "fr");
+
+interface Props {
+  entry: CollectionEntry<"work">;
+}
+---
+
+<CaseStudy entry={Astro.props.entry} />
