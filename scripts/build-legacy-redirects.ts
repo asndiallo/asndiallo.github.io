@@ -1,4 +1,3 @@
-import { dirname, join, relative, sep } from "node:path";
 /**
  * Builds dist-legacy/: a redirect-only site for the old address (LEGACY_SITE_URL, GitHub Pages).
  * GitHub Pages can't send real 301s, so every page of the real site gets a stub that redirects
@@ -8,6 +7,7 @@ import { dirname, join, relative, sep } from "node:path";
  *   pnpm build && pnpm build:legacy
  */
 import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
+import { dirname, join, relative, sep } from "node:path";
 
 import { SITE_URL } from "../src/config.ts";
 
