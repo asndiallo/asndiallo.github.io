@@ -24,7 +24,8 @@ Status: **approved with the decisions below; in progress.**
 | D14 | French                                                                     | Full French site for francophone owners **in the US** (not France). Translated URLs. Prices in USD. Canada and France deferred; France would need mentions légales.                                                                                                                                                                                      |
 | D15 | Online shops                                                               | Off the main pitch: one line, "Online shops: audits by request.", linked to the Djidiawax case study (in progress, no results). Never in home proof cards.                                                                                                                                                                                               |
 | D16 | Djidiawax                                                                  | Case study in progress: product/category pages, technical SEO and speed, Google Shopping, conversion. Owner consent assumed from the decision; to confirm.                                                                                                                                                                                               |
-| D17 | Domain | `https://assane-diallo.com` (apex) in `src/config.ts` only. Spaceship registrar, Cloudflare DNS (proxy off), GitHub Pages. `CNAME` generated (GitHub ignores it with Actions deploys). `pnpm verify:domain` runs after deploys. Manual steps in DOMAIN-SETUP.md. |
+| D17 | Domain                                                                     | `https://assane-diallo.com` (apex) in `src/config.ts` only. Spaceship registrar, Cloudflare DNS (proxy off), GitHub Pages. `CNAME` generated (GitHub ignores it with Actions deploys). `pnpm verify:domain` runs after deploys. Manual steps in DOMAIN-SETUP.md.                                                                                         |
+| D18 | Hosting | **Supersedes D3/D17's GitHub Pages hosting.** Cloudflare Workers static assets (Cloudflare's recommendation for new static sites): `_headers`, `_redirects`, hash-based CSP, preview URL per PR, deploy gated on CI. github.io serves a redirect-only build. Cloudflare changes are made with the `cf` CLI with per-step approval; the API token is created and stored by the owner. |
 
 ---
 
@@ -269,7 +270,7 @@ Before I say "done" I'll paste the output of lint, typecheck, build (with TODO r
 
 ## 10. Everything you must supply (becomes TODO.md)
 
-**Business facts (`src/config.ts`)**
+### Business facts (`src/config.ts`)
 
 - [ ] WhatsApp number (business line, international format). **Not** a personal number.
 - [ ] Contact email. The site used `asn.diallo@outlook.com` before. Reuse it, or use a business address?
@@ -279,7 +280,7 @@ Before I say "done" I'll paste the output of lint, typecheck, build (with TODO r
 - [ ] Business/brand name, if it's anything other than "Assane Diallo"
 - [ ] Response-time promise, if any (e.g. "I reply within 1 business day")
 
-**Positioning and copy**
+### Positioning and copy
 
 - [ ] The two verticals (slugs + display names), e.g. braiding salons, restaurants
 - [ ] Wording for the community you serve. Exact phrasing matters, so I'll draft options and you choose (e.g. "African-owned", "African and Caribbean-owned", or specific diasporas).
@@ -290,13 +291,13 @@ Before I say "done" I'll paste the output of lint, typecheck, build (with TODO r
 - [ ] Photo of you (optional; it helps trust a lot): a square image of at least 800px
 - [ ] French homepage copy (or approval for me to draft it for your review)
 
-**Proof**
+### Proof
 
 - [ ] Case study 1–3: client (with written consent to be named, or anonymised), what you did, real results with source and date. Screenshots of GBP Insights are ideal.
 - [ ] D4: Isa Hair Salon, yes or no, plus consent
 - [ ] Testimonials: only real ones, with permission. None will be shown until you supply them.
 
-**Infrastructure**
+### Infrastructure
 
 - [ ] Form service choice + endpoint URL (Formspree / Web3Forms / Basin)
 - [ ] Analytics choice + token (Cloudflare recommended)
