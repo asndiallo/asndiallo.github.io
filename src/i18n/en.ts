@@ -134,10 +134,6 @@ export const en = {
     proof: {
       h2: "My first clients",
       body: `I'm taking my first ${n} projects at a founding-client price. In return, you let me share the results.`,
-      placeholderTitle: "Case study coming soon",
-      placeholderBody:
-        "This space is for a real client result, published with the owner's permission.",
-      placeholderTodo: "real case study with owner's permission",
       allWork: "See all client work",
     },
     pricing: {
