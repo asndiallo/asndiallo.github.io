@@ -49,8 +49,8 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 
 ### Hosting, domain and email (status in DOMAIN-SETUP.md)
 - [x] hello@assane-diallo.com forwards to Gmail (Email Routing live 2026-10-18)
-- [ ] Dashboard: workers.dev subdomain `assane-diallo`
-- [ ] Dashboard: API token "Edit Cloudflare Workers", then `gh secret set CLOUDFLARE_API_TOKEN`
+- [x] workers.dev subdomain `assane-diallo`
+- [x] API token secret set; preview live at https://assane-diallo.assane-diallo.workers.dev
 - [ ] Dashboard: DMARC Management → Add the DMARC record (`p=none`)
 - [ ] Review the preview URL, then say "go live" (custom domain, www redirect, github.io redirect, merge)
 - [ ] Spaceship: 2FA, WHOIS privacy, registrar lock, auto-renew (renews 2027-10-18)
