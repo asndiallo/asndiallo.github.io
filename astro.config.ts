@@ -1,9 +1,10 @@
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
+import { SITE_URL } from "./src/config.ts";
 import { defaultLocale, locales } from "./src/i18n/locales.ts";
 
 export default defineConfig({
-  site: "https://asndiallo.github.io",
+  site: SITE_URL,
   trailingSlash: "always",
   build: { format: "directory" },
   i18n: {

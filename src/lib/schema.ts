@@ -1,13 +1,13 @@
-import { pricing, site } from "../config.ts";
+import { pricing, SITE_NAME, SITE_URL, site } from "../config.ts";
 
 const sameAs = Object.values(site.social);
 
 /** Schema.org Person for Assane. Shared by the business and the about page. */
 export const personSchema = {
   "@type": "Person",
-  "@id": `${site.url}/#person`,
-  name: site.name,
-  url: `${site.url}/about/`,
+  "@id": `${SITE_URL}/#person`,
+  name: SITE_NAME,
+  url: `${SITE_URL}/about/`,
   jobTitle: "Local SEO consultant and software engineer",
   knowsLanguage: ["en", "fr"],
   sameAs,
@@ -19,11 +19,11 @@ export function professionalServiceSchema(description: string): Record<string, u
   return {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "@id": `${site.url}/#business`,
-    name: `${site.name}, local SEO`,
+    "@id": `${SITE_URL}/#business`,
+    name: `${SITE_NAME}, local SEO`,
     description,
-    url: `${site.url}/`,
-    image: `${site.url}/og-default.png`,
+    url: `${SITE_URL}/`,
+    image: `${SITE_URL}/og-default.png`,
     areaServed: { "@type": "Country", name: site.areaServed },
     availableLanguage: ["English", "French"],
     priceRange: `$${Math.min(...prices)}–$${Math.max(...prices)} setup`,

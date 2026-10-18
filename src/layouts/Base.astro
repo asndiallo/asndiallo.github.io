@@ -4,7 +4,7 @@ import Analytics from "../components/Analytics.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import JsonLd from "../components/JsonLd.astro";
-import { site } from "../config.ts";
+import { SITE_NAME, SITE_URL } from "../config.ts";
 import {
   type Alternates,
   defaultLocale,
@@ -40,7 +40,7 @@ const {
 } = Astro.props;
 
 const t = getDictionary(locale);
-const base = Astro.site ?? new URL(site.url);
+const base = Astro.site ?? new URL(SITE_URL);
 const abs = (path: string) => new URL(path, base).href;
 const canonical = abs(Astro.url.pathname);
 const translations = locales.flatMap((l) => {
@@ -82,7 +82,7 @@ const xDefault = translations.find((a) => a.locale === defaultLocale) ?? transla
     <meta name="theme-color" content="#0f1a24" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content={ogType} />
-    <meta property="og:site_name" content={site.name} />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
