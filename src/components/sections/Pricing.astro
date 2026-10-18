@@ -25,11 +25,16 @@ const { pricing: copy, services } = t.home;
           </p>
           <p class="mt-2">
             <span class="text-muted">{copy.startingAt} </span>
-            <span class="font-serif text-3xl font-bold">{t.money(tier.founding.setup)}</span>
-            <span> {copy.setup}</span>
+            <!-- Each amount stays on one line with its unit. -->
+            <span class="whitespace-nowrap">
+              <span class="font-serif text-3xl font-bold">{t.money(tier.founding.setup)}</span>{" "}
+              {copy.setup}
+            </span>
             <span class="text-muted"> + </span>
-            <span class="font-serif text-3xl font-bold">{t.money(tier.founding.monthly)}</span>
-            <span> {copy.perMonth}</span>
+            <span class="whitespace-nowrap">
+              <span class="font-serif text-3xl font-bold">{t.money(tier.founding.monthly)}</span>{" "}
+              {copy.perMonth}
+            </span>
           </p>
           <p class="mt-2 text-sm text-muted">
             {copy.standardLabel}{t.colon} {copy.startingAtLower} {t.money(tier.standard.setup)}{" "}

@@ -61,7 +61,11 @@ const breadcrumbs = {
       <Content />
       {status === "in-progress" && <p class="rounded-2xl border-2 border-dashed border-line p-4">{t.caseStudy.inProgressNote}</p>}
     </div>
-    <aside class="space-y-6 self-start rounded-2xl bg-wash p-6" aria-label={t.caseStudy.facts}>
+    <!-- Results first: above the story on phones, in the sidebar on wide screens. -->
+    <aside
+      class="order-first space-y-6 self-start rounded-2xl bg-wash p-6 lg:order-none"
+      aria-label={t.caseStudy.facts}
+    >
       {
         status === "in-progress" && (
           <p data-status="in-progress" class="inline-block rounded-full bg-sun/25 px-3 py-0.5 text-sm font-semibold">
@@ -69,15 +73,11 @@ const breadcrumbs = {
           </p>
         )
       }
-      <div>
-        <h2 class="text-lg">{t.caseStudy.services}</h2>
-        <ul class="mt-2 list-disc space-y-1 pl-5">{services.map((s) => <li>{s}</li>)}</ul>
-      </div>
       {
         results.length > 0 && (
           <div>
             <h2 class="text-lg">{t.caseStudy.results}</h2>
-            <dl class="mt-2 space-y-2">
+            <dl class="mt-2 grid grid-cols-2 gap-x-4 gap-y-3">
               {results.map((r) => (
                 <div>
                   <dt class="text-sm text-muted">{r.label}</dt>
@@ -98,6 +98,10 @@ const breadcrumbs = {
           </div>
         )
       }
+      <div>
+        <h2 class="text-lg">{t.caseStudy.services}</h2>
+        <ul class="mt-2 list-disc space-y-1 pl-5">{services.map((s) => <li>{s}</li>)}</ul>
+      </div>
       {website && <p><Link href={website}>{t.caseStudy.visit(business)}</Link></p>}
     </aside>
   </div>

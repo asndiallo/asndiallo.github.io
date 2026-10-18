@@ -269,6 +269,21 @@ test("external links open in a new tab, safely, with a screen-reader hint", asyn
   }
 });
 
+test("prices read with spaces, in both languages", async ({ page }) => {
+  // Astro drops line breaks between tags; a glued price ("$79a month") is easy to miss.
+  for (const [path, pattern] of [
+    ["/", /\$\d[\d,]* setup \+ \$\d[\d,]* a month/],
+    ["/fr/", /\d[\d\s]*\u00a0\$ de mise en place \+ \d[\d\s]*\u00a0\$ par mois/],
+  ] as const) {
+    await page.goto(path);
+    const text = (await page.locator("#pricing article").first().textContent())?.replace(
+      /\s+/g,
+      (m) => (m.includes("\u00a0") ? "\u00a0" : " "),
+    );
+    expect(text, path).toMatch(pattern);
+  }
+});
+
 test("no work-in-progress case study is published", async ({ page }) => {
   // Production builds leave out status: in-progress entries (only PR previews include them).
   for (const path of await sitemapPaths(page)) {
