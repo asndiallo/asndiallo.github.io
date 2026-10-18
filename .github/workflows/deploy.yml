@@ -44,3 +44,18 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+
+  # Checks the live domain after each deploy (HTTPS, www and github.io redirects, canonical URLs,
+  # sitemap, robots.txt). Informational: a failure here never blocks or rolls back the deploy.
+  verify-domain:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      # The script only needs Node and curl, so no dependency install.
+      - run: node scripts/verify-domain.ts
