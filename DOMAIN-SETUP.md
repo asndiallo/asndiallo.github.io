@@ -24,7 +24,7 @@ The runbook for how the site is hosted and how the domain and email are wired. T
    https://asndiallo.github.io/<path>  (GitHub Pages)
         → redirect-only site → https://assane-diallo.com/<path>
 
-   hello@assane-diallo.com → Cloudflare Email Routing → Gmail   (receive only)
+   hello@assane-diallo.com → Zoho Mail (being set up; until then mail bounces)
 ```
 
 **Why Cloudflare Workers.** Cloudflare recommends Workers static assets for new static sites. Static asset requests are free and unlimited. DNS and hosting sit in the same place, so there's no proxy-versus-certificate conflict. It also gives real HTTP headers (HSTS, CSP), real 301 redirects and a preview URL per pull request. GitHub Pages can do none of these.
@@ -37,15 +37,13 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 | --- | --- | --- | --- |
 | ✅ | Domain registered at Spaceship (expires 2027-10-18); nameservers on Cloudflare | you | before |
 | ✅ | Zone `assane-diallo.com` active on Cloudflare (Free plan) | you | before |
-| ✅ | Email Routing enabled. Cloudflare created 3 MX records, SPF `v=spf1 include:_spf.mx.cloudflare.net ~all` and DKIM `cf2024-1._domainkey` | Claude | 2026-10-18 |
-| ✅ | Destination address `asndiallo98@gmail.com` added | Claude | 2026-10-18 |
+| ↩️ | Cloudflare Email Routing: enabled, then **removed** at your request to switch to Zoho. Disabling removed its 3 MX, SPF and DKIM records; the `hello@` rule and the Gmail destination were deleted | Claude | 2026-10-18 |
 | ✅ | DMARC Management enabled | Claude | 2026-10-18 |
 | ✅ | GitHub secret `CLOUDFLARE_ACCOUNT_ID` | Claude | 2026-10-18 |
-| ✅ | Gmail destination verified | you | 2026-10-18 |
-| ✅ | Routing rule `hello@assane-diallo.com → asndiallo98@gmail.com` (catch-all stays off: other addresses are rejected) | Claude | 2026-10-18 |
 | ✅ | workers.dev subdomain `assane-diallo` | you | 2026-10-18 |
 | ✅ | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers") | you | 2026-10-18 |
-| ⏳ | **DMARC record**: dashboard step 3 below | you | |
+| ⚠️ | **Two `_dmarc` records exist** (yours → asn.diallo@outlook.com, and Cloudflare's). Receivers ignore DMARC when there are two. Needs a decision | you | |
+| ⏳ | **Zoho Mail** for hello@assane-diallo.com: sign up, then Claude adds Zoho's DNS records (values from your Zoho admin console) | you + Claude | |
 | ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): https://assane-diallo.assane-diallo.workers.dev | Claude | 2026-10-18 |
 | ✅ | PR previews working: https://pr-1-assane-diallo.assane-diallo.workers.dev | CI | 2026-10-18 |
 | ⏳ | **Review the preview**, then say "go live" | you | |
