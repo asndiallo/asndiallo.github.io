@@ -1,14 +1,29 @@
 import { getCollection } from "astro:content";
+import { type Alternates, staticRoutes } from "../i18n/index.ts";
+import { entryKey, entryLocale, entryPath } from "./content.ts";
 
-/** Every indexable page, by its default-locale path. noindex pages (404, /thanks/) are left out. */
-export async function getIndexablePaths(): Promise<string[]> {
-  const [work, verticals] = await Promise.all([getCollection("work"), getCollection("verticals")]);
+/** Group a collection's entries by key: one group per page, holding its URL in each locale. */
+async function collectionGroups(collection: "work" | "verticals"): Promise<Alternates[]> {
+  const groups = new Map<string, Alternates>();
+  for (const entry of await getCollection(collection)) {
+    const group = groups.get(entryKey(entry)) ?? {};
+    group[entryLocale(entry)] = entryPath(collection, entry);
+    groups.set(entryKey(entry), group);
+  }
+  return [...groups.values()];
+}
+
+/**
+ * Every indexable page with its translations. Feeds the sitemap, which feeds the smoke tests.
+ * noindex pages (404, thanks) are left out.
+ */
+export async function getPageGroups(): Promise<Alternates[]> {
   return [
-    "/",
-    ...verticals.map((v) => `/for/${v.id}/`),
-    "/work/",
-    ...work.map((w) => `/work/${w.id}/`),
-    "/about/",
-    "/engineering/",
+    staticRoutes.home,
+    ...(await collectionGroups("verticals")),
+    staticRoutes.work,
+    ...(await collectionGroups("work")),
+    staticRoutes.about,
+    staticRoutes.engineering,
   ];
 }

@@ -1,6 +1,6 @@
 ---
 business: "Isa's African Hair Braiding"
-city: Savannah, GA
+location: Savannah, GA
 vertical: braiding-salons
 summary: "Claimed and fixed the salon's Google profile, built a fast website, and set up free booking alerts. 450 calls from Google in 3 months."
 consent: true
@@ -25,7 +25,7 @@ results:
     value: "4,723"
     source: Google Business Profile, last 3 months (to Oct 2026)
 image:
-  src: ../../assets/work/isa-braiding.png
+  src: ../../../assets/work/isa-braiding.png
   alt: "The home page of isabraiding.com: the salon's name, the headline “Let your hair do the talking,” a Book your appointment button, and the salon's phone number."
 order: 1
 ---

@@ -1,4 +1,5 @@
 ---
+import type { Alternates, Locale } from "../i18n/index.ts";
 import Base from "./Base.astro";
 
 /** Inner pages: Base + a page header with the H1 and an optional lead paragraph. */
@@ -7,6 +8,8 @@ interface Props {
   description: string;
   h1: string;
   lead?: string;
+  locale?: Locale;
+  alternates?: Alternates;
   noindex?: boolean;
   ogType?: "website" | "article" | "profile";
   jsonLd?: Record<string, unknown>[];

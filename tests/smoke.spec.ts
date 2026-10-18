@@ -12,9 +12,21 @@ async function sitemapPaths(page: Page): Promise<string[]> {
 
 test("sitemap lists the core pages", async ({ page }) => {
   const paths = await sitemapPaths(page);
-  for (const path of ["/", "/work/", "/about/", "/engineering/"]) expect(paths).toContain(path);
+  for (const path of [
+    "/",
+    "/work/",
+    "/about/",
+    "/engineering/",
+    "/fr/",
+    "/fr/realisations/",
+    "/fr/a-propos/",
+  ]) {
+    expect(paths).toContain(path);
+  }
   expect(paths.filter((p) => p.startsWith("/for/")).length).toBeGreaterThanOrEqual(2);
+  expect(paths.filter((p) => p.startsWith("/fr/pour/")).length).toBeGreaterThanOrEqual(2);
   expect(paths).not.toContain("/thanks/");
+  expect(paths).not.toContain("/fr/merci/");
 });
 
 test("every page has one h1, unique title and description, canonical, and no console errors", async ({
@@ -76,6 +88,58 @@ test("hreflang alternates point at pages that exist", async ({ page }) => {
   }
 });
 
+test("every page except /engineering/ exists in English and French", async ({ page }) => {
+  for (const path of await sitemapPaths(page)) {
+    if (path === "/engineering/") continue;
+    await page.goto(path);
+    const langs = await page
+      .locator('link[rel="alternate"][hreflang]:not([hreflang="x-default"])')
+      .evaluateAll((links) => links.map((l) => l.getAttribute("hreflang")).sort());
+    expect(langs, path).toEqual(["en", "fr"]);
+  }
+});
+
+test("language switch links to the same page in the other language", async ({ page }) => {
+  await page.goto("/work/isa-african-hair-braiding/");
+  await page.getByRole("link", { name: "Lire cette page en français" }).click();
+  await expect(page).toHaveURL(/\/fr\/realisations\/isa-african-hair-braiding\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+  await page.getByRole("link", { name: "Read this page in English" }).click();
+  await expect(page).toHaveURL(/\/work\/isa-african-hair-braiding\/$/);
+});
+
+test("theme: follows the system, and a saved choice wins and persists", async ({ page }) => {
+  const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+  const systemDark = await background();
+  expect(systemDark).not.toBe("rgb(255, 255, 255)");
+
+  const toggle = page.locator("[data-theme-toggle]").first();
+  await expect(toggle.getByRole("button", { name: "System" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await toggle.getByRole("button", { name: "Light" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  expect(await background()).toBe("rgb(255, 255, 255)");
+
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(toggle.getByRole("button", { name: "Light" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+
+  await toggle.getByRole("button", { name: "Dark" }).click();
+  await page.emulateMedia({ colorScheme: "light" });
+  expect(await background()).toBe(systemDark);
+
+  await toggle.getByRole("button", { name: "System" }).click();
+  await expect(page.locator("html")).not.toHaveAttribute("data-theme", /.+/);
+  expect(await background()).toBe("rgb(255, 255, 255)");
+});
+
 test("home has the WhatsApp CTA and ProfessionalService JSON-LD without an address", async ({
   page,
 }) => {
@@ -93,7 +157,7 @@ test("home has the WhatsApp CTA and ProfessionalService JSON-LD without an addre
   expect(JSON.stringify(data)).not.toMatch(/"address"|streetAddress|"telephone"/);
 });
 
-test("keyboard: first Tab reaches the skip link, which moves focus to main", async ({
+test("keyboard: first Tab reaches the skip link, and the next Tab lands inside main", async ({
   page,
   isMobile,
 }) => {
@@ -103,7 +167,9 @@ test("keyboard: first Tab reaches the skip link, which moves focus to main", asy
   const skip = page.getByRole("link", { name: "Skip to main content" });
   await expect(skip).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.locator("main")).toBeFocused();
+  await page.keyboard.press("Tab");
+  // Focus skipped the header: the next stop is the first link or button inside <main>.
+  expect(await page.evaluate(() => !!document.activeElement?.closest("main"))).toBe(true);
 });
 
 test("no horizontal scroll on a small phone", async ({ page }) => {

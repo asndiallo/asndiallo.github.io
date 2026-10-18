@@ -1,15 +1,31 @@
-import { formatUsd, pricing, type ServiceId, type TierId, getTier as tier } from "../config.ts";
+import { pricing, type ServiceId, type TierId, getTier as tier } from "../config.ts";
 
 const n = pricing.foundingClients;
+const money = (amount: number): string => `$${amount.toLocaleString("en-US")}`;
 
 export const en = {
   lang: "en",
+  money,
+  /** Label separator; French puts a non-breaking space before the colon. */
+  colon: ":",
   nav: {
     label: "Main",
     skip: "Skip to main content",
     work: "Client work",
     about: "About",
     contact: "Contact",
+  },
+  language: {
+    /** Text of the link to the other language, written in that language. */
+    switchTo: "Français",
+    switchLabel: "Lire cette page en français",
+    switchLang: "fr",
+  },
+  theme: {
+    label: "Color theme",
+    system: "System",
+    light: "Light",
+    dark: "Dark",
   },
   cta: {
     whatsapp: "Message me on WhatsApp",
@@ -54,6 +70,7 @@ export const en = {
         "Anyone who wants more calls and bookings, not a complicated marketing plan.",
       ],
       verticalsLead: "Read more for your kind of business:",
+      or: "or",
     },
     problem: {
       h2: "Your customers are searching. Are they finding you?",
@@ -88,6 +105,8 @@ export const en = {
         },
       } satisfies Record<ServiceId, { title: string; body: string }>,
       websiteOnly: "Website and search pages come with the Profile + Website package.",
+      onlineShops: "Online shops: audits by request.",
+      onlineShopsLink: "See the shop I'm working with now",
     },
     steps: {
       h2: "Three simple steps",
@@ -116,6 +135,7 @@ export const en = {
       placeholderTitle: "Case study coming soon",
       placeholderBody:
         "This space is for a real client result, published with the owner's permission.",
+      placeholderTodo: "real case study with owner's permission",
       allWork: "See all client work",
     },
     pricing: {
@@ -124,6 +144,7 @@ export const en = {
       foundingLabel: `For my first ${n} clients`,
       standardLabel: `After my first ${n} clients`,
       startingAt: "Starting at",
+      startingAtLower: "starting at",
       setup: "setup",
       perMonth: "a month",
       includes: "Includes",
@@ -145,7 +166,7 @@ export const en = {
     },
     about: {
       h2: "Who I am",
-      body: "I'm Assane. I'm a backend engineer with a Master's in Data Engineering & AI. I built and grew an SEO-driven ecommerce store to about 800 pages with no ad spend. I speak French and English, and I build things that bring customers to small businesses.",
+      body: "I'm Assane. I'm a software engineer with a Master's in Data Engineering & AI. I built and grew an SEO-driven ecommerce store to about 800 pages with no ad spend. I speak French and English, and I build things that bring customers to small businesses.",
       more: "More about me",
     },
     faq: {
@@ -173,7 +194,7 @@ export const en = {
         },
         {
           q: "What does it cost?",
-          a: `Google Profile starts at ${formatUsd(tier("profile").founding.setup)} setup and ${formatUsd(tier("profile").founding.monthly)} a month. Profile + Website starts at ${formatUsd(tier("website").founding.setup)} setup and ${formatUsd(tier("website").founding.monthly)} a month. Those are founding prices for my first ${n} clients. You get a final quote after the free check-up.`,
+          a: `Google Profile starts at ${money(tier("profile").founding.setup)} setup and ${money(tier("profile").founding.monthly)} a month. Profile + Website starts at ${money(tier("website").founding.setup)} setup and ${money(tier("website").founding.monthly)} a month. Those are founding prices for my first ${n} clients. You get a final quote after the free check-up.`,
         },
         {
           q: "Is there a contract?",
@@ -185,7 +206,7 @@ export const en = {
         },
         {
           q: "Parlez-vous français ?",
-          a: "Oui. Je travaille en français et en anglais.",
+          a: "Oui. Je travaille en français et en anglais, et ce site existe aussi en français.",
           lang: "fr",
         },
       ] as { q: string; a: string; lang?: string }[],
@@ -194,6 +215,64 @@ export const en = {
       h2: "Start with a free check-up",
       body: "Send me your business name on WhatsApp, or email me.",
     },
+  },
+  work: {
+    meta: {
+      title: "Client work: local SEO case studies | Assane Diallo",
+      description:
+        "Real projects for African-owned businesses: what I set up and what changed. Published with each owner's permission.",
+    },
+    h1: "Client work",
+    lead: "Real projects, published with each owner's permission. I only share numbers the owner has approved.",
+    empty: "I'm writing up my first client projects now. Ask me about them on WhatsApp.",
+  },
+  caseStudy: {
+    title: (business: string, location: string) => `${business}, ${location}: what changed`,
+    metaTitle: (business: string) => `${business}: case study | Assane Diallo`,
+    readMore: (business: string) => `Read the ${business} case study`,
+    visit: (business: string) => `Visit the ${business} website`,
+    all: "All client work",
+    facts: "Project facts",
+    services: "Services",
+    results: "Results",
+    source: "Source",
+    inProgress: "In progress",
+    inProgressNote:
+      "This project is in progress. I'll add results here once there's enough data and the owner approves them.",
+    home: "Home",
+  },
+  vertical: {
+    more: "See",
+    prices: "prices",
+    and: "and",
+    how: "how it works",
+    orMessage: ", or message me with your business name.",
+  },
+  aboutPage: {
+    meta: {
+      title: "About Assane Diallo | Local SEO in English & French",
+      description:
+        "I'm Assane. I help African-owned businesses in the US get found on Google. Software engineer. I work in English and French.",
+    },
+    h1: "About me",
+    paragraphs: [
+      "I'm Assane. I help African-owned businesses in the US get found on Google and get more calls and bookings.",
+      "I'm a software engineer with a Master's in Data Engineering & AI. I built and grew an SEO-driven ecommerce store to about 800 pages with no ad spend.",
+      "I work in English and French, mostly over WhatsApp, so we don't have to schedule long meetings.",
+      "Your accounts stay in your name. I'll always tell you what I'm doing, why, and what it did.",
+    ],
+    ownWords: "2–4 sentences in your own words: why this work matters to you",
+    engineering: "Looking for my software work?",
+    engineeringLink: "See my engineering projects",
+  },
+  thanks: {
+    meta: {
+      title: "Message sent | Assane Diallo",
+      description: "Thanks for your message. I'll reply soon, on WhatsApp or by email.",
+    },
+    h1: "Message sent",
+    lead: "Thanks. I'll reply soon, on WhatsApp or by email, whichever you gave me.",
+    back: "Back to the home page",
   },
   form: {
     h3: "Or send a message here",
@@ -204,7 +283,6 @@ export const en = {
     optional: "optional",
     submit: "Send message",
   },
-  placeholder: "To be added",
 };
 
 export type Dictionary = typeof en;

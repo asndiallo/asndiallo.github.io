@@ -1,12 +1,18 @@
 ---
 import { pricing } from "../../config.ts";
-import type { Dictionary } from "../../i18n/en.ts";
+import type { Dictionary, Locale } from "../../i18n/index.ts";
+import { entryPath, getLocalized } from "../../lib/content.ts";
 import Section from "../Section.astro";
 
 interface Props {
   t: Dictionary;
+  locale: Locale;
 }
 const { services, pricing: prices } = Astro.props.t.home;
+// Online shops are a side offer: one quiet line, linked to the current shop project if there is one.
+const shop = (await getLocalized("work", Astro.props.locale)).find(
+  (e) => e.data.vertical === "online-shop",
+);
 const websiteTier = prices.tiers.website.name;
 const ids = pricing.tiers.at(-1)?.includes ?? [];
 const inEveryTier = (id: (typeof ids)[number]) =>
@@ -33,4 +39,8 @@ const inEveryTier = (id: (typeof ids)[number]) =>
     }
   </ul>
   <p class="measure mt-10 text-muted">{services.websiteOnly}</p>
+  <p class="measure mt-3 text-muted">
+    {services.onlineShops}
+    {shop && <a href={entryPath("work", shop)}>{services.onlineShopsLink}</a>}
+  </p>
 </Section>

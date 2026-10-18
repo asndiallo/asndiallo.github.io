@@ -5,12 +5,21 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import JsonLd from "../components/JsonLd.astro";
 import { site } from "../config.ts";
-import { defaultLocale, getAlternates, getDictionary, type Locale, locales } from "../i18n/index.ts";
+import {
+  type Alternates,
+  defaultLocale,
+  getDictionary,
+  type Locale,
+  localeMeta,
+  locales,
+} from "../i18n/index.ts";
 
 interface Props {
   title: string;
   description: string;
   locale?: Locale;
+  /** This page's URL in every locale it exists in. Drives hreflang and the language switch. */
+  alternates?: Alternates;
   /** Keep out of search results (thank-you page, 404). Also drops canonical and hreflang. */
   noindex?: boolean;
   /** Root-relative path to a 1200×630 image. */
@@ -23,6 +32,7 @@ const {
   title,
   description,
   locale = defaultLocale,
+  alternates = {},
   noindex = false,
   ogImage = "/og-default.png",
   ogType = "website",
@@ -30,12 +40,14 @@ const {
 } = Astro.props;
 
 const t = getDictionary(locale);
-const site_ = Astro.site ?? new URL(site.url);
-const canonical = new URL(Astro.url.pathname, site_).href;
-const prefix = locales.find((l) => l !== defaultLocale && Astro.url.pathname.startsWith(`/${l}/`));
-const basePath = prefix ? Astro.url.pathname.slice(prefix.length + 1) : Astro.url.pathname;
-const alternates = getAlternates(basePath);
-const ogImageUrl = new URL(ogImage, site_).href;
+const base = Astro.site ?? new URL(site.url);
+const abs = (path: string) => new URL(path, base).href;
+const canonical = abs(Astro.url.pathname);
+const translations = locales.flatMap((l) => {
+  const path = alternates[l];
+  return path ? [{ locale: l, href: abs(path) }] : [];
+});
+const xDefault = translations.find((a) => a.locale === defaultLocale) ?? translations[0];
 ---
 
 <!doctype html>
@@ -43,42 +55,52 @@ const ogImageUrl = new URL(ogImage, site_).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Apply a saved theme before first paint, so there is no flash. -->
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     {!noindex && <link rel="canonical" href={canonical} />}
     {
       !noindex &&
-        alternates.map((a) => (
-          <link rel="alternate" hreflang={a.locale} href={new URL(a.path, site_).href} />
-        ))
+        translations.length > 1 &&
+        translations.map((a) => <link rel="alternate" hreflang={a.locale} href={a.href} />)
     }
     {
-      !noindex && (
-        <link
-          rel="alternate"
-          hreflang="x-default"
-          href={new URL(alternates.find((a) => a.locale === defaultLocale)?.path ?? basePath, site_).href}
-        />
+      !noindex && translations.length > 1 && xDefault && (
+        <link rel="alternate" hreflang="x-default" href={xDefault.href} />
       )
     }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap.xml" />
-    <meta name="theme-color" content="#0b6b4c" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1a24" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image" content={abs(ogImage)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content={locale === "fr" ? "fr_FR" : "en_US"} />
+    <meta property="og:locale" content={localeMeta[locale].ogLocale} />
+    {
+      translations
+        .filter((a) => a.locale !== locale)
+        .map((a) => (
+          <meta property="og:locale:alternate" content={localeMeta[a.locale].ogLocale} />
+        ))
+    }
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image" content={abs(ogImage)} />
 
     {jsonLd.length > 0 && <JsonLd data={jsonLd} />}
     <Analytics />
@@ -86,13 +108,13 @@ const ogImageUrl = new URL(ogImage, site_).href;
   <body class="flex min-h-screen flex-col">
     <a
       href="#main"
-      class="sr-only z-50 rounded bg-ink px-4 py-2 text-white focus:not-sr-only focus:absolute focus:top-2 focus:left-2"
+      class="sr-only z-50 rounded bg-ink px-4 py-2 text-paper focus:not-sr-only focus:absolute focus:top-2 focus:left-2"
       >{t.nav.skip}</a
     >
-    <Header t={t} />
-    <main id="main" tabindex="-1" class="flex-1 focus:outline-none">
+    <Header t={t} locale={locale} alternates={alternates} />
+    <main id="main" class="flex-1">
       <slot />
     </main>
-    <Footer t={t} />
+    <Footer t={t} locale={locale} />
   </body>
 </html>

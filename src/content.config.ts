@@ -7,9 +7,15 @@ const work = defineCollection({
   schema: ({ image }) =>
     z
       .object({
+        /** URL segment for this locale; defaults to the file name. (Not `slug`: Astro uses that as the id.) */
+        urlSlug: z.string().optional(),
         business: z.string(),
-        city: z.string(),
-        vertical: z.enum(["braiding-salons", "restaurants", "other"]),
+        /** City and state, or "Online shop". */
+        location: z.string(),
+        vertical: z.enum(["braiding-salons", "restaurants", "online-shop", "other"]),
+        status: z.enum(["complete", "in-progress"]).default("complete"),
+        /** Show in the home page "My first clients" cards (local SEO work only). */
+        homepage: z.boolean().default(true),
         /** Card + meta description. Plain language, no numbers that the owner hasn't approved. */
         summary: z.string().max(155),
         /** The owner agreed to be named and to have this page published. Required to publish. */
@@ -32,6 +38,7 @@ const verticals = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/verticals" }),
   schema: z
     .object({
+      urlSlug: z.string().optional(),
       /** Short name used in links, e.g. "Braiding salons". */
       name: z.string(),
       title: z.string().max(60),

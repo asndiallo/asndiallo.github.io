@@ -1,13 +1,14 @@
 ---
-import { getCollection } from "astro:content";
-import type { Dictionary } from "../../i18n/en.ts";
+import type { Dictionary, Locale } from "../../i18n/index.ts";
+import { entryPath, getLocalized } from "../../lib/content.ts";
 import Section from "../Section.astro";
 
 interface Props {
   t: Dictionary;
+  locale: Locale;
 }
 const { whoFor } = Astro.props.t.home;
-const verticals = (await getCollection("verticals")).sort((a, b) => a.data.order - b.data.order);
+const verticals = await getLocalized("verticals", Astro.props.locale);
 ---
 
 <Section id="who" heading={whoFor.h2}>
@@ -27,8 +28,8 @@ const verticals = (await getCollection("verticals")).sort((a, b) => a.data.order
     {
       verticals.map((v, i) => (
         <>
-          {i > 0 && (i === verticals.length - 1 ? " or " : ", ")}
-          <a href={`/for/${v.id}/`}>{v.data.name.toLowerCase()}</a>
+          {i > 0 && (i === verticals.length - 1 ? ` ${whoFor.or} ` : ", ")}
+          <a href={entryPath("verticals", v)}>{v.data.name.toLowerCase()}</a>
         </>
       ))
     }.

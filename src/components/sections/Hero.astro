@@ -1,5 +1,5 @@
 ---
-import type { Dictionary } from "../../i18n/en.ts";
+import type { Dictionary } from "../../i18n/index.ts";
 import { bookingHref } from "../../lib/contact.ts";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
 import Todo from "../Todo.astro";
@@ -34,7 +34,7 @@ const booking = bookingHref();
           )
         }
       </div>
-      <p class="mt-4 text-muted" lang="fr">{hero.languages}</p>
+      <p class="mt-4 text-muted">{hero.languages}</p>
     </div>
 
     <figure class="relative mx-auto w-full max-w-md">
@@ -79,7 +79,7 @@ const booking = bookingHref();
                 <span
                   class:list={[
                     "rounded-full py-2 text-center text-sm font-semibold",
-                    i === 0 ? "bg-brand text-white" : "border border-line text-brand",
+                    i === 0 ? "bg-brand text-on-brand" : "border border-line text-brand",
                   ]}
                 >
                   {action}

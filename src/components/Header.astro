@@ -1,21 +1,46 @@
 ---
-import type { Dictionary } from "../i18n/en.ts";
+import {
+  type Alternates,
+  type Dictionary,
+  homeAnchor,
+  type Locale,
+  locales,
+  staticRoutes,
+} from "../i18n/index.ts";
+import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
   t: Dictionary;
+  locale: Locale;
+  alternates: Alternates;
 }
-const { t } = Astro.props;
+const { t, locale, alternates } = Astro.props;
+const other = locales.find((l) => l !== locale) ?? locale;
+// The same page in the other language, or that language's home page if it has no translation.
+const switchHref = alternates[other] ?? staticRoutes.home[other];
 ---
 
 <header class="border-b border-line">
-  <div class="container-page flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-4">
-    <a href="/" class="font-serif text-xl font-bold text-ink no-underline hover:text-brand">Assane Diallo</a>
-    <nav aria-label={t.nav.label}>
-      <ul class="flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
-        <li><a href="/work/">{t.nav.work}</a></li>
-        <li><a href="/about/">{t.nav.about}</a></li>
-        <li><a href="/#contact">{t.nav.contact}</a></li>
-      </ul>
-    </nav>
+  <div class="container-page flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4">
+    <a href={staticRoutes.home[locale]} class="font-serif text-xl font-bold text-ink no-underline hover:text-brand"
+      >Assane Diallo</a
+    >
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+      <nav aria-label={t.nav.label}>
+        <ul class="flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
+          <li><a href={staticRoutes.work[locale]}>{t.nav.work}</a></li>
+          <li><a href={staticRoutes.about[locale]}>{t.nav.about}</a></li>
+          <li><a href={homeAnchor(locale, "contact")}>{t.nav.contact}</a></li>
+        </ul>
+      </nav>
+      <a
+        href={switchHref}
+        hreflang={other}
+        lang={t.language.switchLang}
+        aria-label={t.language.switchLabel}
+        class="text-[0.95rem] font-semibold">{t.language.switchTo}</a
+      >
+      <ThemeToggle t={t} />
+    </div>
   </div>
 </header>
