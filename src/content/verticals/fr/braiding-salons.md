@@ -18,7 +18,7 @@ setup:
   items:
     - Une fiche Google avec les bonnes catégories et vos plus belles photos
     - Une page simple pour chaque coiffure principale (par exemple, knotless braids dans votre ville)
-    - "Un lien de réservation qui marche sur téléphone [TODO: confirm platform option]"
+    - "Un lien de réservation qui marche sur téléphone"
     - Un court message pour demander un avis après chaque rendez-vous
 wontDo:
   h2: Ce que je ne ferai pas

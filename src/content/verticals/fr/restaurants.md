@@ -18,7 +18,7 @@ setup:
   items:
     - Une fiche Google avec les bonnes catégories, votre menu et vos plus belles photos
     - Une page simple pour vos plats phares et votre service traiteur (par exemple, jollof rice dans votre ville)
-    - "Un lien pour commander ou réserver un traiteur qui marche sur téléphone [TODO: confirm platform option]"
+    - "Un lien pour commander ou réserver un traiteur qui marche sur téléphone"
     - Un court message pour demander un avis après une commande ou un événement
 wontDo:
   h2: Ce que je ne ferai pas
