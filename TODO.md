@@ -8,7 +8,7 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 ### Contact facts (`src/config.ts`)
 - [x] Email: set. It's never in the HTML; the "Email me" link is assembled in the browser.
 - [x] Booking link: set (Google Calendar appointment page)
-- [ ] **WhatsApp number**: currently `19125726366`, which is the personal number from your old resume. It isn't printed as text, but anyone can read it from the `wa.me` links. Keep it, or switch to a business line (e.g. a free WhatsApp Business number on Google Voice)?
+- [x] WhatsApp number: switched to a separate line (`12109605715`)
 
 ### Isa's African Hair Braiding case study (`src/content/work/isa-african-hair-braiding.md`)
 - [x] Before / what I did / booking (Telegram booking-request alerts) / 3-month results: filled in from your notes and her Google Business Profile performance screen
@@ -17,9 +17,18 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 - [ ] **Confirm** she's OK with the homepage screenshot of isabraiding.com (`src/assets/work/isa-braiding.png`, taken 2026-10-18)
 - [ ] Optional: a before/after comparison (e.g. calls in the 3 months after claiming vs. now) would make a stronger story than totals alone
 
+### Djidiawax (`src/content/work/{en,fr}/djidiawax.md`), in progress
+- [ ] **Confirm the owner agreed** to be named and shown (case study marked "in progress", no numbers)
+- [ ] Results later: only numbers the owner approves, each with a source
+- [ ] Confirm the screenshot of djidiawax.com is OK (`src/assets/work/djidiawax.png`, taken 2026-10-18)
+
+### French version
+- [ ] **Review all French copy**: `src/i18n/fr.ts` and the `fr/` content files. Drafted by me for francophone owners in the US; US search examples stay in English ("braiding near me").
+- [ ] French about page: 2–4 sentences in your own words (marked on `/fr/a-propos/`)
+
 ### Vertical pages
 - [ ] **Booking platform** for braiding salons: "A booking link that works on a phone [TODO: confirm platform option]". Suggestion based on the Isa work: "your existing booking tool, or a free booking request form that alerts you on WhatsApp or Telegram". OK?
-- [ ] **Ordering/catering platform** for restaurants: same question
+- [ ] **Ordering/catering platform** for restaurants: same question (the French pages carry the same two markers)
 
 ### About page (`src/pages/about.astro`)
 - [ ] 2–4 sentences in your own words on why this work matters to you (EN)
@@ -47,8 +56,8 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 - [ ] **Contact form**: pick Formspree, Web3Forms or Basin and set the repo variable `PUBLIC_FORM_ENDPOINT`. (The markup uses Formspree field names `_gotcha`/`_next`; tell me if you pick another service.)
 - [ ] **Analytics**: Cloudflare Web Analytics (recommended, free, cookieless). Set `PUBLIC_ANALYTICS=cloudflare` and `PUBLIC_CF_BEACON_TOKEN`.
 - [ ] **Photo of you** (square, ≥ 800px) for /about/. It helps trust a lot.
-- [ ] **French homepage**: translate the rest of `src/i18n/fr.ts` (or approve a draft from me), then publish `/fr/`.
 - [ ] **More case studies** as founding clients finish (2 placeholder cards are on the home page now).
 - [ ] **Languages**: anything besides English and French (e.g. Wolof)?
+- [ ] **Canada / France**: deferred. France would need a French legal notice page (mentions légales) and EUR (HT) prices.
 - [ ] **Custom domain**: none now. If you want one later, it's a `site` change plus a CNAME.
 - [ ] **Old resume PDF**: removed from the site, but it's still in git history, which is public on GitHub (it has your phone number). Rewriting history is a separate decision.
