@@ -9,11 +9,11 @@ export const site = {
   name: "Assane Diallo",
   url: "https://asndiallo.github.io",
   /** Contact email shown on the site. */
-  email: TODO as string,
+  email: "asndiallo98@gmail.com" as string,
   /** Business WhatsApp number, digits only, with country code (e.g. "15551234567"). */
-  whatsappNumber: TODO as string,
+  whatsappNumber: "19125726366" as string,
   /** Booking page for the free 15-minute check-up (Cal.com, Calendly, Google appointment page). */
-  bookingUrl: TODO as string,
+  bookingUrl: "https://calendar.app.google/7VsGdzUNf8CynFcd8" as string,
   areaServed: "United States",
   social: {
     linkedin: "https://www.linkedin.com/in/assane-diallo/",
