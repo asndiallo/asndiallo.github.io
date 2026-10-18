@@ -1,4 +1,4 @@
-import { isTodo, site } from "../config.ts";
+import { CONTACT_EMAIL, isTodo, site } from "../config.ts";
 
 /** Each helper returns null while its fact is still a TODO, so callers can show a placeholder. */
 export const whatsappHref = (message: string): string | null =>
@@ -11,6 +11,6 @@ export const whatsappHref = (message: string): string | null =>
  * It ships reversed and base64-encoded, and EmailLink.astro decodes it in the browser.
  */
 export const encodedEmail = (): string | null =>
-  isTodo(site.email) ? null : btoa([...site.email].reverse().join(""));
+  isTodo(CONTACT_EMAIL) ? null : btoa([...CONTACT_EMAIL].reverse().join(""));
 
 export const bookingHref = (): string | null => (isTodo(site.bookingUrl) ? null : site.bookingUrl);

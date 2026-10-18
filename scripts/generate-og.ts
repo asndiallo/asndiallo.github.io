@@ -3,10 +3,11 @@
  * Run with `pnpm og` after changing the copy below; the PNG is committed.
  */
 import sharp from "sharp";
+import { SITE_NAME, SITE_URL } from "../src/config.ts";
 
 const headline = ["Get found on Google.", "Get more calls and bookings."];
 const subline = "Local SEO for African-owned businesses in the US";
-const footer = "Assane Diallo  ·  English &amp; French  ·  asndiallo.github.io";
+const footer = `${SITE_NAME}  ·  English &amp; French  ·  ${new URL(SITE_URL).hostname}`;
 
 const serif = "Iowan Old Style, Palatino, Georgia, serif";
 const sans = "Helvetica Neue, Arial, sans-serif";

@@ -1,5 +1,5 @@
 ---
-import { site } from "../config.ts";
+import { SITE_NAME, site } from "../config.ts";
 import { type Dictionary, type Locale, staticRoutes } from "../i18n/index.ts";
 import { entryPath, getLocalized } from "../lib/content.ts";
 
@@ -35,5 +35,5 @@ const verticals = await getLocalized("verticals", locale);
       <li><a href={site.social.github} rel="me">GitHub</a></li>
     </ul>
   </div>
-  <p class="container-page pb-8 text-sm text-muted">© {new Date().getFullYear()} {site.name}</p>
+  <p class="container-page pb-8 text-sm text-muted">© {new Date().getFullYear()} {SITE_NAME}</p>
 </footer>

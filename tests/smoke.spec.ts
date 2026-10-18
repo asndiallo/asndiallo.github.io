@@ -1,6 +1,6 @@
+import { readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
-
-const SITE = "https://asndiallo.github.io";
+import { LEGACY_SITE_URL, SITE_URL as SITE } from "../src/config.ts";
 
 /** Indexable pages come from the sitemap, so new pages are covered automatically. */
 async function sitemapPaths(page: Page): Promise<string[]> {
@@ -193,6 +193,37 @@ test("404, robots.txt, and the old /about.html", async ({ page }) => {
 
   await page.goto("/about.html");
   await expect(page).toHaveURL(/\/about\/$/);
+});
+
+test("only the canonical domain is used: no github.io URLs in pages, sitemap, or robots", async ({
+  page,
+}) => {
+  const legacyHost = new URL(LEGACY_SITE_URL).hostname;
+  for (const path of [...(await sitemapPaths(page)), "/sitemap.xml", "/robots.txt"]) {
+    const body = await (await page.request.get(path)).text();
+    expect(body, path).not.toContain(legacyHost);
+  }
+  // Read from disk: the preview server 404s extensionless files under trailingSlash "always".
+  expect(readFileSync("dist/CNAME", "utf8").trim()).toBe(new URL(SITE).hostname);
+});
+
+test("links inside sentences keep their spaces", async ({ page }) => {
+  // Astro drops a line break between a text expression and a tag, gluing words to links.
+  for (const path of await sitemapPaths(page)) {
+    await page.goto(path);
+    const glued = await page.evaluate(() =>
+      [...document.querySelectorAll("main a, footer a")].flatMap((a) => {
+        // Only text touching the link matters; neighbouring elements (buttons, blocks) don't.
+        const text = (node: ChildNode | null) =>
+          node?.nodeType === Node.TEXT_NODE ? (node.textContent ?? "") : "";
+        const before = text(a.previousSibling);
+        const after = text(a.nextSibling);
+        const bad = /[\p{L}\p{N}?!.,:;)»]$/u.test(before) || /^[\p{L}\p{N}(]/u.test(after);
+        return bad ? [`${before.slice(-20)}[${a.textContent}]${after.slice(0, 20)}`] : [];
+      }),
+    );
+    expect(glued, path).toEqual([]);
+  }
 });
 
 test("nothing personal is published", async ({ page }) => {
