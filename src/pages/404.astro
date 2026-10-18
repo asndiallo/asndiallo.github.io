@@ -1,0 +1,25 @@
+---
+import CtaWhatsApp from "../components/CtaWhatsApp.astro";
+import { getDictionary, staticRoutes } from "../i18n/index.ts";
+import Page from "../layouts/Page.astro";
+
+const t = getDictionary("en");
+---
+
+<Page
+  title="Page not found | Assane Diallo"
+  description="This page doesn't exist. Go to the home page or message me on WhatsApp."
+  h1="Page not found"
+  lead="This page doesn't exist or has moved."
+  noindex
+>
+  <ul class="mt-8 space-y-2">
+    <li><a href={staticRoutes.home.en}>Go to the home page</a></li>
+    <li><a href={staticRoutes.engineering.en}>See my engineering work</a></li>
+  </ul>
+  <!-- One 404 page serves every language on GitHub Pages. -->
+  <p class="mt-8" lang="fr">
+    Cette page n'existe pas ou a été déplacée. <a href={staticRoutes.home.fr} hreflang="fr">Aller à l'accueil en français</a>.
+  </p>
+  <div class="mt-8"><CtaWhatsApp t={t} /></div>
+</Page>

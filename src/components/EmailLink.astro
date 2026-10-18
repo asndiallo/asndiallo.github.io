@@ -1,0 +1,24 @@
+---
+import { encodedEmail } from "../lib/contact.ts";
+import Todo from "./Todo.astro";
+
+// Without JavaScript the link falls back to the contact section (WhatsApp, booking, form).
+const encoded = encodedEmail();
+---
+
+{
+  encoded ? (
+    <a href="#contact" data-email={encoded}>
+      <slot />
+    </a>
+  ) : (
+    <Todo label="email in src/config.ts" />
+  )
+}
+
+<script>
+  // Bundled by Astro (allowed by the CSP as 'self'). Decodes the address only in the browser.
+  for (const a of document.querySelectorAll<HTMLAnchorElement>("a[data-email]")) {
+    a.href = `mailto:${[...atob(a.dataset.email ?? "")].reverse().join("")}`;
+  }
+</script>

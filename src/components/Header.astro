@@ -1,0 +1,65 @@
+---
+import {
+  type Alternates,
+  type Dictionary,
+  homeAnchor,
+  type Locale,
+  locales,
+  staticRoutes,
+} from "../i18n/index.ts";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  t: Dictionary;
+  locale: Locale;
+  alternates: Alternates;
+}
+const { t, locale, alternates } = Astro.props;
+const other = locales.find((l) => l !== locale) ?? locale;
+// The same page in the other language, or that language's home page if it has no translation.
+const switchHref = alternates[other] ?? staticRoutes.home[other];
+---
+
+<header class="border-b border-line">
+  <!--
+    Phones: row 1 = name + language + theme, row 2 = nav. Wider screens: one row.
+    DOM order (name, nav, controls) is the reading and focus order; only the layout changes.
+  -->
+  <div class="container-page flex flex-wrap items-center gap-x-6 gap-y-2 py-3 sm:py-4">
+    <a
+      href={staticRoutes.home[locale]}
+      class="order-1 font-serif text-xl font-bold text-ink no-underline hover:text-brand">Assane Diallo</a
+    >
+    <nav aria-label={t.nav.label} class="order-3 w-full sm:order-2 sm:ml-auto sm:w-auto">
+      <ul class="flex flex-wrap gap-x-5 gap-y-1 text-[0.95rem]">
+        <li><a href={staticRoutes.work[locale]}>{t.nav.work}</a></li>
+        <li><a href={staticRoutes.about[locale]}>{t.nav.about}</a></li>
+        <li><a href={homeAnchor(locale, "contact")}>{t.nav.contact}</a></li>
+      </ul>
+    </nav>
+    <div class="order-2 ml-auto flex items-center gap-x-4 sm:order-3 sm:ml-0">
+      <a
+        href={switchHref}
+        hreflang={other}
+        lang={t.language.switchLang}
+        aria-label={t.language.switchLabel}
+        data-lang-choice={other}
+        class="text-[0.95rem] font-semibold">{t.language.switchTo}</a
+      >
+      <ThemeToggle t={t} />
+    </div>
+  </div>
+</header>
+
+<script>
+  // An explicit language choice wins over the device language on later visits to the home page.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-lang-choice]")) {
+    link.addEventListener("click", () => {
+      try {
+        localStorage.setItem("lang", link.dataset.langChoice ?? "");
+      } catch {
+        // Storage blocked (private mode): the choice simply isn't remembered.
+      }
+    });
+  }
+</script>

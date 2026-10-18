@@ -1,0 +1,19 @@
+---
+import type { Dictionary } from "../../i18n/index.ts";
+import Section from "../Section.astro";
+
+interface Props {
+  t: Dictionary;
+}
+const { problem } = Astro.props.t.home;
+---
+
+<Section id="problem" heading={problem.h2} band="wash">
+  <ul class="mt-8 grid gap-6 md:grid-cols-3">
+    {
+      problem.points.map((point) => (
+        <li class="border-t-4 border-ink pt-4 text-lg">{point}</li>
+      ))
+    }
+  </ul>
+</Section>

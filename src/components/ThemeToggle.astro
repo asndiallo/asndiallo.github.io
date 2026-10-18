@@ -1,0 +1,85 @@
+---
+import type { Dictionary } from "../i18n/index.ts";
+
+interface Props {
+  t: Dictionary;
+}
+const { theme } = Astro.props.t;
+const options = [
+  {
+    value: "system",
+    label: theme.system,
+    icon: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  },
+  {
+    value: "light",
+    label: theme.light,
+    icon: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  },
+  { value: "dark", label: theme.dark, icon: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>' },
+];
+---
+
+<!-- Hidden until the script runs: without JavaScript the site simply follows the system theme. -->
+<fieldset data-theme-toggle hidden class="inline-flex rounded-full border border-line p-0.5">
+  <legend class="sr-only">{theme.label}</legend>
+  {
+    options.map((o) => (
+      <button
+        type="button"
+        data-value={o.value}
+        aria-pressed="false"
+        title={o.label}
+        class="grid h-8 w-8 place-items-center rounded-full text-muted hover:text-ink aria-pressed:bg-wash aria-pressed:text-ink"
+      >
+        <svg
+          aria-hidden="true"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          set:html={o.icon}
+        />
+        <span class="sr-only">{o.label}</span>
+      </button>
+    ))
+  }
+</fieldset>
+
+<script>
+  // Bundled by Astro (allowed by the CSP as 'self'); runs after the page is parsed.
+  const root = document.documentElement;
+  const current = () => root.dataset.theme ?? "system";
+  const groups = document.querySelectorAll<HTMLFieldSetElement>("[data-theme-toggle]");
+
+  const render = () => {
+    for (const group of groups) {
+      group.hidden = false;
+      for (const button of group.querySelectorAll<HTMLButtonElement>("button[data-value]")) {
+        button.setAttribute("aria-pressed", String(button.dataset.value === current()));
+      }
+    }
+  };
+
+  for (const group of groups) {
+    group.addEventListener("click", (event) => {
+      const value = (event.target as Element | null)?.closest<HTMLButtonElement>("button[data-value]")
+        ?.dataset.value;
+      if (!value) return;
+      if (value === "system") delete root.dataset.theme;
+      else root.dataset.theme = value;
+      try {
+        if (value === "system") localStorage.removeItem("theme");
+        else localStorage.setItem("theme", value);
+      } catch {
+        // Storage can be blocked (private mode); the choice then lasts for this page only.
+      }
+      render();
+    });
+  }
+  render();
+</script>

@@ -1,0 +1,37 @@
+---
+import type { Dictionary, Locale } from "../../i18n/index.ts";
+import { entryPath, getLocalized } from "../../lib/content.ts";
+import Section from "../Section.astro";
+
+interface Props {
+  t: Dictionary;
+  locale: Locale;
+}
+const { whoFor } = Astro.props.t.home;
+const verticals = await getLocalized("verticals", Astro.props.locale);
+---
+
+<Section id="who" heading={whoFor.h2}>
+  <p class="measure mt-4 text-lg">{whoFor.intro}</p>
+  <ul class="measure mt-6 space-y-3">
+    {
+      whoFor.points.map((point) => (
+        <li class="flex gap-3">
+          <span aria-hidden="true" class="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-brand" />
+          {point}
+        </li>
+      ))
+    }
+  </ul>
+  <p class="mt-8">
+    {whoFor.verticalsLead}{" "}
+    {
+      verticals.map((v, i) => (
+        <>
+          {i > 0 && (i === verticals.length - 1 ? ` ${whoFor.or} ` : ", ")}
+          <a href={entryPath("verticals", v)}>{v.data.name.toLowerCase()}</a>
+        </>
+      ))
+    }.
+  </p>
+</Section>

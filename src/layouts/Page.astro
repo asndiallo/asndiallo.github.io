@@ -1,0 +1,26 @@
+---
+import type { Alternates, Locale } from "../i18n/index.ts";
+import Base from "./Base.astro";
+
+/** Inner pages: Base + a page header with the H1 and an optional lead paragraph. */
+interface Props {
+  title: string;
+  description: string;
+  h1: string;
+  lead?: string;
+  locale?: Locale;
+  alternates?: Alternates;
+  noindex?: boolean;
+  ogType?: "website" | "article" | "profile";
+  jsonLd?: Record<string, unknown>[];
+}
+const { h1, lead, ...base } = Astro.props;
+---
+
+<Base {...base}>
+  <div class="container-page py-12 sm:py-16">
+    <h1 class="measure">{h1}</h1>
+    {lead && <p class="measure mt-6 text-lg text-muted sm:text-xl">{lead}</p>}
+    <slot />
+  </div>
+</Base>

@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { defaultLocale, getDictionary, type Locale } from "../i18n/index.ts";
+import { EXTERNAL_REL, isExternal } from "../lib/links.ts";
+
+/**
+ * Use for any link that may point off-site. External links open in a new tab, with a
+ * screen-reader hint in the page's language; internal links render as a plain <a>.
+ */
+type Props = HTMLAttributes<"a"> & { href: string };
+const { href, rel, ...rest } = Astro.props;
+const external = isExternal(href);
+const t = getDictionary((Astro.currentLocale as Locale | undefined) ?? defaultLocale);
+const relValue = external ? [rel, EXTERNAL_REL].filter(Boolean).join(" ") : rel;
+---
+
+<a href={href} rel={relValue} target={external ? "_blank" : undefined} {...rest}><slot />{external && <span class="sr-only"> {t.newTab}</span>}</a>

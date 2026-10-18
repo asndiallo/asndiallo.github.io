@@ -1,0 +1,40 @@
+---
+import { SITE_NAME, site } from "../config.ts";
+import { type Dictionary, type Locale, staticRoutes } from "../i18n/index.ts";
+import { entryPath, getLocalized } from "../lib/content.ts";
+import Link from "./Link.astro";
+
+interface Props {
+  t: Dictionary;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+const verticals = await getLocalized("verticals", locale);
+---
+
+<footer class="mt-auto border-t border-line bg-wash">
+  <div class="container-page grid gap-8 py-12 text-[0.95rem] sm:grid-cols-[2fr_1fr_1fr]">
+    <div class="measure space-y-2">
+      <p class="font-serif text-lg font-bold">Assane Diallo</p>
+      <p class="text-muted">{t.footer.tagline}</p>
+      <p class="text-muted">{t.footer.languages}</p>
+    </div>
+    <ul class="space-y-2">
+      <li><a href={staticRoutes.work[locale]}>{t.nav.work}</a></li>
+      {
+        verticals.map((v) => (
+          <li>
+            <a href={entryPath("verticals", v)}>{v.data.name}</a>
+          </li>
+        ))
+      }
+      <li><a href={staticRoutes.about[locale]}>{t.nav.about}</a></li>
+    </ul>
+    <ul class="space-y-2">
+      <li><a href={staticRoutes.engineering.en} hreflang="en">{t.footer.engineering}</a></li>
+      <li><Link href={site.social.linkedin} rel="me">LinkedIn</Link></li>
+      <li><Link href={site.social.github} rel="me">GitHub</Link></li>
+    </ul>
+  </div>
+  <p class="container-page pb-8 text-sm text-muted">© {new Date().getFullYear()} {SITE_NAME}</p>
+</footer>

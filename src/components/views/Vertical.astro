@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getDictionary, homeAnchor } from "../../i18n/index.ts";
+import Page from "../../layouts/Page.astro";
+import { entryAlternates, entryLocale } from "../../lib/content.ts";
+import { professionalServiceSchema } from "../../lib/schema.ts";
+import CtaWhatsApp from "../CtaWhatsApp.astro";
+import TodoText from "../TodoText.astro";
+
+interface Props {
+  entry: CollectionEntry<"verticals">;
+}
+const { entry } = Astro.props;
+const v = entry.data;
+const locale = entryLocale(entry);
+const t = getDictionary(locale);
+const alternates = await entryAlternates("verticals", entry);
+---
+
+<Page
+  title={v.title}
+  description={v.description}
+  h1={v.h1}
+  lead={v.intro}
+  locale={locale}
+  alternates={alternates}
+  jsonLd={[professionalServiceSchema(v.description)]}
+>
+  <div class="mt-8"><CtaWhatsApp t={t} /></div>
+
+  <div class="mt-16 grid gap-12 md:grid-cols-2">
+    {
+      [v.lookFor, v.setup].map((block) => (
+        <section>
+          <h2 class="text-3xl">{block.h2}</h2>
+          <ul class="mt-6 space-y-3">
+            {block.items.map((item) => (
+              <li class="flex gap-3">
+                <span aria-hidden="true" class="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-brand" />
+                <span>
+                  <TodoText text={item} />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="measure mt-16 border-l-8 border-sun pl-6">
+    <h2 class="text-3xl">{v.wontDo.h2}</h2>
+    <p class="mt-4 text-lg"><TodoText text={v.wontDo.body} /></p>
+  </section>
+
+  <section class="mt-16 rounded-2xl bg-wash p-6 sm:p-10">
+    <h2 class="text-3xl">{v.cta}</h2>
+    <p class="measure mt-4">
+      {t.vertical.more} <a href={homeAnchor(locale, "pricing")}>{t.vertical.prices}</a>{" "}
+      {t.vertical.and} <a href={homeAnchor(locale, "how")}>{t.vertical.how}</a>{t.vertical.orMessage}
+    </p>
+    <div class="mt-6"><CtaWhatsApp t={t} /></div>
+  </section>
+</Page>
