@@ -1,0 +1,105 @@
+---
+import { site } from "../config.ts";
+import Page from "../layouts/Page.astro";
+import { personSchema } from "../lib/schema.ts";
+
+const projects = [
+  {
+    name: "YoBool: where luggage space meets community",
+    body: "A peer-to-peer platform for sharing spare luggage space. Think Airbnb, but for your suitcase's empty space. I built the backend with Rails 7 in API mode, plus authentication, access control, Stripe Connect payments, and the React Native app.",
+    stack: ["Ruby on Rails", "PostgreSQL", "React Native", "Docker"],
+  },
+  {
+    name: "AIclinix: AI for healthcare",
+    body: "A Rails app that helps healthcare professionals with AI-assisted diagnostics.",
+    stack: ["Ruby on Rails", "PostgreSQL", "Machine learning"],
+  },
+  {
+    name: "IntelliAPI: making ML models accessible",
+    body: "A Django-based REST framework that puts machine learning models behind simple endpoints. ML models should be easy to use, not just easy to build.",
+    stack: ["Django", "Python", "REST API"],
+  },
+];
+
+const earlier = [
+  {
+    name: "Isa's African Hair Braiding",
+    body: "Website, local search setup, and online booking for a braiding salon in Savannah, Georgia.",
+    links: [
+      { href: "/work/isa-african-hair-braiding/", label: "Read the Isa's African Hair Braiding case study" },
+      { href: "https://isabraiding.com/", label: "Visit isabraiding.com" },
+    ],
+  },
+  {
+    name: "Pantry Pal: an AI cooking assistant",
+    body: "Recipe suggestions from the ingredients you already have, using OpenAI's GPT-3.5.",
+    links: [{ href: "https://github.com/asndiallo/pantry-pal-server", label: "Pantry Pal server code on GitHub" }],
+  },
+  {
+    name: "Express Food",
+    body: "A school project from my Master's in Paris: a food delivery app. I built the backend with Django and MongoDB.",
+    links: [{ href: "https://github.com/asndiallo/express-food", label: "Express Food code on GitHub" }],
+  },
+];
+---
+
+<Page
+  title="Assane Diallo, software engineer: Rails, Node.js, Python"
+  description="Backend engineer with a Master's in Data Engineering & AI. Ruby on Rails, Node.js, Python, PostgreSQL, and React Native projects."
+  h1="Engineering work"
+  lead="I'm a backend engineer who loves building robust APIs and scaling systems, and occasionally dabbles in AI. I have a Master's in Data Engineering & AI, and these days I'm all about making apps that don't break when users do unexpected things."
+  ogType="profile"
+  jsonLd={[{ "@context": "https://schema.org", ...personSchema, jobTitle: "Backend engineer" }]}
+>
+  <p class="measure mt-6 rounded-2xl bg-wash p-4">
+    I now also help small businesses get found on Google. <a href="/">See how I can help your business</a>.
+  </p>
+
+  <section aria-labelledby="projects-h" class="mt-14">
+    <h2 id="projects-h">Some things I've built</h2>
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      {
+        projects.map((p) => (
+          <article class="rounded-2xl border border-line p-6">
+            <h3>{p.name}</h3>
+            <p class="mt-2 text-muted">{p.body}</p>
+            <ul class="mt-4 flex flex-wrap gap-2" aria-label="Built with">
+              {p.stack.map((s) => (
+                <li class="rounded-full bg-wash px-3 py-0.5 text-sm">{s}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="earlier-h" class="mt-14">
+    <h2 id="earlier-h">Earlier projects</h2>
+    <div class="mt-8 space-y-8">
+      {
+        earlier.map((p) => (
+          <article class="measure">
+            <h3>{p.name}</h3>
+            <p class="mt-1 text-muted">{p.body}</p>
+            <ul class="mt-2 space-y-1">
+              {p.links.map((l) => (
+                <li>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="connect-h" class="mt-14">
+    <h2 id="connect-h">Let's connect</h2>
+    <p class="measure mt-4">
+      Looking for a backend engineer? Find me on <a href={site.social.linkedin}>LinkedIn</a> or
+      <a href={site.social.github}>GitHub</a>.
+    </p>
+  </section>
+</Page>
