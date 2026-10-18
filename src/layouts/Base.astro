@@ -13,7 +13,7 @@ import {
   localeMeta,
   locales,
 } from "../i18n/index.ts";
-import { themeInitScript } from "../lib/inline-scripts.ts";
+import { languageRedirectScript, themeInitScript } from "../lib/inline-scripts.ts";
 
 interface Props {
   title: string;
@@ -27,6 +27,8 @@ interface Props {
   ogImage?: string;
   ogType?: "website" | "article" | "profile";
   jsonLd?: Record<string, unknown>[];
+  /** Default-locale home page only: redirect to the visitor's device language (see inline-scripts.ts). */
+  detectLanguage?: boolean;
 }
 
 const {
@@ -38,6 +40,7 @@ const {
   ogImage = "/og-default.png",
   ogType = "website",
   jsonLd = [],
+  detectLanguage = false,
 } = Astro.props;
 
 const t = getDictionary(locale);
@@ -56,6 +59,7 @@ const xDefault = translations.find((a) => a.locale === defaultLocale) ?? transla
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {detectLanguage && <script is:inline set:html={languageRedirectScript} />}
     <!-- Apply a saved theme before first paint, so there is no flash. Hashed into the CSP. -->
     <script is:inline set:html={themeInitScript} />
     <title>{title}</title>

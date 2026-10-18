@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import { SITE_URL } from "./src/config.ts";
 import { defaultLocale, locales } from "./src/i18n/locales.ts";
-import { themeInitScript } from "./src/lib/inline-scripts.ts";
+import { languageRedirectScript, themeInitScript } from "./src/lib/inline-scripts.ts";
 
 const sha256 = (source: string) =>
   `sha256-${createHash("sha256").update(source).digest("base64")}` as const;
@@ -19,11 +19,11 @@ export default defineConfig({
   trailingSlash: "always",
   security: {
     // Hash-based CSP in a <meta> tag on every page. Astro hashes its own bundled scripts and
-    // styles; the one inline script is hashed here from its source.
+    // styles; the inline scripts are hashed here from their source.
     csp: {
       scriptDirective: {
         resources: ["'self'", ...(analyticsHosts[process.env.PUBLIC_ANALYTICS ?? ""] ?? [])],
-        hashes: [sha256(themeInitScript)],
+        hashes: [sha256(themeInitScript), sha256(languageRedirectScript)],
       },
     },
   },
@@ -36,6 +36,8 @@ export default defineConfig({
   env: {
     // All optional: an unset variable switches its feature off.
     schema: {
+      // Build-time only: include case studies marked `status: in-progress` (PR previews).
+      SHOW_IN_PROGRESS: envField.boolean({ context: "server", access: "public", default: false }),
       PUBLIC_FORM_ENDPOINT: envField.string({
         context: "client",
         access: "public",
