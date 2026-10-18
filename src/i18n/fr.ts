@@ -11,6 +11,7 @@ export const fr: Dictionary = {
   lang: "fr",
   money,
   colon: `${nb}:`,
+  photoAlt: "Assane Diallo, avec des lunettes rondes et un col roulé bleu marine",
   nav: {
     label: "Principal",
     skip: "Aller au contenu principal",

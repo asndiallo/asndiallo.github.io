@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+import portrait from "../assets/people/assane-diallo.jpg";
+
+interface Props {
+  alt: string;
+  /** "lg" on the about page, "sm" beside the home page's "Who I am". */
+  size: "sm" | "lg";
+  /** Above the fold: load immediately at high priority. */
+  eager?: boolean;
+}
+const { alt, size, eager = false } = Astro.props;
+const variants = {
+  sm: { widths: [192, 288, 384], sizes: "(min-width: 640px) 192px, 40vw" },
+  lg: { widths: [320, 480, 640, 960], sizes: "(min-width: 1024px) 320px, 70vw" },
+} as const;
+const { widths, sizes } = variants[size];
+---
+
+<Image
+  src={portrait}
+  alt={alt}
+  widths={[...widths]}
+  sizes={sizes}
+  loading={eager ? "eager" : "lazy"}
+  fetchpriority={eager ? "high" : "auto"}
+  class="aspect-[3/4] w-full rounded-2xl border-2 border-ink object-cover shadow-[6px_6px_0_var(--color-ink)]"
+/>
