@@ -1,14 +1,13 @@
 /**
  * Post-deploy domain check: `pnpm verify:domain`. curl-based, read-only, no secrets.
- * The site is served by Cloudflare Workers on SITE_URL; the old GitHub Pages address serves a
- * redirect-only build.
+ * The site is served by Cloudflare Workers on SITE_URL.
  * Prints PASS/FAIL per check and exits 1 if any check still fails after the retries.
  *
  *   VERIFY_ATTEMPTS=1 pnpm verify:domain   # one pass, no waiting (default: 5 attempts, 30s apart)
  */
 import { execFileSync } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
-import { LEGACY_SITE_URL, SITE_URL } from "../src/config.ts";
+import { SITE_URL } from "../src/config.ts";
 
 const site = new URL(SITE_URL);
 const apex = `https://${site.hostname}`;
@@ -77,18 +76,6 @@ const checks: Check[] = [
   {
     name: `https://www.${site.hostname}/ redirects to the apex`,
     run: redirectsTo(`https://www.${site.hostname}/`, `${apex}/`),
-  },
-  {
-    // GitHub Pages serves a redirect-only site (scripts/build-legacy-redirects.ts): no real 301s
-    // there, so check the instant refresh and the canonical link to the same path.
-    name: `${LEGACY_SITE_URL}/engineering/ forwards to ${apex}/engineering/`,
-    run: () => {
-      const res = curl(`${LEGACY_SITE_URL}/engineering/`);
-      if (res.status !== 200) return `got ${shown(res)}`;
-      const target = `${apex}/engineering/`;
-      if (!res.body.includes(`<link rel="canonical" href="${target}">`)) return "canonical missing";
-      return res.body.includes(`content="0; url=${target}"`) ? true : "meta refresh missing";
-    },
   },
   {
     name: "/about.html is a real 301 to /about/",

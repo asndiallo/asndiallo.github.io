@@ -40,40 +40,10 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           WRANGLER_SEND_METRICS: "false"
 
-  # The old address (asndiallo.github.io) on GitHub Pages: a redirect-only site that forwards
-  # every path to the same path on the new domain. Only once the new domain is live.
-  legacy-redirects:
-    needs: checks
-    if: vars.SITE_LIVE == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-      - uses: actions/download-artifact@v8
-        with:
-          name: site
-          path: dist/
-      - run: node scripts/build-legacy-redirects.ts
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: dist-legacy
-      - id: deployment
-        uses: actions/deploy-pages@v5
-
   # Checks the live domain (HTTPS, redirects, headers, canonical URLs). Informational only:
   # a failure never blocks or rolls back the deploy.
   verify-domain:
-    needs: [site, legacy-redirects]
+    needs: site
     if: vars.SITE_LIVE == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
