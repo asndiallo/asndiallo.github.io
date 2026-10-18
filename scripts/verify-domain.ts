@@ -52,14 +52,14 @@ type Check = { name: string; run: () => string | true };
 const redirectsTo = (from: string, target: string) => (): string | true => {
   const res = curl(from);
   if (![301, 308].includes(res.status)) return `expected 301/308, got ${shown(res)}`;
-  if (res.location === target) return true;
-  if (res.location === target.replace(/^https:/, "http:")) {
-    console.log(
-      `        note: redirects via http (${res.location}); HTTPS upgrade checked separately`,
-    );
+  // Location may be relative (e.g. "/about/"); resolve it against the request URL like a browser.
+  const location = res.location ? new URL(res.location, from).href : "";
+  if (location === target) return true;
+  if (location === target.replace(/^https:/, "http:")) {
+    console.log(`        note: redirects via http (${location}); HTTPS upgrade checked separately`);
     return true;
   }
-  return `Location is ${res.location || "(none)"}, want ${target}`;
+  return `Location is ${location || "(none)"}, want ${target}`;
 };
 
 const checks: Check[] = [

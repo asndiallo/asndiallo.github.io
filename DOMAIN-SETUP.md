@@ -43,11 +43,14 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 | ✅ | workers.dev subdomain `assane-diallo` | you | 2026-10-18 |
 | ✅ | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers") | you | 2026-10-18 |
 | ✅ | One DMARC record: `v=DMARC1; p=none; rua=…@dmarc-reports.cloudflare.net` (the duplicate sending reports to outlook.com was deleted; reports appear in DMARC Management) | Claude | 2026-10-18 |
-| ⏳ | **Zoho Mail** for hello@assane-diallo.com: sign up, then Claude adds Zoho's DNS records (values from your Zoho admin console) | you + Claude | |
 | ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): https://assane-diallo.assane-diallo.workers.dev | Claude | 2026-10-18 |
 | ✅ | PR previews working: https://pr-1-assane-diallo.assane-diallo.workers.dev | CI | 2026-10-18 |
-| ⏳ | **Review the preview**, then say "go live" | you | |
-| ⏳ | Go-live (section below) | Claude, on your go | |
+| ✅ | Preview reviewed; go-live approved | you | 2026-10-18 |
+| ✅ | **Live**: Custom Domain `assane-diallo.com` on the Worker (Google Trust Services certificate), `workers.dev` off | Claude | 2026-10-18 |
+| ✅ | www → apex 301 (proxied `AAAA www 100::` + Redirect Rule), Always Use HTTPS on, minimum TLS 1.2 | Claude | 2026-10-18 |
+| ✅ | GitHub Pages switched to Actions; `SITE_LIVE=true`; asndiallo.github.io serves the redirect-only build | Claude | 2026-10-18 |
+| ✅ | PR #1 merged; Deploy runs on every push to `develop`; `pnpm verify:domain` 9/9 | Claude | 2026-10-18 |
+| ✅ | Zoho Mail (EU): MX, SPF `include:zohomail.eu`, DKIM, verification | you | 2026-10-18 |
 
 ## Your dashboard steps (about 5 minutes)
 
