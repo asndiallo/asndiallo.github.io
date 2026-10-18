@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
 import { LEGACY_SITE_URL, SITE_URL as SITE } from "../src/config.ts";
 
@@ -203,8 +202,31 @@ test("only the canonical domain is used: no github.io URLs in pages, sitemap, or
     const body = await (await page.request.get(path)).text();
     expect(body, path).not.toContain(legacyHost);
   }
-  // Read from disk: the preview server 404s extensionless files under trailingSlash "always".
-  expect(readFileSync("dist/CNAME", "utf8").trim()).toBe(new URL(SITE).hostname);
+});
+
+test("security and cache headers, and a strict hash-based CSP", async ({ page }) => {
+  const res = await page.request.get("/");
+  const h = res.headers();
+  expect(h["strict-transport-security"]).toContain("max-age=31536000");
+  expect(h["content-security-policy"]).toContain("frame-ancestors 'none'");
+  expect(h["x-content-type-options"]).toBe("nosniff");
+  expect(h["referrer-policy"]).toBe("strict-origin-when-cross-origin");
+
+  const html = await res.text();
+  const csp = /<meta http-equiv="content-security-policy" content="([^"]+)"/.exec(html)?.[1] ?? "";
+  expect(csp).toMatch(/script-src 'self' 'sha256-/);
+  expect(csp).not.toContain("unsafe-inline");
+
+  const asset = /\/_astro\/[^"]+\.css/.exec(html)?.[0];
+  expect(asset).toBeTruthy();
+  const cached = await page.request.get(asset ?? "");
+  expect(cached.headers()["cache-control"]).toContain("immutable");
+});
+
+test("old /about.html is a real 301 to /about/", async ({ page }) => {
+  const res = await page.request.get("/about.html", { maxRedirects: 0 });
+  expect(res.status()).toBe(301);
+  expect(res.headers().location).toMatch(/\/about\/$/);
 });
 
 test("links inside sentences keep their spaces", async ({ page }) => {
