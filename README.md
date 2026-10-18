@@ -30,7 +30,7 @@ The first time, run `pnpm exec playwright install chromium`. Lighthouse uses you
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | Email, WhatsApp number, booking link, area served | `src/config.ts`                                                                                                           |
 | Prices and what each package includes             | `src/config.ts` → `pricing`                                                                                               |
-| Homepage and UI copy                              | `src/i18n/en.ts`                                                                                                          |
+| Homepage and UI copy                              | `src/i18n/en.ts` and `src/i18n/fr.ts`                                                                                     |
 | Contact form (optional)                           | env `PUBLIC_FORM_ENDPOINT`: a Formspree-style POST URL. No value means no form.                                           |
 | Analytics (optional, cookieless)                  | env `PUBLIC_ANALYTICS=cloudflare` + `PUBLIC_CF_BEACON_TOKEN`, or `PUBLIC_ANALYTICS=plausible` + `PUBLIC_PLAUSIBLE_DOMAIN` |
 
@@ -47,70 +47,62 @@ Deploys are manual until the site is ready to go live. To deploy on every push t
 
 CI (`.github/workflows/ci.yml`) runs the full `pnpm check` on every push and pull request.
 
+## Languages and theme
+
+The site is in English (`/`) and French (`/fr/`), for African-owned businesses in the US.
+
+- UI and home page copy: `src/i18n/en.ts` and `src/i18n/fr.ts`. `fr.ts` is typed as the English dictionary, so a missing French key fails `pnpm typecheck`.
+- URLs per language: `src/i18n/locales.ts` (`staticRoutes`, `collectionBase`). French URLs are translated (`/fr/realisations/`, `/fr/a-propos/`, `/fr/pour/…`).
+- hreflang, the sitemap and the language switch in the header all read the same alternates, so a page only links to translations that exist. A test fails if a page (other than `/engineering/`) is missing its French or English version.
+- Theme: System / Light / Dark switch in the header. The choice is saved in the browser (`localStorage`, no cookies). Colours are `light-dark()` tokens in `src/styles/global.css`.
+
 ## Add a case study
 
 1. Get the owner's written OK to be named, and to use any numbers or quotes.
 2. Add a screenshot or photo to `src/assets/work/` (optional).
-3. Create `src/content/work/<business-slug>.md`:
+3. Create **two files with the same name**, one per language: `src/content/work/en/<business-slug>.md` and `src/content/work/fr/<business-slug>.md`:
 
 ```markdown
 ---
-business: 'Business name'
-city: City, ST
-vertical: braiding-salons # braiding-salons | restaurants | other
-summary: 'One plain sentence, ≤ 155 characters.'
-consent: true # required: the build fails without it
-website: https://example.com/ # optional
+business: "Business name"
+location: City, ST              # or "Online shop"
+vertical: braiding-salons       # braiding-salons | restaurants | online-shop | other
+status: complete                # or in-progress (shows a badge and a "results coming" note)
+homepage: true                  # false keeps it off the home page cards (e.g. online shops)
+summary: "One plain sentence, ≤ 155 characters."
+consent: true                   # required: the build fails without it
+website: https://example.com/   # optional
 services:
   - Google Business Profile
-results: # optional: only numbers the owner approved
-  - label: Calls from Google, per month # example format only
-    value: '12 → 31'
+results:                        # optional: only numbers the owner approved
+  - label: Calls from Google, per month   # example format only
+    value: "12 → 31"
     source: Google Business Profile insights, Jan vs. Apr 2027
-quote: # optional: only with permission
-  text: '…'
+quote:                          # optional: only with permission
+  text: "…"
   author: Name, Business
 image:
-  src: ../../assets/work/<file>.png
-  alt: 'What the image shows.'
-order: 2 # position on the home page and /work/
+  src: ../../../assets/work/<file>.png
+  alt: "What the image shows."
+order: 2                        # position on the home page and the work page
+urlSlug: …                      # optional: a different URL segment for this language
 ---
 
 ## Before
-
 …
-
 ## What I did
-
 …
-
 ## After
-
 …
 ```
 
-The first three entries (by `order`) fill the "My first clients" cards on the home page. Any empty slots show a marked placeholder.
+The first three `homepage: true` entries (by `order`) fill the "My first clients" cards. Empty slots show a marked placeholder.
 
 ## Add a vertical
 
-Create `src/content/verticals/<slug>.md`, copying `braiding-salons.md`. It's published at `/for/<slug>/` and linked from the home page and footer. The sitemap and tests pick it up automatically. If it should appear in case studies, also add the slug to the `vertical` enum in `src/content.config.ts`.
+Create `src/content/verticals/en/<key>.md` and `src/content/verticals/fr/<key>.md` (copy the braiding-salons files). English is published at `/for/<key>/`, French at `/fr/pour/<urlSlug or key>/`. Both are linked from the home page and footer, and the sitemap and tests pick them up automatically. If case studies should use it, add the key to the `vertical` enum in `src/content.config.ts`.
 
-## Publish the French version
-
-French overrides live in `src/i18n/fr.ts`. When every homepage section is translated:
-
-1. Add `"fr"` to `publishedLocales` in `src/i18n/locales.ts`. That adds `hreflang` links and sitemap alternates.
-2. Create `src/pages/fr/index.astro`:
-
-   ```astro
-   ---
-   import Home from "../../components/Home.astro";
-   ---
-
-   <Home locale="fr" />
-   ```
-
-The Playwright hreflang test fails if step 1 is done without step 2.
+Use `urlSlug`, not `slug`, for a translated URL: Astro reserves `slug` as the entry id.
 
 ## Project docs
 

@@ -23,8 +23,9 @@ Port 4321 is often taken by another local project. Tests use 4399.
 ## Where things live
 
 - `src/config.ts`: business facts (email, WhatsApp, booking link, prices, area served). Unknown values are `TODO`.
-- `src/i18n/en.ts`: all homepage and UI copy. `fr.ts` holds partial French overrides. `locales.ts#publishedLocales` decides hreflang and sitemap entries. A locale's route is a page file (`src/pages/fr/index.astro`), added when it's published.
-- `src/content/work/*.md`: case studies (schema in `src/content.config.ts`). `src/content/verticals/*.md`: `/for/[vertical]/` pages.
+- `src/i18n/en.ts` / `fr.ts`: all UI and home copy (fr is typed as the en dictionary). `src/i18n/locales.ts`: locales and URLs per locale. Pages pass `alternates` to `Base.astro`; hreflang, sitemap and the language switch all read them.
+- `src/content/{work,verticals}/{en,fr}/<key>.md`: same key = same page translated. `urlSlug` overrides the URL segment (never `slug`: Astro uses it as the id). Page bodies are `src/components/views/*`; `src/pages/**` are thin per-locale wrappers.
+- Theme: `light-dark()` tokens in `global.css`; `ThemeToggle.astro` + an inline head script (no flash). Use tokens (`text-on-brand`, `bg-band`…), never raw `text-white`.
 - `src/lib/routes.ts`: list of indexable pages. It feeds `sitemap.xml`, which feeds the Playwright tests.
 - Copy source of truth: the owner's `site-copy.md`. Decisions: `PLAN.md` §0. Open items: `TODO.md`.
 
@@ -37,6 +38,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 - Never mention military service, rank or branch. No home address, spouse, or personal phone number. The old resume PDF is not published.
 - Never link `isahairbraiding.com`. It lapsed and now redirects to spam. The client site is `https://isabraiding.com`.
 - The email address never appears in the served HTML (no text, no `mailto:`, no JSON-LD). Use `EmailLink.astro`.
+- Market: US businesses only, in English and French. Online shops are a quiet side line ("audits by request"), never in the main pitch or home proof cards.
 - No spots-left counter. Prices are "starting at", with "final quote after a free check-up".
 
 ## Technical rules
