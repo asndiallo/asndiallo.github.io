@@ -31,7 +31,7 @@ const { business, location, summary, image, status } = entry.data;
   <div class="flex flex-1 flex-col p-6">
     {
       status === "in-progress" && (
-        <p class="mb-2 self-start rounded-full bg-sun/25 px-3 py-0.5 text-sm font-semibold">
+        <p data-status="in-progress" class="mb-2 self-start rounded-full bg-sun/25 px-3 py-0.5 text-sm font-semibold">
           {t.caseStudy.inProgress}
         </p>
       )

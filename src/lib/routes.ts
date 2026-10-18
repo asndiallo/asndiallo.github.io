@@ -1,11 +1,10 @@
-import { getCollection } from "astro:content";
 import { type Alternates, staticRoutes } from "../i18n/index.ts";
-import { entryKey, entryLocale, entryPath } from "./content.ts";
+import { entryKey, entryLocale, entryPath, getVisible } from "./content.ts";
 
 /** Group a collection's entries by key: one group per page, holding its URL in each locale. */
 async function collectionGroups(collection: "work" | "verticals"): Promise<Alternates[]> {
   const groups = new Map<string, Alternates>();
-  for (const entry of await getCollection(collection)) {
+  for (const entry of await getVisible(collection)) {
     const group = groups.get(entryKey(entry)) ?? {};
     group[entryLocale(entry)] = entryPath(collection, entry);
     groups.set(entryKey(entry), group);

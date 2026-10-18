@@ -63,7 +63,7 @@ const breadcrumbs = {
     <aside class="space-y-6 self-start rounded-2xl bg-wash p-6" aria-label={t.caseStudy.facts}>
       {
         status === "in-progress" && (
-          <p class="inline-block rounded-full bg-sun/25 px-3 py-0.5 text-sm font-semibold">
+          <p data-status="in-progress" class="inline-block rounded-full bg-sun/25 px-3 py-0.5 text-sm font-semibold">
             {t.caseStudy.inProgress}
           </p>
         )

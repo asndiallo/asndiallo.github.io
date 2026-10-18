@@ -24,6 +24,8 @@ jobs:
       PUBLIC_ANALYTICS: ${{ vars.PUBLIC_ANALYTICS }}
       PUBLIC_CF_BEACON_TOKEN: ${{ vars.PUBLIC_CF_BEACON_TOKEN }}
       PUBLIC_PLAUSIBLE_DOMAIN: ${{ vars.PUBLIC_PLAUSIBLE_DOMAIN }}
+      # Previews also show case studies still marked in-progress; production never does.
+      SHOW_IN_PROGRESS: "true"
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
