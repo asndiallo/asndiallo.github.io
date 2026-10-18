@@ -56,7 +56,7 @@ const alternates = await entryAlternates("verticals", entry);
   <section class="mt-16 rounded-2xl bg-wash p-6 sm:p-10">
     <h2 class="text-3xl">{v.cta}</h2>
     <p class="measure mt-4">
-      {t.vertical.more} <a href={homeAnchor(locale, "pricing")}>{t.vertical.prices}</a>
+      {t.vertical.more} <a href={homeAnchor(locale, "pricing")}>{t.vertical.prices}</a>{" "}
       {t.vertical.and} <a href={homeAnchor(locale, "how")}>{t.vertical.how}</a>{t.vertical.orMessage}
     </p>
     <div class="mt-6"><CtaWhatsApp t={t} /></div>
