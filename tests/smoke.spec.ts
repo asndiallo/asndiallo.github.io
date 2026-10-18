@@ -248,6 +248,65 @@ test("links inside sentences keep their spaces", async ({ page }) => {
   }
 });
 
+test("no work-in-progress case study is published", async ({ page }) => {
+  // Production builds leave out status: in-progress entries (only PR previews include them).
+  for (const path of await sitemapPaths(page)) {
+    await page.goto(path);
+    await expect(page.locator('[data-status="in-progress"]'), path).toHaveCount(0);
+  }
+});
+
+test("photo of Assane on the about page and the home page, loaded and described", async ({
+  page,
+}) => {
+  for (const path of ["/about/", "/fr/a-propos/", "/", "/fr/"]) {
+    await page.goto(path);
+    const photo = page.locator('img[alt^="Assane Diallo"]');
+    await photo.scrollIntoViewIfNeeded();
+    await expect(photo, path).toHaveCount(1);
+    await expect
+      .poll(() => photo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0))
+      .toBe(true);
+  }
+});
+
+test.describe("home page follows the device language", () => {
+  for (const [deviceLocale, expected] of [
+    ["fr-FR", "/fr/"],
+    ["fr-CA", "/fr/"],
+    ["en-US", "/"],
+    ["es-ES", "/"], // unsupported: English
+  ] as const) {
+    test(`${deviceLocale} → ${expected}`, async ({ browser }) => {
+      const context = await browser.newContext({ locale: deviceLocale });
+      const page = await context.newPage();
+      await page.goto("/");
+      await expect(page).toHaveURL(new RegExp(`${expected.replace(/\//g, "\\/")}$`));
+      await context.close();
+    });
+  }
+
+  test("a language picked with the switch wins over the device language", async ({ browser }) => {
+    const context = await browser.newContext({ locale: "fr-FR" });
+    const page = await context.newPage();
+    await page.goto("/");
+    await expect(page).toHaveURL(/\/fr\/$/);
+    await page.getByRole("link", { name: "Read this page in English" }).click();
+    await expect(page).toHaveURL(/:\d+\/$/);
+    await page.goto("/");
+    await expect(page).toHaveURL(/:\d+\/$/);
+    await context.close();
+  });
+
+  test("deep links are never redirected", async ({ browser }) => {
+    const context = await browser.newContext({ locale: "fr-FR" });
+    const page = await context.newPage();
+    await page.goto("/work/");
+    await expect(page).toHaveURL(/\/work\/$/);
+    await context.close();
+  });
+});
+
 test("nothing personal is published", async ({ page }) => {
   for (const path of [...(await sitemapPaths(page)), "/404.html"]) {
     await page.goto(path);
