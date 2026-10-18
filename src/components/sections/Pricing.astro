@@ -1,0 +1,58 @@
+---
+import { formatUsd, pricing } from "../../config.ts";
+import type { Dictionary } from "../../i18n/en.ts";
+import CtaWhatsApp from "../CtaWhatsApp.astro";
+import Section from "../Section.astro";
+
+interface Props {
+  t: Dictionary;
+}
+const { t } = Astro.props;
+const { pricing: copy, services } = t.home;
+---
+
+<Section id="pricing" heading={copy.h2} band="wash">
+  <p class="measure mt-4 text-lg">{copy.intro}</p>
+  <div class="mt-10 grid gap-6 md:grid-cols-2">
+    {
+      pricing.tiers.map((tier) => (
+        <article class="flex flex-col rounded-2xl border-2 border-ink bg-paper p-6 sm:p-8">
+          <h3 class="text-2xl">{copy.tiers[tier.id].name}</h3>
+          <p class="mt-1 text-muted">{copy.tiers[tier.id].summary}</p>
+
+          <p class="mt-6 inline-block self-start rounded-full bg-sun/25 px-3 py-0.5 text-sm font-semibold">
+            {copy.foundingLabel}
+          </p>
+          <p class="mt-2">
+            <span class="text-muted">{copy.startingAt} </span>
+            <span class="font-serif text-3xl font-bold">{formatUsd(tier.founding.setup)}</span>
+            <span> {copy.setup}</span>
+            <span class="text-muted"> + </span>
+            <span class="font-serif text-3xl font-bold">{formatUsd(tier.founding.monthly)}</span>
+            <span> {copy.perMonth}</span>
+          </p>
+          <p class="mt-2 text-sm text-muted">
+            {copy.standardLabel}: {copy.startingAt.toLowerCase()} {formatUsd(tier.standard.setup)}{" "}
+            {copy.setup} + {formatUsd(tier.standard.monthly)} {copy.perMonth}.
+          </p>
+
+          <h4 class="mt-6 font-semibold">{copy.includes}</h4>
+          <ul class="mt-2 space-y-2">
+            {tier.includes.map((id) => (
+              <li class="flex gap-2">
+                <svg aria-hidden="true" class="mt-1 h-5 w-5 shrink-0 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m5 12.5 4.5 4.5L19 7.5" />
+                </svg>
+                {services.items[id].title.replace(/\.$/, "")}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+  <ul class="mt-8 space-y-1">
+    {copy.notes.map((note) => <li>{note}</li>)}
+  </ul>
+  <div class="mt-8"><CtaWhatsApp t={t} /></div>
+</Section>

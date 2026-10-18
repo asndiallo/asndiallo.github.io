@@ -1,0 +1,47 @@
+---
+import { PUBLIC_FORM_ENDPOINT } from "astro:env/client";
+import { site } from "../config.ts";
+import type { Dictionary } from "../i18n/en.ts";
+
+interface Props {
+  t: Dictionary;
+}
+const { form } = Astro.props.t;
+// Formspree-style fields: "_gotcha" is the honeypot, "_next" the success redirect.
+const thanks = new URL("/thanks/", site.url).href;
+const field =
+  "mt-1 block w-full rounded-lg border-2 border-ink/30 bg-paper px-3 py-2.5 text-ink focus:border-ink";
+---
+
+{
+  PUBLIC_FORM_ENDPOINT && (
+    <form method="POST" action={PUBLIC_FORM_ENDPOINT} class="measure mt-10 space-y-4 rounded-2xl bg-paper p-6 text-ink sm:p-8">
+      <h3>{form.h3}</h3>
+      <input type="hidden" name="_next" value={thanks} />
+      <div class="hidden" aria-hidden="true">
+        <label>
+          Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
+      <label class="block font-semibold">
+        {form.name}
+        <input class={field} type="text" name="name" autocomplete="name" required />
+      </label>
+      <label class="block font-semibold">
+        {form.business}
+        <input class={field} type="text" name="business" autocomplete="organization" required />
+      </label>
+      <label class="block font-semibold">
+        {form.reply}
+        <input class={field} type="text" name="reply_to" autocomplete="email" required />
+      </label>
+      <label class="block font-semibold">
+        {form.message} <span class="font-normal text-muted">({form.optional})</span>
+        <textarea class={field} name="message" rows="4" />
+      </label>
+      <button type="submit" class="btn btn-primary">
+        {form.submit}
+      </button>
+    </form>
+  )
+}

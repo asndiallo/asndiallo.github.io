@@ -1,0 +1,27 @@
+---
+import type { Dictionary } from "../../i18n/en.ts";
+import Section from "../Section.astro";
+
+interface Props {
+  t: Dictionary;
+}
+const { faq } = Astro.props.t.home;
+---
+
+<Section id="faq" heading={faq.h2}>
+  <div class="measure mt-8 divide-y divide-line border-y border-line">
+    {
+      faq.items.map((item) => (
+        <details class="group py-4" lang={item.lang}>
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-lg [&::-webkit-details-marker]:hidden">
+            {item.q}
+            <span aria-hidden="true" class="text-2xl leading-none text-brand transition-transform group-open:rotate-45">
+              +
+            </span>
+          </summary>
+          <p class="mt-3 text-muted">{item.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</Section>
