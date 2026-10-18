@@ -139,5 +139,4 @@ dist/
 .lighthouseci/
 test-results/
 playwright-report/
-dist-legacy/
 .wrangler/

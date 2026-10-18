@@ -21,15 +21,12 @@ The runbook for how the site is hosted and how the domain and email are wired. T
    │ GitHub Actions            │  PRs: preview URL on workers.dev, posted as a comment
    └───────────────────────────┘
 
-   https://asndiallo.github.io/<path>  (GitHub Pages)
-        → redirect-only site → https://assane-diallo.com/<path>
-
-   hello@assane-diallo.com → Zoho Mail (being set up; until then mail bounces)
+   hello@assane-diallo.com → Zoho Mail (EU)
 ```
 
 **Why Cloudflare Workers.** Cloudflare recommends Workers static assets for new static sites. Static asset requests are free and unlimited. DNS and hosting sit in the same place, so there's no proxy-versus-certificate conflict. It also gives real HTTP headers (HSTS, CSP), real 301 redirects and a preview URL per pull request. GitHub Pages can do none of these.
 
-**Single source of truth.** The domain lives only in `src/config.ts` (`SITE_URL`, `SITE_NAME`, `CONTACT_EMAIL`, `LEGACY_SITE_URL`).
+**Single source of truth.** The domain lives only in `src/config.ts` (`SITE_URL`, `SITE_NAME`, `CONTACT_EMAIL`).
 
 ## Status
 
@@ -42,15 +39,16 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 | ✅ | GitHub secret `CLOUDFLARE_ACCOUNT_ID` | Claude | 2026-10-18 |
 | ✅ | workers.dev subdomain `assane-diallo` | you | 2026-10-18 |
 | ✅ | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers") | you | 2026-10-18 |
-| ✅ | One DMARC record: `v=DMARC1; p=none; sp=none; adkim=r; aspf=r; rua=` hello@assane-diallo.com + Cloudflare DMARC Management; `ruf=` hello@ (duplicate from the Zoho setup merged) | Claude | 2026-10-18 |
-| ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): https://assane-diallo.assane-diallo.workers.dev | Claude | 2026-10-18 |
-| ✅ | PR previews working: https://pr-1-assane-diallo.assane-diallo.workers.dev | CI | 2026-10-18 |
+| ✅ | One DMARC record: `v=DMARC1; p=none; sp=none; adkim=r; aspf=r; rua=` <hello@assane-diallo.com> + Cloudflare DMARC Management; `ruf=` hello@ (duplicate from the Zoho setup merged) | Claude | 2026-10-18 |
+| ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): <https://assane-diallo.assane-diallo.workers.dev> | Claude | 2026-10-18 |
+| ✅ | PR previews working: <https://pr-1-assane-diallo.assane-diallo.workers.dev> | CI | 2026-10-18 |
 | ✅ | Preview reviewed; go-live approved | you | 2026-10-18 |
 | ✅ | **Live**: Custom Domain `assane-diallo.com` on the Worker (Google Trust Services certificate), `workers.dev` off | Claude | 2026-10-18 |
 | ✅ | www → apex 301 (proxied `AAAA www 100::` + Redirect Rule), Always Use HTTPS on, minimum TLS 1.2 | Claude | 2026-10-18 |
 | ✅ | GitHub Pages switched to Actions; `SITE_LIVE=true`; asndiallo.github.io serves the redirect-only build | Claude | 2026-10-18 |
 | ✅ | PR #1 merged; Deploy runs on every push to `develop`; `pnpm verify:domain` 9/9 | Claude | 2026-10-18 |
 | ✅ | Zoho Mail (EU): MX, SPF `include:zohomail.eu`, DKIM, verification | you | 2026-10-18 |
+| ✅ | GitHub Pages removed (no redirect build for asndiallo.github.io); repo renamed to `asndiallo/assane-diallo.com` | Claude | 2026-10-18 |
 
 ## Your dashboard steps (about 5 minutes)
 
@@ -70,7 +68,7 @@ Each step is shown before it runs.
 1. **Custom domain.** Add `{ "pattern": "assane-diallo.com", "custom_domain": true }` to `routes` in `wrangler.jsonc` and set `"workers_dev": false`. On deploy, Cloudflare creates the DNS record and the certificate. ([Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/))
 2. **www → apex.** Create a proxied placeholder record `AAAA www → 100::` and a Single Redirect rule: `https://www.*` → `https://${1}`, status 301, query string preserved. ([Redirect from WWW to root](https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-www-to-root/); the placeholder record is required per the Custom Domains doc)
 3. **Zone settings.** Turn on Always Use HTTPS and set minimum TLS to 1.2.
-4. **Old address.** Switch GitHub Pages' source to **GitHub Actions** and set the repo variable `SITE_LIVE=true`. The Deploy workflow then also publishes the redirect-only build to `asndiallo.github.io` and runs `pnpm verify:domain`.
+4. **Live checks.** Set the repo variable `SITE_LIVE=true`; the Deploy workflow then runs `pnpm verify:domain` after each deploy. (Until 2026-10-18 this step also published a redirect-only build to `asndiallo.github.io` on GitHub Pages; that was removed because nobody used the old address.)
 5. **Merge** the PR into `develop`. Optionally enable deploy-on-push (see the comment in `.github/workflows/deploy.yml`).
 6. **Verify.** `pnpm verify:domain` must show all checks passing.
 
@@ -107,7 +105,7 @@ If you switch to a mailbox provider: remove Email Routing, follow that provider'
 ## Verify
 
 ```bash
-pnpm verify:domain                    # HTTPS, http→https, www→apex, github.io forward, /about.html 301,
+pnpm verify:domain                    # HTTPS, http→https, www→apex, /about.html 301,
                                       # security headers, immutable caching, sitemap, canonical, robots
 VERIFY_ATTEMPTS=1 pnpm verify:domain  # one quick pass
 
@@ -124,7 +122,6 @@ curl -sI https://www.assane-diallo.com/ | grep -i location   # https://assane-di
 | --- | --- |
 | A deploy broke the site | `pnpm exec wrangler rollback` (or in the dashboard, Worker → Deployments → roll back). Previous versions stay available. |
 | The domain must go dark | Remove the `routes` entry and run the Deploy workflow, or delete the Custom Domain in the dashboard. Leave Email Routing alone; it's independent of the website. |
-| github.io redirect is wrong | Unset `SITE_LIVE` and re-run Deploy, or switch Pages off in the repo's Settings → Pages. |
 | Email not arriving | Check that the destination shows **Verified** and look at the Email Routing activity log. Disabling the rule stops forwarding without touching the website. |
 
 ## Troubleshooting

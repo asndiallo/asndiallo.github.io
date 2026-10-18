@@ -2,7 +2,7 @@
 
 Offer site for Assane Diallo: local SEO and Google Business Profile packages for African-owned small businesses in the US. It's a credibility page that turns a referral or a Google check into a WhatsApp conversation.
 
-Astro 7 (static) · Tailwind 4 · TypeScript strict · pnpm · Cloudflare Workers static assets, deployed by GitHub Actions. asndiallo.github.io serves a redirect-only build.
+Astro 7 (static) · Tailwind 4 · TypeScript strict · pnpm · Cloudflare Workers static assets, deployed by GitHub Actions.
 
 ## Commands
 
@@ -17,7 +17,6 @@ pnpm linkcheck    # linkinator on dist/
 pnpm check        # all of the above, in order. Run before saying "done".
 pnpm og           # regenerate public/og-default.png
 pnpm verify:domain  # post-deploy checks of the live domain (curl, no secrets)
-pnpm build:legacy   # redirect-only build for asndiallo.github.io (from dist/)
 pnpm exec wrangler dev     # serve dist/ like production (headers, redirects, 404)
 ```
 
@@ -41,7 +40,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 - Never mention military service, rank or branch. No home address, spouse, or personal phone number. The old resume PDF is not published.
 - Never link `isahairbraiding.com`. It lapsed and now redirects to spam. The client site is `https://isabraiding.com`.
 - The email address never appears in the served HTML (no text, no `mailto:`, no JSON-LD). Use `EmailLink.astro`.
-- The domain lives only in `src/config.ts` (`SITE_URL`, `SITE_NAME`, `CONTACT_EMAIL`, `LEGACY_SITE_URL`). Never hard-code a domain elsewhere; a test fails if `github.io` appears in pages, sitemap or robots. Cloudflare changes (DNS, routes, email) are made with the signed-in `cf` CLI only with the owner's explicit approval for each step. Never ask for or handle tokens/passwords: the owner sets secrets with `gh secret set`. DOMAIN-SETUP.md is the runbook and status log.
+- The domain lives only in `src/config.ts` (`SITE_URL`, `SITE_NAME`, `CONTACT_EMAIL`). Never hard-code a domain elsewhere; a test fails if `github.io` appears in pages, sitemap or robots. Cloudflare changes (DNS, routes, email) are made with the signed-in `cf` CLI only with the owner's explicit approval for each step. Never ask for or handle tokens/passwords: the owner sets secrets with `gh secret set`. DOMAIN-SETUP.md is the runbook and status log.
 - Links: use `components/Link.astro` for any link that may leave the site (external = other host over http/https: new tab, rel=noopener, screen-reader hint). Markdown gets the same from `src/lib/markdown-external-links.ts`.
 - Drafts: case studies with `status: in-progress` never reach production (one filter in `src/lib/content.ts`); PR previews set `SHOW_IN_PROGRESS=true`.
 - Language: `/` redirects French devices to `/fr/` (inline script in `src/lib/inline-scripts.ts`); a choice made with the header switch wins.
