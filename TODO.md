@@ -48,7 +48,7 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 - [ ] **OG image** text (`scripts/generate-og.ts`)
 
 ### Hosting, domain and email (status in DOMAIN-SETUP.md)
-- [ ] Click the Cloudflare verification email sent to asndiallo98@gmail.com (then Claude creates the hello@ rule)
+- [x] hello@assane-diallo.com forwards to Gmail (Email Routing live 2026-10-18)
 - [ ] Dashboard: workers.dev subdomain `assane-diallo`
 - [ ] Dashboard: API token "Edit Cloudflare Workers", then `gh secret set CLOUDFLARE_API_TOKEN`
 - [ ] Dashboard: DMARC Management → Add the DMARC record (`p=none`)
