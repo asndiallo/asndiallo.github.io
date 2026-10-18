@@ -49,7 +49,7 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 
 ### Hosting, domain and email (status in DOMAIN-SETUP.md)
 - [ ] **Zoho Mail** for hello@assane-diallo.com (Cloudflare forwarding removed 2026-10-18; mail bounces until Zoho's MX records are added)
-- [ ] Fix the duplicate `_dmarc` records (receivers ignore DMARC when there are two)
+- [x] One DMARC record (Cloudflare reporting, `p=none`)
 - [x] workers.dev subdomain `assane-diallo`
 - [x] API token secret set; preview live at https://assane-diallo.assane-diallo.workers.dev
 - [ ] Review the preview URL, then say "go live" (custom domain, www redirect, github.io redirect, merge)

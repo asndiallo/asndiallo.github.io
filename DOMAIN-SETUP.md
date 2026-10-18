@@ -42,7 +42,7 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 | ✅ | GitHub secret `CLOUDFLARE_ACCOUNT_ID` | Claude | 2026-10-18 |
 | ✅ | workers.dev subdomain `assane-diallo` | you | 2026-10-18 |
 | ✅ | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers") | you | 2026-10-18 |
-| ⚠️ | **Two `_dmarc` records exist** (yours → asn.diallo@outlook.com, and Cloudflare's). Receivers ignore DMARC when there are two. Needs a decision | you | |
+| ✅ | One DMARC record: `v=DMARC1; p=none; rua=…@dmarc-reports.cloudflare.net` (the duplicate sending reports to outlook.com was deleted; reports appear in DMARC Management) | Claude | 2026-10-18 |
 | ⏳ | **Zoho Mail** for hello@assane-diallo.com: sign up, then Claude adds Zoho's DNS records (values from your Zoho admin console) | you + Claude | |
 | ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): https://assane-diallo.assane-diallo.workers.dev | Claude | 2026-10-18 |
 | ✅ | PR previews working: https://pr-1-assane-diallo.assane-diallo.workers.dev | CI | 2026-10-18 |
