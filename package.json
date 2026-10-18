@@ -15,9 +15,10 @@
     "typecheck": "astro check",
     "test:e2e": "playwright test",
     "lhci": "lhci autorun",
-    "linkcheck": "linkinator dist --recurse --skip \"^(mailto:|https://wa\\\\.me|https://asndiallo\\\\.github\\\\.io)\"",
+    "linkcheck": "node scripts/linkcheck.ts",
     "og": "node scripts/generate-og.ts",
-    "check": "pnpm lint && pnpm typecheck && pnpm build && pnpm test:e2e && pnpm lhci && pnpm linkcheck"
+    "check": "pnpm lint && pnpm typecheck && pnpm build && pnpm test:e2e && pnpm lhci && pnpm linkcheck",
+    "verify:domain": "node scripts/verify-domain.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
