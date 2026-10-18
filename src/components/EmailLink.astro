@@ -8,16 +8,17 @@ const encoded = encodedEmail();
 
 {
   encoded ? (
-    <>
-      <a href="#contact" data-email={encoded}>
-        <slot />
-      </a>
-      <script is:inline>
-        for (const a of document.querySelectorAll("a[data-email]"))
-          a.href = `mailto:${[...atob(a.dataset.email)].reverse().join("")}`;
-      </script>
-    </>
+    <a href="#contact" data-email={encoded}>
+      <slot />
+    </a>
   ) : (
     <Todo label="email in src/config.ts" />
   )
 }
+
+<script>
+  // Bundled by Astro (allowed by the CSP as 'self'). Decodes the address only in the browser.
+  for (const a of document.querySelectorAll<HTMLAnchorElement>("a[data-email]")) {
+    a.href = `mailto:${[...atob(a.dataset.email ?? "")].reverse().join("")}`;
+  }
+</script>

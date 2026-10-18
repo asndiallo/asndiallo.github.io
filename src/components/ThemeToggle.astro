@@ -50,32 +50,36 @@ const options = [
   }
 </fieldset>
 
-<script is:inline>
-  (() => {
-    const root = document.documentElement;
-    const current = () => root.dataset.theme || "system";
-    const groups = document.querySelectorAll("[data-theme-toggle]");
-    const render = () => {
-      for (const group of groups) {
-        group.hidden = false;
-        for (const b of group.querySelectorAll("button")) {
-          b.setAttribute("aria-pressed", String(b.dataset.value === current()));
-        }
-      }
-    };
+<script>
+  // Bundled by Astro (allowed by the CSP as 'self'); runs after the page is parsed.
+  const root = document.documentElement;
+  const current = () => root.dataset.theme ?? "system";
+  const groups = document.querySelectorAll<HTMLFieldSetElement>("[data-theme-toggle]");
+
+  const render = () => {
     for (const group of groups) {
-      group.addEventListener("click", (event) => {
-        const value = event.target.closest("button[data-value]")?.dataset.value;
-        if (!value) return;
-        if (value === "system") delete root.dataset.theme;
-        else root.dataset.theme = value;
-        try {
-          if (value === "system") localStorage.removeItem("theme");
-          else localStorage.setItem("theme", value);
-        } catch {}
-        render();
-      });
+      group.hidden = false;
+      for (const button of group.querySelectorAll<HTMLButtonElement>("button[data-value]")) {
+        button.setAttribute("aria-pressed", String(button.dataset.value === current()));
+      }
     }
-    render();
-  })();
+  };
+
+  for (const group of groups) {
+    group.addEventListener("click", (event) => {
+      const value = (event.target as Element | null)?.closest<HTMLButtonElement>("button[data-value]")
+        ?.dataset.value;
+      if (!value) return;
+      if (value === "system") delete root.dataset.theme;
+      else root.dataset.theme = value;
+      try {
+        if (value === "system") localStorage.removeItem("theme");
+        else localStorage.setItem("theme", value);
+      } catch {
+        // Storage can be blocked (private mode); the choice then lasts for this page only.
+      }
+      render();
+    });
+  }
+  render();
 </script>
