@@ -16,6 +16,7 @@ pnpm lhci         # Lighthouse CI, mobile, ≥ 0.95 in all four categories
 pnpm linkcheck    # linkinator on dist/
 pnpm check        # all of the above, in order. Run before saying "done".
 pnpm og           # regenerate public/og-default.png
+pnpm verify:domain  # post-deploy checks of the live domain (curl, no secrets)
 ```
 
 Port 4321 is often taken by another local project. Tests use 4399.
@@ -38,6 +39,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 - Never mention military service, rank or branch. No home address, spouse, or personal phone number. The old resume PDF is not published.
 - Never link `isahairbraiding.com`. It lapsed and now redirects to spam. The client site is `https://isabraiding.com`.
 - The email address never appears in the served HTML (no text, no `mailto:`, no JSON-LD). Use `EmailLink.astro`.
+- The domain lives only in `src/config.ts` (`SITE_URL`, `SITE_NAME`, `CONTACT_EMAIL`, `LEGACY_SITE_URL`). Never hard-code a domain elsewhere; a test fails if `github.io` appears in pages, sitemap or robots. Never touch DNS or ask for registrar/Cloudflare/email credentials. The owner follows DOMAIN-SETUP.md by hand.
 - Market: US businesses only, in English and French. Online shops are a quiet side line ("audits by request"), never in the main pitch or home proof cards.
 - No spots-left counter. Prices are "starting at", with "final quote after a free check-up".
 
