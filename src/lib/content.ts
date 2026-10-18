@@ -1,4 +1,5 @@
 import { type CollectionEntry, getCollection } from "astro:content";
+import { SHOW_IN_PROGRESS } from "astro:env/server";
 import { type Alternates, collectionBase, type Locale } from "../i18n/index.ts";
 
 type Localized = "work" | "verticals";
@@ -11,6 +12,21 @@ const split = (id: string) => {
   const [locale, ...rest] = id.split("/");
   return { locale: locale as Locale, key: rest.join("/") };
 };
+
+/**
+ * Case studies marked `status: in-progress` stay out of production builds: no page, no listing,
+ * no sitemap entry, no link. PR previews set SHOW_IN_PROGRESS=true so drafts can be reviewed.
+ */
+const isVisible = (entry: CollectionEntry<Localized>): boolean =>
+  SHOW_IN_PROGRESS || !("status" in entry.data && entry.data.status === "in-progress");
+
+/** Every visible entry of a collection matching `filter`. All content lookups go through here. */
+export async function getVisible<C extends Localized>(
+  collection: C,
+  filter: (entry: CollectionEntry<C>) => boolean = () => true,
+): Promise<CollectionEntry<C>[]> {
+  return getCollection(collection, (e) => isVisible(e) && filter(e));
+}
 
 export const entryLocale = (entry: CollectionEntry<Localized>): Locale => split(entry.id).locale;
 export const entryKey = (entry: CollectionEntry<Localized>): string => split(entry.id).key;
@@ -26,7 +42,7 @@ export async function getLocalized<C extends Localized>(
   collection: C,
   locale: Locale,
 ): Promise<CollectionEntry<C>[]> {
-  const entries = await getCollection(collection, (e) => split(e.id).locale === locale);
+  const entries = await getVisible(collection, (e) => split(e.id).locale === locale);
   return entries.sort((a, b) => a.data.order - b.data.order);
 }
 
@@ -36,7 +52,7 @@ export async function entryAlternates(
   entry: CollectionEntry<Localized>,
 ): Promise<Alternates> {
   const key = entryKey(entry);
-  const all = await getCollection(collection, (e) => split(e.id).key === key);
+  const all = await getVisible(collection, (e) => split(e.id).key === key);
   return Object.fromEntries(all.map((e) => [entryLocale(e), entryPath(collection, e)]));
 }
 
