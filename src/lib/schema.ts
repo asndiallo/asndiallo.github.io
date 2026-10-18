@@ -1,4 +1,4 @@
-import { isTodo, pricing, site } from "../config.ts";
+import { pricing, site } from "../config.ts";
 
 const sameAs = Object.values(site.social);
 
@@ -28,7 +28,6 @@ export function professionalServiceSchema(description: string): Record<string, u
     availableLanguage: ["English", "French"],
     priceRange: `$${Math.min(...prices)}–$${Math.max(...prices)} setup`,
     founder: personSchema,
-    ...(isTodo(site.email) ? {} : { email: site.email }),
     sameAs,
   };
 }
