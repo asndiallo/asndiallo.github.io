@@ -18,6 +18,9 @@ const { business, city, summary, website, services, results, quote, image } = en
 const { Content } = await render(entry);
 const t = getDictionary("en");
 const title = `${business}, ${city}: what changed`;
+// When every result has the same source, say it once under the list instead of under each number.
+const sources = [...new Set(results.map((r) => r.source))];
+const sharedSource = sources.length === 1 ? sources[0] : undefined;
 
 const breadcrumbs = {
   "@context": "https://schema.org",
@@ -57,7 +60,7 @@ const breadcrumbs = {
     </div>
     <aside class="space-y-6 self-start rounded-2xl bg-wash p-6" aria-label="Project facts">
       <div>
-        <h2 class="text-lg">What I did</h2>
+        <h2 class="text-lg">Services</h2>
         <ul class="mt-2 list-disc space-y-1 pl-5">{services.map((s) => <li>{s}</li>)}</ul>
       </div>
       {
@@ -69,10 +72,11 @@ const breadcrumbs = {
                 <div>
                   <dt class="text-sm text-muted">{r.label}</dt>
                   <dd class="font-serif text-2xl font-bold">{r.value}</dd>
-                  <dd class="text-xs text-muted">Source: {r.source}</dd>
+                  {!sharedSource && <dd class="text-xs text-muted">Source: {r.source}</dd>}
                 </div>
               ))}
             </dl>
+            {sharedSource && <p class="mt-3 text-xs text-muted">Source: {sharedSource}</p>}
           </div>
         )
       }
