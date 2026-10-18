@@ -20,6 +20,8 @@ const work = defineCollection({
         summary: z.string().max(155),
         /** The owner agreed to be named and to have this page published. Required to publish. */
         consent: z.literal(true),
+        /** Any personal relationship with the client, shown on the card and the page. */
+        disclosure: z.string().optional(),
         website: z.url().optional(),
         services: z.array(z.string()).min(1),
         /** Only numbers the owner approved, each with where it came from. */

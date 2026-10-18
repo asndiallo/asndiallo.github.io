@@ -138,10 +138,6 @@ export const fr: Dictionary = {
     proof: {
       h2: "Mes premiers clients",
       body: `Je prends mes ${n} premiers projets à un tarif «${nb}client fondateur${nb}». En échange, vous me laissez partager les résultats.`,
-      placeholderTitle: "Étude de cas à venir",
-      placeholderBody:
-        "Cet espace est réservé au résultat d'un vrai client, publié avec son accord.",
-      placeholderTodo: "vraie étude de cas avec l'accord du client",
       allWork: "Voir toutes les réalisations",
     },
     pricing: {

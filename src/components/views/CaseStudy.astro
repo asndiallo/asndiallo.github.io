@@ -12,7 +12,7 @@ interface Props {
   entry: CollectionEntry<"work">;
 }
 const { entry } = Astro.props;
-const { business, location, summary, website, services, results, quote, image, status } =
+const { business, location, summary, website, services, results, quote, image, status, disclosure } =
   entry.data;
 const locale = entryLocale(entry);
 const t = getDictionary(locale);
@@ -43,6 +43,7 @@ const breadcrumbs = {
   ogType="article"
   jsonLd={[breadcrumbs]}
 >
+  {disclosure && <p class="measure mt-3 text-muted" data-disclosure>{disclosure}</p>}
   <p class="mt-2 text-sm"><a href={staticRoutes.work[locale]}>{t.caseStudy.all}</a></p>
   {
     image && (
