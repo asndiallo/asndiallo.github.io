@@ -9,7 +9,7 @@ const { id, heading, band = "plain", class: className } = Astro.props;
 const bands = {
   plain: "bg-paper",
   wash: "bg-wash",
-  brand: "bg-brand text-white [&_h2]:text-white [&_a]:text-white",
+  brand: "bg-brand text-white [&_h2]:text-white [&_a:not(.btn)]:text-white",
 } as const;
 ---
 
