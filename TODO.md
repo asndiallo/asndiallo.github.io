@@ -48,13 +48,12 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 - [ ] **OG image** text (`scripts/generate-og.ts`)
 
 ### Hosting, domain and email (status in DOMAIN-SETUP.md)
-- [x] hello@assane-diallo.com forwards to Gmail (Email Routing live 2026-10-18)
+- [ ] **Zoho Mail** for hello@assane-diallo.com (Cloudflare forwarding removed 2026-10-18; mail bounces until Zoho's MX records are added)
+- [ ] Fix the duplicate `_dmarc` records (receivers ignore DMARC when there are two)
 - [x] workers.dev subdomain `assane-diallo`
 - [x] API token secret set; preview live at https://assane-diallo.assane-diallo.workers.dev
-- [ ] Dashboard: DMARC Management → Add the DMARC record (`p=none`)
 - [ ] Review the preview URL, then say "go live" (custom domain, www redirect, github.io redirect, merge)
 - [ ] Spaceship: 2FA, WHOIS privacy, registrar lock, auto-renew (renews 2027-10-18)
-- [ ] Decide how to *send* as hello@ (Workspace, Spacemail, Zoho…). Until then, replies come from Gmail
 
 ### Infrastructure
 - [ ] Go-live approval. Then add the `push` trigger to `deploy.yml` if you want automatic deploys.
