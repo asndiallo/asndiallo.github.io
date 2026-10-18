@@ -1,0 +1,21 @@
+---
+import CtaWhatsApp from "../components/CtaWhatsApp.astro";
+import { getDictionary } from "../i18n/index.ts";
+import Page from "../layouts/Page.astro";
+
+const t = getDictionary("en");
+---
+
+<Page
+  title="Page not found | Assane Diallo"
+  description="This page doesn't exist. Go to the home page or message me on WhatsApp."
+  h1="Page not found"
+  lead="This page doesn't exist or has moved."
+  noindex
+>
+  <ul class="mt-8 space-y-2">
+    <li><a href="/">Go to the home page</a></li>
+    <li><a href="/engineering/">See my engineering work</a></li>
+  </ul>
+  <div class="mt-8"><CtaWhatsApp t={t} /></div>
+</Page>
