@@ -6,7 +6,7 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 ## Before launch
 
 ### Contact facts (`src/config.ts`)
-- [x] Email: set. It's never in the HTML; the "Email me" link is assembled in the browser.
+- [x] Email: `hello@assane-diallo.com` (set in `src/config.ts`). Never in the HTML; the "Email me" link is assembled in the browser. Mail only arrives once Email Routing is set up.
 - [x] Booking link: set (Google Calendar appointment page)
 - [x] WhatsApp number: switched to a separate line (`12109605715`)
 
@@ -47,6 +47,16 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 - [ ] **/work/**: intro line; **/engineering/**: lightly edited from your old portfolio (YoBool now also mentions auth, Stripe Connect and the React Native app, from your resume)
 - [ ] **OG image** text (`scripts/generate-og.ts`)
 
+### Domain (follow DOMAIN-SETUP.md)
+- [ ] Spaceship: 2FA, WHOIS privacy, registrar lock, auto-renew (renews 2027-10-18)
+- [ ] GitHub: verify `assane-diallo.com` in account settings (TXT record)
+- [ ] GitHub: custom domain in Settings → Pages, then Enforce HTTPS
+- [ ] Cloudflare: GitHub Pages A/AAAA records + `www` CNAME, proxy **off**
+- [ ] Cloudflare Email Routing: `hello@assane-diallo.com` → Gmail. **Confirm routing works** (the site already shows this address)
+- [ ] DMARC Management on, `p=none` to start
+- [ ] Decide how to *send* as hello@ (Workspace, Spacemail, Zoho…). Until then, replies come from Gmail
+- [ ] `pnpm verify:domain` passes
+
 ### Infrastructure
 - [ ] **Pages source** → GitHub Actions (Settings → Pages), then run the "Deploy to GitHub Pages" workflow. I can do the switch with `gh api` when you say go.
 - [ ] Go-live approval. Then add the `push` trigger to `deploy.yml` if you want automatic deploys.
@@ -59,5 +69,4 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 - [ ] **More case studies** as founding clients finish (2 placeholder cards are on the home page now).
 - [ ] **Languages**: anything besides English and French (e.g. Wolof)?
 - [ ] **Canada / France**: deferred. France would need a French legal notice page (mentions légales) and EUR (HT) prices.
-- [ ] **Custom domain**: none now. If you want one later, it's a `site` change plus a CNAME.
 - [ ] **Old resume PDF**: removed from the site, but it's still in git history, which is public on GitHub (it has your phone number). Rewriting history is a separate decision.

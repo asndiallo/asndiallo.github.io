@@ -1,7 +1,7 @@
-# asndiallo.github.io
+# assane-diallo.com
 
 Local SEO and Google Business Profile setup for African-owned businesses in the US.
-Live at <https://asndiallo.github.io>.
+Live at <https://assane-diallo.com> (the old <https://asndiallo.github.io> redirects there). The domain is set only in `src/config.ts` (`SITE_URL`).
 
 Static site: Astro 7, Tailwind 4, TypeScript strict. No client-side JavaScript, no cookies.
 
@@ -40,8 +40,9 @@ For local builds, put env values in `.env` (git-ignored). For deploys, set them 
 
 GitHub Actions builds `dist/` and publishes it to GitHub Pages (`.github/workflows/deploy.yml`).
 
-1. One time: Settings → Pages → Source: **GitHub Actions**.
+1. One time: Settings → Pages → Source: **GitHub Actions**. For the custom domain, DNS, HTTPS and email, follow **[DOMAIN-SETUP.md](DOMAIN-SETUP.md)**.
 2. Actions → "Deploy to GitHub Pages" → **Run workflow**.
+3. After each deploy, a non-blocking `verify-domain` job runs `pnpm verify:domain`, which checks HTTPS, the www and github.io redirects, and the canonical URLs, sitemap and robots.txt. Run it locally any time.
 
 Deploys are manual until the site is ready to go live. To deploy on every push to `develop`, add the `push` trigger shown in the workflow comment.
 
@@ -107,5 +108,6 @@ Use `urlSlug`, not `slug`, for a translated URL: Astro reserves `slug` as the en
 ## Project docs
 
 - `PLAN.md`: architecture and the decisions behind it
+- `DOMAIN-SETUP.md`: domain, DNS, HTTPS and email setup, step by step
 - `TODO.md`: everything the owner still has to supply
 - `CLAUDE.md`: commands and rules for AI-assisted edits
