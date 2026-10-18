@@ -4,9 +4,12 @@ on:
   push:
     branches: [develop]
   pull_request:
+  # Deploys call this workflow so they ship exactly the build that passed these checks.
+  workflow_call:
 
 concurrency:
-  group: ci-${{ github.ref }}
+  # github.workflow is the caller's name when called, so a deploy never cancels a plain CI run.
+  group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -42,6 +45,13 @@ jobs:
         run: pnpm lhci
       - name: Link check
         run: pnpm linkcheck
+
+      - name: Upload the tested build
+        uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist/
+          retention-days: 3
 
       - name: Upload reports
         if: failure()
