@@ -1,7 +1,7 @@
 # assane-diallo.com
 
 Local SEO and Google Business Profile setup for African-owned businesses in the US.
-Live at <https://assane-diallo.com> (the old <https://asndiallo.github.io> redirects there). The domain is set only in `src/config.ts` (`SITE_URL`).
+Live at <https://assane-diallo.com>. The domain is set only in `src/config.ts` (`SITE_URL`).
 
 Static site: Astro 7, Tailwind 4, TypeScript strict. No client-side JavaScript, no cookies.
 
@@ -43,7 +43,7 @@ For local builds, put env values in `.env` (git-ignored). For deploys, set them 
 Hosting is **Cloudflare Workers static assets** (`wrangler.jsonc`). The architecture, status, go-live steps and rollback are in **[DOMAIN-SETUP.md](DOMAIN-SETUP.md)**.
 
 - **Pull requests:** CI runs the full `pnpm check`. PRs from this repo also get a **preview URL** (`pr-<n>-assane-diallo.<subdomain>.workers.dev`), posted as a comment.
-- **Production:** Actions → **Deploy** → *Run workflow*. It reruns every check, then deploys exactly the build that passed (`wrangler deploy`). Once `SITE_LIVE=true`, it also publishes the redirect-only site to `asndiallo.github.io` and runs `pnpm verify:domain`.
+- **Production:** Actions → **Deploy** → *Run workflow*. It reruns every check, then deploys exactly the build that passed (`wrangler deploy`). With `SITE_LIVE=true` (set), it then runs `pnpm verify:domain` against the live domain.
 - **Rollback:** `pnpm exec wrangler rollback`.
 - **Headers and redirects:** `public/_headers` (HSTS, CSP frame rules, caching) and `public/_redirects` (301s). Scripts and styles are covered by a hash-based CSP that Astro generates per page. The only inline script lives in `src/lib/inline-scripts.ts`.
 - **Secrets:** `CLOUDFLARE_API_TOKEN` (yours, "Edit Cloudflare Workers" scoped to the account and zone) and `CLOUDFLARE_ACCOUNT_ID`.

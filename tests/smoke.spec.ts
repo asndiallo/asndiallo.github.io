@@ -1,5 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
-import { LEGACY_SITE_URL, SITE_URL as SITE } from "../src/config.ts";
+import { SITE_URL as SITE } from "../src/config.ts";
 
 /** Indexable pages come from the sitemap, so new pages are covered automatically. */
 async function sitemapPaths(page: Page): Promise<string[]> {
@@ -197,10 +197,9 @@ test("404, robots.txt, and the old /about.html", async ({ page }) => {
 test("only the canonical domain is used: no github.io URLs in pages, sitemap, or robots", async ({
   page,
 }) => {
-  const legacyHost = new URL(LEGACY_SITE_URL).hostname;
   for (const path of [...(await sitemapPaths(page)), "/sitemap.xml", "/robots.txt"]) {
     const body = await (await page.request.get(path)).text();
-    expect(body, path).not.toContain(legacyHost);
+    expect(body, path).not.toContain("github.io");
   }
 });
 

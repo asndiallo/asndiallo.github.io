@@ -3,6 +3,7 @@ import { pricing, getTier as tier } from "../config.ts";
 import type { Dictionary } from "./en.ts";
 
 const n = pricing.foundingClients;
+const names = { profile: "Visibilité", website: "Visibilité + Réservations" };
 const nb = " "; // French typography: non-breaking space before ? ! : and currency
 const money = (amount: number): string => `${amount.toLocaleString("fr-FR")}${nb}$`;
 
@@ -110,7 +111,7 @@ export const fr: Dictionary = {
           body: "Appels, demandes d'itinéraire, ce qui a changé et la suite.",
         },
       },
-      websiteOnly: "Le site et les pages de recherche sont inclus dans la formule Fiche + Site.",
+      websiteOnly: `Le site et les pages de recherche sont inclus dans la formule ${names.website}.`,
       onlineShops: `Boutiques en ligne${nb}: audits sur demande.`,
       onlineShopsLink: "Voir la boutique avec laquelle je travaille en ce moment",
     },
@@ -156,13 +157,14 @@ export const fr: Dictionary = {
       ],
       tiers: {
         profile: {
-          name: "Fiche Google",
+          name: names.profile,
+          tagline: "Configuration de la fiche Google",
           summary: "Pour les entreprises qui n'ont pas encore besoin d'un site.",
         },
         website: {
-          name: "Fiche + Site",
-          summary:
-            "Tout ce qu'inclut Fiche Google, plus un site simple et des pages pour ce que les gens cherchent.",
+          name: names.website,
+          tagline: "Fiche Google + site",
+          summary: `Tout ce qu'inclut ${names.profile}, plus un site simple et des pages pour ce que les gens cherchent.`,
         },
       },
     },
@@ -196,7 +198,7 @@ export const fr: Dictionary = {
         },
         {
           q: `Combien ça coûte${nb}?`,
-          a: `La formule Fiche Google commence à ${money(tier("profile").founding.setup)} de mise en place et ${money(tier("profile").founding.monthly)} par mois. La formule Fiche + Site commence à ${money(tier("website").founding.setup)} de mise en place et ${money(tier("website").founding.monthly)} par mois. Ce sont les tarifs fondateurs pour mes ${n} premiers clients. Vous recevez un devis final après le bilan gratuit.`,
+          a: `La formule ${names.profile} (fiche Google) commence à ${money(tier("profile").founding.setup)} de mise en place et ${money(tier("profile").founding.monthly)} par mois. La formule ${names.website} (fiche + site) commence à ${money(tier("website").founding.setup)} de mise en place et ${money(tier("website").founding.monthly)} par mois. Ce sont les tarifs fondateurs pour mes ${n} premiers clients. Vous recevez un devis final après le bilan gratuit.`,
         },
         {
           q: `Y a-t-il un contrat${nb}?`,

@@ -1,6 +1,8 @@
 import { pricing, type ServiceId, type TierId, getTier as tier } from "../config.ts";
 
 const n = pricing.foundingClients;
+/** Package names, defined once: pricing, the services note and the FAQ all use these. */
+const names = { profile: "Get Found", website: "Get Booked" } satisfies Record<TierId, string>;
 const money = (amount: number): string => `$${amount.toLocaleString("en-US")}`;
 
 export const en = {
@@ -106,7 +108,7 @@ export const en = {
           body: "Calls, direction requests, what changed, and what's next.",
         },
       } satisfies Record<ServiceId, { title: string; body: string }>,
-      websiteOnly: "Website and search pages come with the Profile + Website package.",
+      websiteOnly: `Website and search pages come with the ${names.website} package.`,
       onlineShops: "Online shops: audits by request.",
       onlineShopsLink: "See the shop I'm working with now",
     },
@@ -152,15 +154,16 @@ export const en = {
       ],
       tiers: {
         profile: {
-          name: "Google Profile",
+          name: names.profile,
+          tagline: "Google profile setup",
           summary: "For businesses that don't need a website yet.",
         },
         website: {
-          name: "Profile + Website",
-          summary:
-            "Everything in Google Profile, plus a simple website and pages for what people search.",
+          name: names.website,
+          tagline: "Google profile + website",
+          summary: `Everything in ${names.profile}, plus a simple website and pages for what people search.`,
         },
-      } satisfies Record<TierId, { name: string; summary: string }>,
+      } satisfies Record<TierId, { name: string; tagline: string; summary: string }>,
     },
     about: {
       h2: "Who I am",
@@ -192,7 +195,7 @@ export const en = {
         },
         {
           q: "What does it cost?",
-          a: `Google Profile starts at ${money(tier("profile").founding.setup)} setup and ${money(tier("profile").founding.monthly)} a month. Profile + Website starts at ${money(tier("website").founding.setup)} setup and ${money(tier("website").founding.monthly)} a month. Those are founding prices for my first ${n} clients. You get a final quote after the free check-up.`,
+          a: `${names.profile} (Google profile) starts at ${money(tier("profile").founding.setup)} setup and ${money(tier("profile").founding.monthly)} a month. ${names.website} (profile + website) starts at ${money(tier("website").founding.setup)} setup and ${money(tier("website").founding.monthly)} a month. Those are founding prices for my first ${n} clients. You get a final quote after the free check-up.`,
         },
         {
           q: "Is there a contract?",

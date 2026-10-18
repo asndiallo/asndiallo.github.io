@@ -7,14 +7,12 @@ export const isTodo = (value: unknown): value is typeof TODO => value === TODO;
 
 /**
  * The domain lives here and only here: astro.config, canonical/OG URLs, JSON-LD, the sitemap,
- * robots.txt, CNAME, the OG image and scripts/verify-domain.ts all read these.
+ * robots.txt, the OG image and scripts/verify-domain.ts all read these.
  */
 export const SITE_URL = "https://assane-diallo.com";
 export const SITE_NAME = "Assane Diallo";
 /** Routed to Gmail by Cloudflare Email Routing (receive only). See DOMAIN-SETUP.md. */
 export const CONTACT_EMAIL: string = "hello@assane-diallo.com";
-/** The old GitHub Pages address. GitHub redirects it to SITE_URL once the custom domain is set. */
-export const LEGACY_SITE_URL = "https://asndiallo.github.io";
 
 export const site = {
   /** Business WhatsApp number, digits only, with country code (e.g. "15551234567"). */
