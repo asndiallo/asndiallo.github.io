@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import { site } from "../config.ts";
+import type { Dictionary } from "../i18n/en.ts";
+
+interface Props {
+  t: Dictionary;
+}
+const { t } = Astro.props;
+const verticals = (await getCollection("verticals")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<footer class="mt-auto border-t border-line bg-wash">
+  <div class="container-page grid gap-8 py-12 text-[0.95rem] sm:grid-cols-[2fr_1fr_1fr]">
+    <div class="measure space-y-2">
+      <p class="font-serif text-lg font-bold">Assane Diallo</p>
+      <p class="text-muted">{t.footer.tagline}</p>
+      <p class="text-muted" lang="fr">{t.footer.languages}</p>
+    </div>
+    <ul class="space-y-2">
+      <li><a href="/work/">{t.nav.work}</a></li>
+      {
+        verticals.map((v) => (
+          <li>
+            <a href={`/for/${v.id}/`}>{v.data.name}</a>
+          </li>
+        ))
+      }
+      <li><a href="/about/">{t.nav.about}</a></li>
+    </ul>
+    <ul class="space-y-2">
+      <li><a href="/engineering/">{t.footer.engineering}</a></li>
+      <li><a href={site.social.linkedin} rel="me">LinkedIn</a></li>
+      <li><a href={site.social.github} rel="me">GitHub</a></li>
+    </ul>
+  </div>
+  <p class="container-page pb-8 text-sm text-muted">© {new Date().getFullYear()} {site.name}</p>
+</footer>

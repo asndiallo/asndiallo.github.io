@@ -1,0 +1,12 @@
+---
+/** Visible placeholder for a fact the owner must supply. The post-build report counts these. */
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<span
+  class="inline-block rounded border border-dashed border-todo bg-todo-bg px-1.5 font-mono text-[0.85em] text-todo"
+  data-todo={label}>[TODO: {label}]</span
+>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  id: string;
+  heading: string;
+  band?: "plain" | "wash" | "brand";
+  class?: string;
+}
+const { id, heading, band = "plain", class: className } = Astro.props;
+const bands = {
+  plain: "bg-paper",
+  wash: "bg-wash",
+  brand: "bg-brand text-white [&_h2]:text-white [&_a]:text-white",
+} as const;
+---
+
+<section id={id} aria-labelledby={`${id}-h`} class:list={[bands[band], "py-16 sm:py-24"]}>
+  <div class:list={["container-page", className]}>
+    <h2 id={`${id}-h`} class="measure">{heading}</h2>
+    <slot />
+  </div>
+</section>
