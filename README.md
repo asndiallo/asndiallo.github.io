@@ -97,7 +97,20 @@ Create `src/content/verticals/<slug>.md`, copying `braiding-salons.md`. It's pub
 
 ## Publish the French version
 
-French overrides live in `src/i18n/fr.ts`. When every homepage section is translated, add `"fr"` to `publishedLocales` in `src/i18n/locales.ts`. That builds `/fr/` and adds `hreflang` links and sitemap alternates.
+French overrides live in `src/i18n/fr.ts`. When every homepage section is translated:
+
+1. Add `"fr"` to `publishedLocales` in `src/i18n/locales.ts`. That adds `hreflang` links and sitemap alternates.
+2. Create `src/pages/fr/index.astro`:
+
+   ```astro
+   ---
+   import Home from "../../components/Home.astro";
+   ---
+
+   <Home locale="fr" />
+   ```
+
+The Playwright hreflang test fails if step 1 is done without step 2.
 
 ## Project docs
 

@@ -23,7 +23,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 ## Where things live
 
 - `src/config.ts`: business facts (email, WhatsApp, booking link, prices, area served). Unknown values are `TODO`.
-- `src/i18n/en.ts`: all homepage and UI copy. `fr.ts` holds partial French overrides. `locales.ts#publishedLocales` decides which locales get routes, hreflang and sitemap entries.
+- `src/i18n/en.ts`: all homepage and UI copy. `fr.ts` holds partial French overrides. `locales.ts#publishedLocales` decides hreflang and sitemap entries. A locale's route is a page file (`src/pages/fr/index.astro`), added when it's published.
 - `src/content/work/*.md`: case studies (schema in `src/content.config.ts`). `src/content/verticals/*.md`: `/for/[vertical]/` pages.
 - `src/lib/routes.ts`: list of indexable pages. It feeds `sitemap.xml`, which feeds the Playwright tests.
 - Copy source of truth: the owner's `site-copy.md`. Decisions: `PLAN.md` §0. Open items: `TODO.md`.
@@ -36,6 +36,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 - No ranking or timeline guarantees. The FAQ says plainly that SEO takes months.
 - Never mention military service, rank or branch. No home address, spouse, or personal phone number. The old resume PDF is not published.
 - Never link `isahairbraiding.com`. It lapsed and now redirects to spam. The client site is `https://isabraiding.com`.
+- The email address never appears in the served HTML (no text, no `mailto:`, no JSON-LD). Use `EmailLink.astro`.
 - No spots-left counter. Prices are "starting at", with "final quote after a free check-up".
 
 ## Technical rules
