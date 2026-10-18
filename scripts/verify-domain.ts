@@ -1,5 +1,7 @@
 /**
  * Post-deploy domain check: `pnpm verify:domain`. curl-based, read-only, no secrets.
+ * The site is served by Cloudflare Workers on SITE_URL; the old GitHub Pages address serves a
+ * redirect-only build.
  * Prints PASS/FAIL per check and exits 1 if any check still fails after the retries.
  *
  *   VERIFY_ATTEMPTS=1 pnpm verify:domain   # one pass, no waiting (default: 5 attempts, 30s apart)
@@ -45,7 +47,7 @@ type Check = { name: string; run: () => string | true };
 
 /**
  * A permanent redirect to `target` (same host and path). An http:// Location is accepted with a
- * note: GitHub may redirect to http first, and the "Enforce HTTPS" check covers the upgrade.
+ * note: a redirect may go via http first; the "Always Use HTTPS" check covers the upgrade.
  */
 const redirectsTo = (from: string, target: string) => (): string | true => {
   const res = curl(from);
@@ -69,7 +71,7 @@ const checks: Check[] = [
     },
   },
   {
-    name: `http://${site.hostname}/ redirects to HTTPS (Enforce HTTPS)`,
+    name: `http://${site.hostname}/ redirects to HTTPS (Always Use HTTPS)`,
     run: redirectsTo(`http://${site.hostname}/`, `${apex}/`),
   },
   {
@@ -77,8 +79,40 @@ const checks: Check[] = [
     run: redirectsTo(`https://www.${site.hostname}/`, `${apex}/`),
   },
   {
-    name: `${LEGACY_SITE_URL}/engineering/ redirects to ${apex}/engineering/`,
-    run: redirectsTo(`${LEGACY_SITE_URL}/engineering/`, `${apex}/engineering/`),
+    // GitHub Pages serves a redirect-only site (scripts/build-legacy-redirects.ts): no real 301s
+    // there, so check the instant refresh and the canonical link to the same path.
+    name: `${LEGACY_SITE_URL}/engineering/ forwards to ${apex}/engineering/`,
+    run: () => {
+      const res = curl(`${LEGACY_SITE_URL}/engineering/`);
+      if (res.status !== 200) return `got ${shown(res)}`;
+      const target = `${apex}/engineering/`;
+      if (!res.body.includes(`<link rel="canonical" href="${target}">`)) return "canonical missing";
+      return res.body.includes(`content="0; url=${target}"`) ? true : "meta refresh missing";
+    },
+  },
+  {
+    name: "/about.html is a real 301 to /about/",
+    run: redirectsTo(`${apex}/about.html`, `${apex}/about/`),
+  },
+  {
+    name: "security headers (HSTS, CSP, nosniff) and immutable caching of /_astro/ files",
+    run: () => {
+      const res = curl(`${apex}/`);
+      if (res.status !== 200) return `got ${shown(res)}`;
+      for (const header of [
+        "strict-transport-security",
+        "content-security-policy",
+        "x-content-type-options",
+      ]) {
+        if (!new RegExp(`^${header}:`, "im").test(res.body)) return `missing ${header}`;
+      }
+      const asset = /\/_astro\/[^"]+\.css/.exec(res.body)?.[0];
+      if (!asset) return "no /_astro/ stylesheet found";
+      const cached = curl(`${apex}${asset}`);
+      return /^cache-control:.*immutable/im.test(cached.body)
+        ? true
+        : `${asset} is not cached as immutable`;
+    },
   },
   {
     name: "sitemap.xml lists only URLs on the canonical domain",
