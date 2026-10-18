@@ -1,21 +1,22 @@
 import type { APIRoute } from "astro";
-import { getAlternates } from "../i18n/index.ts";
-import { getIndexablePaths } from "../lib/routes.ts";
+import { locales } from "../i18n/index.ts";
+import { getPageGroups } from "../lib/routes.ts";
 
 export const GET: APIRoute = async ({ site }) => {
   const abs = (path: string) => new URL(path, site).href;
-  const urls = (await getIndexablePaths()).flatMap((path) => {
-    const alternates = getAlternates(path);
+  const urls = (await getPageGroups()).flatMap((group) => {
+    const versions = locales.flatMap((locale) => {
+      const path = group[locale];
+      return path ? [{ locale, href: abs(path) }] : [];
+    });
+    // Each language version is its own <url>, listing every version (itself included).
     const links =
-      alternates.length > 1
-        ? alternates
-            .map(
-              (a) => `<xhtml:link rel="alternate" hreflang="${a.locale}" href="${abs(a.path)}"/>`,
-            )
+      versions.length > 1
+        ? versions
+            .map((v) => `<xhtml:link rel="alternate" hreflang="${v.locale}" href="${v.href}"/>`)
             .join("")
         : "";
-    // Each language version is its own <url> carrying the same set of alternates.
-    return alternates.map((a) => `<url><loc>${abs(a.path)}</loc>${links}</url>`);
+    return versions.map((v) => `<url><loc>${v.href}</loc>${links}</url>`);
   });
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

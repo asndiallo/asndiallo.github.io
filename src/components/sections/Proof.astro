@@ -1,34 +1,36 @@
 ---
-import { getCollection } from "astro:content";
-import type { Dictionary } from "../../i18n/en.ts";
+import { type Dictionary, type Locale, staticRoutes } from "../../i18n/index.ts";
+import { getLocalized } from "../../lib/content.ts";
 import CaseStudyCard from "../CaseStudyCard.astro";
 import Section from "../Section.astro";
 import Todo from "../Todo.astro";
 
 interface Props {
   t: Dictionary;
+  locale: Locale;
 }
-const { proof } = Astro.props.t.home;
+const { t, locale } = Astro.props;
+const { proof } = t.home;
 const SLOTS = 3;
-const entries = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order).slice(0, SLOTS);
+const entries = (await getLocalized("work", locale)).filter((e) => e.data.homepage).slice(0, SLOTS);
 const empty = SLOTS - entries.length;
 ---
 
 <Section id="proof" heading={proof.h2}>
   <p class="measure mt-4 text-lg">{proof.body}</p>
   <div class="mt-10 grid gap-6 md:grid-cols-3">
-    {entries.map((entry) => <CaseStudyCard entry={entry} />)}
+    {entries.map((entry) => <CaseStudyCard t={t} entry={entry} />)}
     {
       Array.from({ length: empty }, () => (
         <div class="flex flex-col justify-center rounded-2xl border-2 border-dashed border-line p-6 text-muted">
           <p class="font-semibold text-ink">{proof.placeholderTitle}</p>
           <p class="mt-2 text-sm">{proof.placeholderBody}</p>
           <p class="mt-3 text-sm">
-            <Todo label="real case study with owner's permission" />
+            <Todo label={proof.placeholderTodo} />
           </p>
         </div>
       ))
     }
   </div>
-  {entries.length > 0 && <p class="mt-8"><a href="/work/">{proof.allWork}</a></p>}
+  {entries.length > 0 && <p class="mt-8"><a href={staticRoutes.work[locale]}>{proof.allWork}</a></p>}
 </Section>

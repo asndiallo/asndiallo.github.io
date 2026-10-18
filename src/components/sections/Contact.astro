@@ -1,5 +1,5 @@
 ---
-import type { Dictionary } from "../../i18n/en.ts";
+import type { Dictionary, Locale } from "../../i18n/index.ts";
 import { bookingHref } from "../../lib/contact.ts";
 import ContactForm from "../ContactForm.astro";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
@@ -9,8 +9,9 @@ import Todo from "../Todo.astro";
 
 interface Props {
   t: Dictionary;
+  locale: Locale;
 }
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
 const booking = bookingHref();
 ---
 
@@ -23,5 +24,5 @@ const booking = bookingHref();
       {booking ? <a href={booking}>{t.cta.booking}</a> : <>{t.cta.booking}: <Todo label="booking link in src/config.ts" /></>}
     </li>
   </ul>
-  <ContactForm t={t} />
+  <ContactForm t={t} locale={locale} />
 </Section>

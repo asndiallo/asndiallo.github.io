@@ -1,21 +1,20 @@
 ---
-import { getCollection } from "astro:content";
-import type { GetStaticPaths } from "astro";
-import CtaWhatsApp from "../../components/CtaWhatsApp.astro";
-import TodoText from "../../components/TodoText.astro";
-import { getDictionary } from "../../i18n/index.ts";
+import type { CollectionEntry } from "astro:content";
+import { getDictionary, homeAnchor } from "../../i18n/index.ts";
 import Page from "../../layouts/Page.astro";
+import { entryAlternates, entryLocale } from "../../lib/content.ts";
 import { professionalServiceSchema } from "../../lib/schema.ts";
+import CtaWhatsApp from "../CtaWhatsApp.astro";
+import TodoText from "../TodoText.astro";
 
-export const getStaticPaths = (async () =>
-  (await getCollection("verticals")).map((entry) => ({
-    params: { vertical: entry.id },
-    props: { entry },
-  }))) satisfies GetStaticPaths;
-
+interface Props {
+  entry: CollectionEntry<"verticals">;
+}
 const { entry } = Astro.props;
 const v = entry.data;
-const t = getDictionary("en");
+const locale = entryLocale(entry);
+const t = getDictionary(locale);
+const alternates = await entryAlternates("verticals", entry);
 ---
 
 <Page
@@ -23,6 +22,8 @@ const t = getDictionary("en");
   description={v.description}
   h1={v.h1}
   lead={v.intro}
+  locale={locale}
+  alternates={alternates}
   jsonLd={[professionalServiceSchema(v.description)]}
 >
   <div class="mt-8"><CtaWhatsApp t={t} /></div>
@@ -36,7 +37,9 @@ const t = getDictionary("en");
             {block.items.map((item) => (
               <li class="flex gap-3">
                 <span aria-hidden="true" class="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-brand" />
-                <span><TodoText text={item} /></span>
+                <span>
+                  <TodoText text={item} />
+                </span>
               </li>
             ))}
           </ul>
@@ -53,7 +56,8 @@ const t = getDictionary("en");
   <section class="mt-16 rounded-2xl bg-wash p-6 sm:p-10">
     <h2 class="text-3xl">{v.cta}</h2>
     <p class="measure mt-4">
-      See <a href="/#pricing">prices</a> and <a href="/#how">how it works</a>, or message me with your business name.
+      {t.vertical.more} <a href={homeAnchor(locale, "pricing")}>{t.vertical.prices}</a>
+      {t.vertical.and} <a href={homeAnchor(locale, "how")}>{t.vertical.how}</a>{t.vertical.orMessage}
     </p>
     <div class="mt-6"><CtaWhatsApp t={t} /></div>
   </section>

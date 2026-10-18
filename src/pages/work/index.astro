@@ -1,30 +1,5 @@
 ---
-import { getCollection } from "astro:content";
-import CaseStudyCard from "../../components/CaseStudyCard.astro";
-import CtaWhatsApp from "../../components/CtaWhatsApp.astro";
-import { getDictionary } from "../../i18n/index.ts";
-import Page from "../../layouts/Page.astro";
-
-const t = getDictionary("en");
-const entries = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+import WorkIndex from "../../components/views/WorkIndex.astro";
 ---
 
-<Page
-  title="Client work: local SEO case studies | Assane Diallo"
-  description="Real projects for African-owned businesses in the US: what I set up and what changed. Published with each owner's permission."
-  h1="Client work"
-  lead="Real projects, published with each owner's permission. I only share numbers the owner has approved."
->
-  {
-    entries.length > 0 ? (
-      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {entries.map((entry) => (
-          <CaseStudyCard entry={entry} headingLevel="h2" />
-        ))}
-      </div>
-    ) : (
-      <p class="measure mt-10">I'm writing up my first client projects now. Ask me about them on WhatsApp.</p>
-    )
-  }
-  <div class="mt-12"><CtaWhatsApp t={t} /></div>
-</Page>
+<WorkIndex locale="en" />

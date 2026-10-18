@@ -1,14 +1,15 @@
 ---
-import type { Dictionary } from "../../i18n/en.ts";
+import { type Dictionary, type Locale, staticRoutes } from "../../i18n/index.ts";
 import Section from "../Section.astro";
 
 interface Props {
   t: Dictionary;
+  locale: Locale;
 }
 const { about } = Astro.props.t.home;
 ---
 
 <Section id="about" heading={about.h2}>
   <p class="measure mt-4 text-lg">{about.body}</p>
-  <p class="mt-4"><a href="/about/">{about.more}</a></p>
+  <p class="mt-4"><a href={staticRoutes.about[Astro.props.locale]}>{about.more}</a></p>
 </Section>

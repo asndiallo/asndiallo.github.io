@@ -1,0 +1,34 @@
+---
+import { getDictionary, type Locale, staticRoutes } from "../../i18n/index.ts";
+import Page from "../../layouts/Page.astro";
+import { personSchema } from "../../lib/schema.ts";
+import CtaWhatsApp from "../CtaWhatsApp.astro";
+import Todo from "../Todo.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const copy = t.aboutPage;
+---
+
+<Page
+  title={copy.meta.title}
+  description={copy.meta.description}
+  h1={copy.h1}
+  locale={locale}
+  alternates={staticRoutes.about}
+  ogType="profile"
+  jsonLd={[{ "@context": "https://schema.org", "@type": "ProfilePage", mainEntity: personSchema }]}
+>
+  <div class="measure mt-10 space-y-4 text-lg">
+    {copy.paragraphs.map((p) => <p>{p}</p>)}
+    <p><Todo label={copy.ownWords} /></p>
+  </div>
+  <p class="mt-12">
+    {copy.engineering}
+    <a href={staticRoutes.engineering.en} hreflang="en">{copy.engineeringLink}</a>.
+  </p>
+  <div class="mt-8"><CtaWhatsApp t={t} /></div>
+</Page>

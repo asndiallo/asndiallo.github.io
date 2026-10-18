@@ -11,7 +11,7 @@ export const site = {
   /** Contact email shown on the site. */
   email: "asndiallo98@gmail.com" as string,
   /** Business WhatsApp number, digits only, with country code (e.g. "15551234567"). */
-  whatsappNumber: "19125726366" as string,
+  whatsappNumber: "12109605715" as string,
   /** Booking page for the free 15-minute check-up (Cal.com, Calendly, Google appointment page). */
   bookingUrl: "https://calendar.app.google/7VsGdzUNf8CynFcd8" as string,
   areaServed: "United States",
@@ -57,8 +57,6 @@ export const pricing = {
     },
   ] satisfies readonly Tier[],
 } as const;
-
-export const formatUsd = (amount: number): string => `$${amount.toLocaleString("en-US")}`;
 
 export function getTier(id: TierId): Tier {
   const tier = pricing.tiers.find((t) => t.id === id);
