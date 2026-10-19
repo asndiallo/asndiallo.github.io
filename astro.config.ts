@@ -10,11 +10,12 @@ import { externalLinksPlugin } from "./src/lib/markdown-external-links.ts";
 const sha256 = (source: string) =>
   `sha256-${createHash("sha256").update(source).digest("base64")}` as const;
 
-// Third-party script hosts, allowed only when that analytics provider is switched on.
-const analyticsHosts: Record<string, string[]> = {
-  cloudflare: ["https://static.cloudflareinsights.com"],
-  plausible: ["https://plausible.io"],
-};
+// Third-party script hosts. Cloudflare Web Analytics is injected at the edge (its automatic
+// setup), so its beacon host is always allowed; Plausible only when switched on at build time.
+const scriptHosts = [
+  "https://static.cloudflareinsights.com",
+  ...(process.env.PUBLIC_ANALYTICS === "plausible" ? ["https://plausible.io"] : []),
+];
 
 export default defineConfig({
   site: SITE_URL,
@@ -24,7 +25,7 @@ export default defineConfig({
     // styles; the inline scripts are hashed here from their source.
     csp: {
       scriptDirective: {
-        resources: ["'self'", ...(analyticsHosts[process.env.PUBLIC_ANALYTICS ?? ""] ?? [])],
+        resources: ["'self'", ...scriptHosts],
         hashes: [sha256(themeInitScript), sha256(languageRedirectScript)],
       },
     },
@@ -52,12 +53,8 @@ export default defineConfig({
         context: "client",
         access: "public",
         optional: true,
-        values: ["cloudflare", "plausible"],
-      }),
-      PUBLIC_CF_BEACON_TOKEN: envField.string({
-        context: "client",
-        access: "public",
-        optional: true,
+        // Cloudflare Web Analytics needs no build setting: Cloudflare injects it at the edge.
+        values: ["plausible"],
       }),
       PUBLIC_PLAUSIBLE_DOMAIN: envField.string({
         context: "client",
