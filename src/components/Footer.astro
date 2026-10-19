@@ -36,5 +36,7 @@ const verticals = await getLocalized("verticals", locale);
       <li><Link href={site.social.github} rel="me">GitHub</Link></li>
     </ul>
   </div>
-  <p class="container-page pb-8 text-sm text-muted">© {new Date().getFullYear()} {SITE_NAME}</p>
+  <p class="container-page pb-8 text-sm text-muted">
+    © {new Date().getFullYear()} {SITE_NAME} · <a href={staticRoutes.privacy[locale]}>{t.footer.privacy}</a>
+  </p>
 </footer>

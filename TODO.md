@@ -67,7 +67,8 @@ Everything I wrote that isn't word-for-word from your `site-copy.md`:
 
 ## Optional (the site works without these)
 
-- [ ] **Contact form**: pick Formspree, Web3Forms or Basin and set the repo variable `PUBLIC_FORM_ENDPOINT`. (The markup uses Formspree field names `_gotcha`/`_next`; tell me if you pick another service.)
+- [ ] **Contact form**: pick Formspree, Web3Forms or Basin and set the repo variable `PUBLIC_FORM_ENDPOINT`. (The markup uses Formspree field names `_gotcha`/`_next`; tell me if you pick another service.) The privacy page then lists the form automatically; add the chosen service to its "Services involved" list.
+- [x] **Privacy note** (`/privacy/`, `/fr/confidentialite/`, added 2026-10-19): what the site and each contact channel collect, use, 12-month retention for non-clients, deletion on request. Text in `src/i18n/{en,fr}.ts` → `privacy`; update the date in `src/components/views/Privacy.astro` whenever it changes. Not legal advice; have it reviewed if the business grows.
 - [ ] **Analytics**: Cloudflare Web Analytics (recommended, free, cookieless). Set `PUBLIC_ANALYTICS=cloudflare` and `PUBLIC_CF_BEACON_TOKEN`.
 - [x] Photo of you: on /about/ and the home page (added 2026-10-18)
 - [ ] **More case studies** as founding clients finish. The home page shows only case studies with approved results (no empty cards); with a single one, its numbers fill the row.
