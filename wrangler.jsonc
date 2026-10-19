@@ -16,5 +16,15 @@
   "routes": [{ "pattern": "assane-diallo.com", "custom_domain": true }],
   // One public address: no workers.dev copy of the site. PR previews keep their version URLs.
   "workers_dev": false,
-  "preview_urls": true
+  "preview_urls": true,
+  // Workers Logs, kept in sync with the dashboard setting (config is the source of truth).
+  // Requests answered straight from static assets don't run Worker code, so this mostly
+  // matters if server code is ever added.
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+      "persist": true
+    }
+  }
 }
