@@ -20,8 +20,11 @@ const options = [
 ];
 ---
 
-<!-- Hidden until the script runs: without JavaScript the site simply follows the system theme. -->
-<fieldset data-theme-toggle hidden class="inline-flex rounded-full border border-line p-0.5">
+<!--
+  Shown only when html[data-js] is set (see global.css): without JavaScript the site simply
+  follows the system theme. The flag is set before first paint, so the toggle never shifts the page.
+-->
+<fieldset data-theme-toggle class="rounded-full border border-line p-0.5">
   <legend class="sr-only">{theme.label}</legend>
   {
     options.map((o) => (
@@ -58,7 +61,6 @@ const options = [
 
   const render = () => {
     for (const group of groups) {
-      group.hidden = false;
       for (const button of group.querySelectorAll<HTMLButtonElement>("button[data-value]")) {
         button.setAttribute("aria-pressed", String(button.dataset.value === current()));
       }

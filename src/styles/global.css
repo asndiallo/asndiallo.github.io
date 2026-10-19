@@ -115,6 +115,14 @@
     max-width: 65ch;
   }
 
+  /* Needs JavaScript; html[data-js] is set by the head script before first paint. */
+  [data-theme-toggle] {
+    display: none;
+  }
+  html[data-js] [data-theme-toggle] {
+    display: inline-flex;
+  }
+
   .btn {
     @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-semibold no-underline transition-colors;
   }

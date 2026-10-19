@@ -6,9 +6,12 @@ import { defaultLocale, locales, staticRoutes } from "../i18n/locales.ts";
  * Every other script is bundled by Astro and allowed as 'self'.
  */
 
-/** Applies a saved theme before first paint, so it never flashes. */
+/**
+ * Applies a saved theme before first paint, so it never flashes. Also marks html[data-js], so
+ * JavaScript-only controls (the theme toggle) are laid out from first paint and never shift the page.
+ */
 export const themeInitScript =
-  'try{const t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch{}';
+  'const d=document.documentElement;d.dataset.js="";try{const t=localStorage.getItem("theme");if(t==="light"||t==="dark")d.dataset.theme=t}catch{}';
 
 /** Home page of every non-default locale, e.g. { fr: "/fr/" }. */
 const otherHomes = Object.fromEntries(
