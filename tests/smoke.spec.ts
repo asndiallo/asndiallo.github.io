@@ -342,19 +342,13 @@ test.describe("home page follows the device language", () => {
   });
 });
 
+// The personal phone number is deliberately not listed here: any form of it (digits or a hash,
+// which is trivially reversible for a phone number) would publish it in this repository.
 test("nothing personal is published", async ({ page }) => {
   for (const path of [...(await sitemapPaths(page)), "/404.html"]) {
     await page.goto(path);
     const text = (await page.locator("body").innerText()).toLowerCase();
-    for (const banned of [
-      "army",
-      "military",
-      "veteran",
-      "sergeant",
-      "savannah, ga 314",
-      "912) 572",
-      "572-6366",
-    ]) {
+    for (const banned of ["army", "military", "veteran", "sergeant", "savannah, ga 314"]) {
       expect(text, `${path} contains "${banned}"`).not.toContain(banned);
     }
   }
