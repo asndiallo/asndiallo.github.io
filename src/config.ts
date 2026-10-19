@@ -11,7 +11,7 @@ export const isTodo = (value: unknown): value is typeof TODO => value === TODO;
  */
 export const SITE_URL = "https://assane-diallo.com";
 export const SITE_NAME = "Assane Diallo";
-/** Routed to Gmail by Cloudflare Email Routing (receive only). See DOMAIN-SETUP.md. */
+/** Hosted on Zoho Mail. See DOMAIN-SETUP.md. */
 export const CONTACT_EMAIL: string = "hello@assane-diallo.com";
 
 /**
