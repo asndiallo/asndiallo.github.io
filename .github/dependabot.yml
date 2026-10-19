@@ -1,0 +1,53 @@
+# Dependabot version updates. Security updates are enabled in the repo settings and are not
+# delayed by the cooldown. Docs: https://docs.github.com/en/code-security/dependabot
+version: 2
+updates:
+  # npm packages (pnpm lockfile). PRs target the default branch (develop) and must pass CI.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: America/New_York
+    # Wait before proposing a fresh release: compromised packages are usually caught within days.
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope # → "chore(deps): …" / "chore(deps-dev): …"
+    groups:
+      # Astro and its official packages move together.
+      astro:
+        patterns: ["astro", "@astrojs/*"]
+        update-types: [minor, patch]
+      # Everything else: one PR for minor/patch per dependency type. Majors stay separate PRs.
+      production:
+        dependency-type: production
+        update-types: [minor, patch]
+      development:
+        dependency-type: development
+        update-types: [minor, patch]
+
+  # GitHub Actions, pinned to commit SHAs in the workflows and the shared setup action.
+  - package-ecosystem: github-actions
+    directories: ["/", "/.github/actions/setup"]
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: America/New_York
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
+      include: scope # → "ci(deps): …"
+    groups:
+      actions:
+        patterns: ["*"]
