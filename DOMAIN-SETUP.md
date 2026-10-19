@@ -52,18 +52,14 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 | ✅ | GitHub security: Dependabot alerts + security updates + version updates (`.github/dependabot.yml`), secret scanning with push protection, CodeQL, private vulnerability reporting, read-only default token, only GitHub-owned actions + `pnpm/action-setup` allowed with SHA pinning required, ruleset "Protect develop" (PR + passing `check`, no force push/deletion) | Claude | 2026-10-18 |
 | ✅ | Cloudflare Web Analytics (cookieless) in every page; Workers Logs enabled | Claude | 2026-10-18 |
 | ✅ | Zone: Always Use HTTPS, TLS 1.3, HTTP/3 on; minimum TLS 1.2; email obfuscation off; Bot Fight Mode and JavaScript detections off (they challenged CI checks and injected a script the CSP blocks) | Claude + you | 2026-10-18 |
-| ⏳ | **DNSSEC**: on at Cloudflare (pending); needs the DS record at Spaceship (below) | you | |
+| ✅ | DNSSEC active (DS record added at Spaceship) | Claude + you | 2026-10-18 |
 | ⏳ | **Access on preview URLs** (drafts): needs Zero Trust enabled once in the dashboard (below) | you | |
 
 ## Remaining dashboard steps
 
-1. **DNSSEC (DS record at Spaceship).** Cloudflare signs the zone; Spaceship must publish this DS record:
-   - Key tag `2371`, algorithm `13` (ECDSA P-256 SHA-256), digest type `2` (SHA-256)
-   - Digest `3D083E5B35AF5C2CA0B6FF55C5B1F55B9117BCA7CE6402856EF297D16B64D0CC`
-   - In Spaceship, open the domain and look for **DNSSEC** (domain settings or Advanced DNS) → add a DS record with these values. If no DS form is shown for domains on custom nameservers, ask Spaceship support to add it. Cloudflare switches from *pending* to *active* once it sees the record (check: `dig assane-diallo.com DS +short`).
-2. **Access on preview URLs.** Zero Trust → enable it once (team name `assane-diallo`, **Free** plan). Then **Workers & Pages → assane-diallo → Access → Protect this Worker behind Access → Previews only**, policy **Cloudflare account** (only you), **Apply Access**. PR previews then ask for a one-time code; the live site is unaffected. (The API refuses until Zero Trust is enabled: "Access is not enabled".)
-3. **Crawler Hints.** Caching → Configuration → **Crawler Hints** on (dashboard only; tells Bing and other IndexNow engines when pages change).
-4. **Account security.** Make sure 2FA is on for Cloudflare and GitHub, and give the deploy API token an expiry date you'll remember to renew.
+1. **Access on preview URLs.** Zero Trust → enable it once (team name `assane-diallo`, **Free** plan). Then **Workers & Pages → assane-diallo → Access → Protect this Worker behind Access → Previews only**, policy **Cloudflare account** (only you), **Apply Access**. PR previews then ask for a one-time code; the live site is unaffected. (The API refuses until Zero Trust is enabled: "Access is not enabled".)
+2. **Crawler Hints.** Caching → Configuration → **Crawler Hints** on (dashboard only; tells Bing and other IndexNow engines when pages change).
+3. **Account security.** Make sure 2FA is on for Cloudflare and GitHub, and give the deploy API token an expiry date you'll remember to renew.
 
 ## Initial dashboard steps (done)
 
