@@ -334,7 +334,7 @@ test.describe("home page follows the device language", () => {
       await stubAnalytics(context);
       const page = await context.newPage();
       await page.goto("/");
-      await expect(page).toHaveURL(new RegExp(`${expected.replace(/\//g, "\\/")}$`));
+      await expect(page).toHaveURL(new RegExp(`${expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`));
       await context.close();
     });
   }
