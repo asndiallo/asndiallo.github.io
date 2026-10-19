@@ -1,0 +1,85 @@
+---
+import { PUBLIC_FORM_ENDPOINT } from "astro:env/client";
+import { getDictionary, type Locale, staticRoutes } from "../../i18n/index.ts";
+import Page from "../../layouts/Page.astro";
+import { bookingHref, encodedEmail, whatsappHref } from "../../lib/contact.ts";
+import EmailLink from "../EmailLink.astro";
+import Link from "../Link.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const copy = t.privacy;
+
+/** Change this date whenever the note changes. */
+const updated = new Date("2026-10-19").toLocaleDateString(locale, {
+  dateStyle: "long",
+  timeZone: "UTC",
+});
+
+// Only the channels that are live on the site are described.
+const whatsapp = whatsappHref(copy.rights.whatsappMessage);
+const channels = [
+  whatsapp && copy.contact.whatsapp,
+  bookingHref() && copy.contact.booking,
+  encodedEmail() && copy.contact.email,
+  PUBLIC_FORM_ENDPOINT && copy.contact.form,
+].filter((c) => !!c);
+
+const services = [
+  { name: "WhatsApp (Meta)", href: "https://www.whatsapp.com/legal/privacy-policy" },
+  { name: "Google", href: "https://policies.google.com/privacy" },
+  { name: "Zoho Mail", href: "https://www.zoho.com/privacy.html" },
+  { name: "Cloudflare", href: "https://www.cloudflare.com/privacypolicy/" },
+];
+const heading = "mt-12 text-2xl sm:text-3xl";
+---
+
+<Page
+  title={copy.meta.title}
+  description={copy.meta.description}
+  h1={copy.h1}
+  lead={copy.lead}
+  locale={locale}
+  alternates={staticRoutes.privacy}
+>
+  <div class="measure">
+    <p class="mt-4 text-sm text-muted">{copy.updated}{t.colon} {updated}</p>
+
+    <h2 class={heading}>{copy.site.h2}</h2>
+    <div class="mt-4 space-y-4">{copy.site.paragraphs.map((p) => <p>{p}</p>)}</div>
+
+    <h2 class={heading}>{copy.contact.h2}</h2>
+    <p class="mt-4">{copy.contact.intro}</p>
+    <ul class="mt-4 list-disc space-y-2 pl-6">
+      {
+        channels.map((c) => (
+          <li>
+            <strong>{c.label}</strong>{t.colon} {c.body}
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 class={heading}>{copy.use.h2}</h2>
+    <p class="mt-4">{copy.use.body}</p>
+
+    <h2 class={heading}>{copy.keep.h2}</h2>
+    <p class="mt-4">{copy.keep.body}</p>
+
+    <h2 class={heading}>{copy.rights.h2}</h2>
+    <p class="mt-4">{copy.rights.body}</p>
+    <ul class="mt-4 space-y-2">
+      {whatsapp && <li><Link href={whatsapp}>{t.cta.whatsapp}</Link></li>}
+      <li><EmailLink>{t.cta.email}</EmailLink></li>
+    </ul>
+
+    <h2 class={heading}>{copy.services.h2}</h2>
+    <p class="mt-4">{copy.services.intro}</p>
+    <ul class="mt-4 list-disc space-y-2 pl-6">
+      {services.map((s) => <li><Link href={s.href}>{s.name}</Link></li>)}
+    </ul>
+  </div>
+</Page>

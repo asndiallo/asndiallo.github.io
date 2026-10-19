@@ -24,5 +24,6 @@ export async function getPageGroups(): Promise<Alternates[]> {
     ...(await collectionGroups("work")),
     staticRoutes.about,
     staticRoutes.engineering,
+    staticRoutes.privacy,
   ];
 }

@@ -40,6 +40,7 @@ export const en = {
   footer: {
     tagline: "Local SEO and Google Business Profile setup for African-owned businesses in the US.",
     engineering: "My software engineering work",
+    privacy: "Privacy",
     languages: "English et français.",
   },
   home: {
@@ -215,6 +216,7 @@ export const en = {
     contact: {
       h2: "Start with a free check-up",
       body: "Send me your business name on WhatsApp, or email me.",
+      privacy: "How I handle your details",
     },
   },
   work: {
@@ -274,6 +276,61 @@ export const en = {
     h1: "Message sent",
     lead: "Thanks. I'll reply soon, on WhatsApp or by email, whichever you gave me.",
     back: "Back to the home page",
+  },
+  privacy: {
+    meta: {
+      title: "Privacy | Assane Diallo",
+      description:
+        "What this site collects (no cookies, no ads) and how I handle your details when you message me, email me or book a free check-up.",
+    },
+    h1: "Privacy",
+    lead: "No cookies, no ads, no tracking across sites. When you contact me, I use your details only to reply and, if we work together, to do the work.",
+    updated: "Last updated",
+    site: {
+      h2: "What this site collects",
+      paragraphs: [
+        "Nothing that identifies you. Cloudflare Web Analytics counts visits without cookies: the page viewed, the site you came from, your type of browser and device, and your country. It doesn't follow you to other sites.",
+        "Cloudflare also hosts this site, so it handles the technical data every website needs to send you a page, such as your IP address.",
+        "If you choose a language or a color theme, that choice is saved in your own browser and never sent to me.",
+      ],
+    },
+    contact: {
+      h2: "When you contact me or book a call",
+      intro: "You decide what to share. Here is what reaches me, by channel:",
+      whatsapp: {
+        label: "WhatsApp",
+        body: "your name, your number and what you write. The conversation goes through WhatsApp (Meta).",
+      },
+      booking: {
+        label: "Booking a free check-up",
+        body: "the details you enter on the Google Calendar booking page, such as your name and email.",
+      },
+      email: {
+        label: "Email",
+        body: "your address and your message. My mailbox is hosted by Zoho Mail.",
+      },
+      form: {
+        label: "Contact form",
+        body: "your name, your business, how to reach you and your message, delivered to me by a form service.",
+      },
+    },
+    use: {
+      h2: "How I use it",
+      body: "Only to reply to you, prepare your free check-up and, if you hire me, do the work and bill for it. I don't sell your details, I don't share them for advertising, and I don't add you to a mailing list.",
+    },
+    keep: {
+      h2: "How long I keep it",
+      body: "While we're talking or working together. If we don't end up working together, I delete our messages and your details within 12 months of our last contact. For clients, I keep what the work and my tax records require.",
+    },
+    rights: {
+      h2: "Seeing, correcting or deleting your details",
+      body: "Ask me at any time what I have about you, or to correct or delete it.",
+      whatsappMessage: "Hi Assane, about my details: ",
+    },
+    services: {
+      h2: "Services involved",
+      intro: "Each one has its own privacy policy:",
+    },
   },
   form: {
     h3: "Or send a message here",

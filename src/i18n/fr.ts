@@ -43,6 +43,7 @@ export const fr: Dictionary = {
     tagline:
       "Référencement local et fiche d'établissement Google pour les entreprises africaines aux États-Unis.",
     engineering: "Mon travail d'ingénieur logiciel (en anglais)",
+    privacy: "Confidentialité",
     languages: "English et français.",
   },
   home: {
@@ -218,6 +219,7 @@ export const fr: Dictionary = {
     contact: {
       h2: "Commencez par un bilan gratuit",
       body: "Envoyez-moi le nom de votre entreprise sur WhatsApp, ou écrivez-moi par e-mail.",
+      privacy: "Comment je traite vos informations",
     },
   },
   work: {
@@ -277,6 +279,61 @@ export const fr: Dictionary = {
     h1: "Message envoyé",
     lead: "Merci. Je vous réponds vite, sur WhatsApp ou par e-mail, selon ce que vous m'avez laissé.",
     back: "Retour à l'accueil",
+  },
+  privacy: {
+    meta: {
+      title: "Confidentialité | Assane Diallo",
+      description:
+        "Ce que ce site collecte (pas de cookies, pas de publicité) et ce que je fais de vos informations quand vous m'écrivez ou réservez un bilan gratuit.",
+    },
+    h1: "Confidentialité",
+    lead: "Pas de cookies, pas de publicité, pas de suivi d'un site à l'autre. Quand vous me contactez, j'utilise vos informations uniquement pour vous répondre et, si nous travaillons ensemble, pour faire le travail.",
+    updated: "Dernière mise à jour",
+    site: {
+      h2: "Ce que ce site collecte",
+      paragraphs: [
+        `Rien qui permette de vous identifier. Cloudflare Web Analytics compte les visites sans cookies${nb}: la page vue, le site d'où vous venez, votre type de navigateur et d'appareil, et votre pays. Il ne vous suit pas sur d'autres sites.`,
+        `Cloudflare héberge aussi ce site${nb}: il traite donc les données techniques dont tout site a besoin pour vous envoyer une page, comme votre adresse IP.`,
+        "Si vous choisissez une langue ou un thème de couleur, ce choix est enregistré dans votre propre navigateur et ne m'est jamais envoyé.",
+      ],
+    },
+    contact: {
+      h2: "Quand vous me contactez ou réservez un appel",
+      intro: `Vous choisissez ce que vous partagez. Voici ce qui me parvient, selon le moyen utilisé${nb}:`,
+      whatsapp: {
+        label: "WhatsApp",
+        body: "votre nom, votre numéro et ce que vous écrivez. La conversation passe par WhatsApp (Meta).",
+      },
+      booking: {
+        label: "Réservation d'un bilan gratuit",
+        body: "les informations que vous saisissez sur la page de réservation Google Agenda, comme votre nom et votre e-mail.",
+      },
+      email: {
+        label: "E-mail",
+        body: "votre adresse et votre message. Ma messagerie est hébergée par Zoho Mail.",
+      },
+      form: {
+        label: "Formulaire de contact",
+        body: "votre nom, votre entreprise, le moyen de vous répondre et votre message, que me transmet un service de formulaires.",
+      },
+    },
+    use: {
+      h2: "Ce que j'en fais",
+      body: "Uniquement vous répondre, préparer votre bilan gratuit et, si vous faites appel à moi, faire le travail et le facturer. Je ne vends pas vos informations, je ne les partage pas à des fins publicitaires et je ne vous inscris à aucune liste de diffusion.",
+    },
+    keep: {
+      h2: "Combien de temps je les garde",
+      body: "Tant que nous échangeons ou travaillons ensemble. Si nous ne travaillons finalement pas ensemble, je supprime nos messages et vos informations dans les 12 mois suivant notre dernier échange. Pour mes clients, je garde ce qu'exigent le travail et mes obligations fiscales.",
+    },
+    rights: {
+      h2: "Consulter, corriger ou supprimer vos informations",
+      body: "Vous pouvez me demander à tout moment ce que je détiens sur vous, ou de le corriger ou de le supprimer.",
+      whatsappMessage: `Bonjour Assane, au sujet de mes informations${nb}: `,
+    },
+    services: {
+      h2: "Services utilisés",
+      intro: `Chacun a sa propre politique de confidentialité${nb}:`,
+    },
   },
   form: {
     h3: "Ou envoyez un message ici",
