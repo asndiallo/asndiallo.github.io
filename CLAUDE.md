@@ -54,5 +54,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 - One `<h1>` per page. Unique title (≤ 60) and description (≤ 155). Every page goes through `layouts/Base.astro`.
 - JSON-LD `ProfessionalService` has `areaServed` and **no address**.
 - System fonts only (zero layout shift). Colours come from `@theme` tokens in `src/styles/global.css`, which are AA-checked.
+- GitHub Actions are pinned to full commit SHAs with a `# vX.Y.Z` comment; Dependabot (`.github/dependabot.yml`) keeps them and npm packages current (weekly, with a cooldown). Never switch back to tags.
+- `develop` is protected by a ruleset: changes land through pull requests with CI (`check`) passing; no force pushes or deletion. Merge only after CI passes.
 - Add no dependency without a one-line justification in PLAN.md §2.
 - Small conventional commits. Run `pnpm check` before claiming done.
