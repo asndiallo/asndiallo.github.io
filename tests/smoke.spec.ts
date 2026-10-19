@@ -152,6 +152,19 @@ test("theme: follows the system, and a saved choice wins and persists", async ({
   expect(await background()).toBe("rgb(255, 255, 255)");
 });
 
+test("theme toggle is laid out before its script runs, so it never shifts the page", async ({
+  page,
+}) => {
+  // Serve the page without its bundled module scripts: only the head script runs.
+  await page.route("/", async (route) => {
+    const response = await route.fetch();
+    const body = (await response.text()).replace(/<script type="module"[\s\S]*?<\/script>/g, "");
+    await route.fulfill({ response, body });
+  });
+  await page.goto("/");
+  await expect(page.locator("[data-theme-toggle]").first()).toBeVisible();
+});
+
 test("home has the WhatsApp CTA and ProfessionalService JSON-LD without an address", async ({
   page,
 }) => {
