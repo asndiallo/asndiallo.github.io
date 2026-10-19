@@ -14,6 +14,12 @@ export const SITE_NAME = "Assane Diallo";
 /** Routed to Gmail by Cloudflare Email Routing (receive only). See DOMAIN-SETUP.md. */
 export const CONTACT_EMAIL: string = "hello@assane-diallo.com";
 
+/**
+ * Cloudflare Web Analytics (cookieless). The token is public: it ships in every page.
+ * Set to "" to turn analytics off. Edge injection doesn't apply to Workers, so it's in the build.
+ */
+export const CF_WEB_ANALYTICS_TOKEN = "6a847fca966e442d9322e847825c4961";
+
 export const site = {
   /** Business WhatsApp number, digits only, with country code (e.g. "15551234567"). */
   whatsappNumber: "12109605715" as string,

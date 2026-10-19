@@ -1,5 +1,18 @@
-import { expect, type Page, test } from "@playwright/test";
+import { type BrowserContext, expect, type Page, test } from "@playwright/test";
 import { SITE_URL as SITE } from "../src/config.ts";
+
+/**
+ * Cloudflare's analytics beacon ships in every page. Tests answer it locally with an empty
+ * script, so they never wait on (or fail because of) Cloudflare's servers.
+ */
+const stubAnalytics = (context: BrowserContext) =>
+  context.route(/cloudflareinsights\.com/, (route) =>
+    route.fulfill({ status: 200, contentType: "application/javascript", body: "" }),
+  );
+
+test.beforeEach(async ({ context }) => {
+  await stubAnalytics(context);
+});
 
 /** Indexable pages come from the sitemap, so new pages are covered automatically. */
 async function sitemapPaths(page: Page): Promise<string[]> {
@@ -216,6 +229,10 @@ test("security and cache headers, and a strict hash-based CSP", async ({ page })
   expect(csp).toMatch(/script-src 'self'[^;]* 'sha256-/);
   expect(csp).not.toContain("unsafe-inline");
 
+  // Cloudflare Web Analytics ships in the page as an external script, allowed by host.
+  expect(html).toContain('src="https://static.cloudflareinsights.com/beacon.min.js"');
+  expect(csp).toContain("https://static.cloudflareinsights.com");
+
   const asset = /\/_astro\/[^"]+\.css/.exec(html)?.[0];
   expect(asset).toBeTruthy();
   const cached = await page.request.get(asset ?? "");
@@ -314,6 +331,7 @@ test.describe("home page follows the device language", () => {
   ] as const) {
     test(`${deviceLocale} → ${expected}`, async ({ browser }) => {
       const context = await browser.newContext({ locale: deviceLocale });
+      await stubAnalytics(context);
       const page = await context.newPage();
       await page.goto("/");
       await expect(page).toHaveURL(new RegExp(`${expected.replace(/\//g, "\\/")}$`));
@@ -323,6 +341,7 @@ test.describe("home page follows the device language", () => {
 
   test("a language picked with the switch wins over the device language", async ({ browser }) => {
     const context = await browser.newContext({ locale: "fr-FR" });
+    await stubAnalytics(context);
     const page = await context.newPage();
     await page.goto("/");
     await expect(page).toHaveURL(/\/fr\/$/);
@@ -335,6 +354,7 @@ test.describe("home page follows the device language", () => {
 
   test("deep links are never redirected", async ({ browser }) => {
     const context = await browser.newContext({ locale: "fr-FR" });
+    await stubAnalytics(context);
     const page = await context.newPage();
     await page.goto("/work/");
     await expect(page).toHaveURL(/\/work\/$/);

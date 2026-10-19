@@ -1,11 +1,22 @@
 ---
 import { PUBLIC_ANALYTICS, PUBLIC_PLAUSIBLE_DOMAIN } from "astro:env/client";
+import { CF_WEB_ANALYTICS_TOKEN } from "../config.ts";
 
-// Optional Plausible analytics, off unless set at build time. Cloudflare Web Analytics is
-// injected by Cloudflare at the edge (automatic setup), so it isn't built into the pages.
+// Cookieless analytics. Cloudflare's beacon is an external script (allowed by host in the CSP).
+// Plausible is an optional alternative switched on at build time.
 const plausible = PUBLIC_ANALYTICS === "plausible" && PUBLIC_PLAUSIBLE_DOMAIN;
 ---
 
+{
+  CF_WEB_ANALYTICS_TOKEN && (
+    <script
+      is:inline
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN })}
+    />
+  )
+}
 {
   plausible && (
     <script is:inline defer data-domain={PUBLIC_PLAUSIBLE_DOMAIN} src="https://plausible.io/js/script.js" />

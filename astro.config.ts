@@ -10,8 +10,8 @@ import { externalLinksPlugin } from "./src/lib/markdown-external-links.ts";
 const sha256 = (source: string) =>
   `sha256-${createHash("sha256").update(source).digest("base64")}` as const;
 
-// Third-party script hosts. Cloudflare Web Analytics is injected at the edge (its automatic
-// setup), so its beacon host is always allowed; Plausible only when switched on at build time.
+// Third-party script hosts: Cloudflare Web Analytics' beacon (in every page, see config.ts),
+// and Plausible only when switched on at build time.
 const scriptHosts = [
   "https://static.cloudflareinsights.com",
   ...(process.env.PUBLIC_ANALYTICS === "plausible" ? ["https://plausible.io"] : []),
