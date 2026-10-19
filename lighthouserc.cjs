@@ -17,6 +17,8 @@ module.exports = {
       staticDirFileDiscoveryDepth: 4, // default 2 misses /fr/pour/<vertical>/ and /fr/realisations/<case>/
       // Median of 3 runs per page: a single run on a shared CI machine is too noisy to gate on.
       numberOfRuns: 3,
+      // The analytics beacon is a third-party request; keep scores about the site itself.
+      settings: { blockedUrlPatterns: ["*cloudflareinsights.com*"] },
     },
     assert: {
       assertMatrix: [
