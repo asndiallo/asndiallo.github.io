@@ -34,7 +34,7 @@ The first time, run `pnpm exec playwright install chromium`. Lighthouse uses you
 | Prices and what each package includes             | `src/config.ts` → `pricing`                                                                                               |
 | Homepage and UI copy                              | `src/i18n/en.ts` and `src/i18n/fr.ts`                                                                                     |
 | Contact form (optional)                           | env `PUBLIC_FORM_ENDPOINT`: a Formspree-style POST URL. No value means no form.                                           |
-| Analytics (optional, cookieless)                  | env `PUBLIC_ANALYTICS=cloudflare` + `PUBLIC_CF_BEACON_TOKEN`, or `PUBLIC_ANALYTICS=plausible` + `PUBLIC_PLAUSIBLE_DOMAIN` |
+| Analytics (cookieless)                            | Cloudflare Web Analytics, injected by Cloudflare at the edge (Web Analytics → automatic setup); nothing in the build. Optional alternative: `PUBLIC_ANALYTICS=plausible` + `PUBLIC_PLAUSIBLE_DOMAIN`. |
 
 For local builds, put env values in `.env` (git-ignored). For deploys, set them as repository **Variables** (Settings → Secrets and variables → Actions → Variables). None of them are secret.
 

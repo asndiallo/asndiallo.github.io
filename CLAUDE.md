@@ -50,7 +50,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 
 ## Technical rules
 
-- No client-side JS framework. No cookies, no consent banner. Analytics only via `PUBLIC_ANALYTICS` (cookieless).
+- No client-side JS framework. No cookies, no consent banner. Analytics: Cloudflare Web Analytics injected at the edge (cookieless; its beacon host is allowed in the CSP), never built into pages, so tests stay deterministic.
 - One `<h1>` per page. Unique title (≤ 60) and description (≤ 155). Every page goes through `layouts/Base.astro`.
 - JSON-LD `ProfessionalService` has `areaServed` and **no address**.
 - System fonts only (zero layout shift). Colours come from `@theme` tokens in `src/styles/global.css`, which are AA-checked.

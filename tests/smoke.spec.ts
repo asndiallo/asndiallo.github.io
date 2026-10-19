@@ -213,7 +213,7 @@ test("security and cache headers, and a strict hash-based CSP", async ({ page })
 
   const html = await res.text();
   const csp = /<meta http-equiv="content-security-policy" content="([^"]+)"/.exec(html)?.[1] ?? "";
-  expect(csp).toMatch(/script-src 'self' 'sha256-/);
+  expect(csp).toMatch(/script-src 'self'[^;]* 'sha256-/);
   expect(csp).not.toContain("unsafe-inline");
 
   const asset = /\/_astro\/[^"]+\.css/.exec(html)?.[0];
