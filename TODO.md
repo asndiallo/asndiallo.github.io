@@ -8,7 +8,7 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 ### Contact facts (`src/config.ts`)
 
 - [x] Email: `hello@assane-diallo.com` (set in `src/config.ts`). Never in the HTML; the "Email me" link is assembled in the browser. Mail only arrives once Email Routing is set up.
-- [x] Booking link: set (Google Calendar appointment page)
+- [x] Booking link: Cal.com `assane-diallo/free-check-up` (phone call; Gmail + Zoho checked for conflicts, bookings written to Zoho). Replaced the Google Calendar appointment page on 2026-10-20.
 - [x] WhatsApp number: switched to a separate line (`12109605715`)
 
 ### Isa's African Hair Braiding case study (`src/content/work/isa-african-hair-braiding.md`)
