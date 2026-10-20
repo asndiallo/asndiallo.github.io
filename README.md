@@ -28,12 +28,12 @@ The first time, run `pnpm exec playwright install chromium`. Lighthouse uses you
 
 ## Configuration
 
-| What                                              | Where                                                                                                                     |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Email, WhatsApp number, booking link, area served | `src/config.ts`                                                                                                           |
-| Prices and what each package includes             | `src/config.ts` → `pricing`                                                                                               |
-| Homepage and UI copy                              | `src/i18n/en.ts` and `src/i18n/fr.ts`                                                                                     |
-| Contact form (optional)                           | env `PUBLIC_FORM_ENDPOINT`: a Formspree-style POST URL. No value means no form.                                           |
+| What                                              | Where                                                                                                                                                                                                           |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Email, WhatsApp number, booking link, area served | `src/config.ts`                                                                                                                                                                                                 |
+| Prices and what each package includes             | `src/config.ts` → `pricing`                                                                                                                                                                                     |
+| Homepage and UI copy                              | `src/i18n/en.ts` and `src/i18n/fr.ts`                                                                                                                                                                           |
+| Contact form (optional)                           | env `PUBLIC_FORM_ENDPOINT`: a Formspree-style POST URL. No value means no form.                                                                                                                                 |
 | Analytics (cookieless)                            | Cloudflare Web Analytics: `CF_WEB_ANALYTICS_TOKEN` in `src/config.ts` (public token; `""` turns it off). Tests stub the beacon. Optional alternative: `PUBLIC_ANALYTICS=plausible` + `PUBLIC_PLAUSIBLE_DOMAIN`. |
 
 For local builds, put env values in `.env` (git-ignored). For deploys, set them as repository **Variables** (Settings → Secrets and variables → Actions → Variables). None of them are secret.
@@ -43,7 +43,7 @@ For local builds, put env values in `.env` (git-ignored). For deploys, set them 
 Hosting is **Cloudflare Workers static assets** (`wrangler.jsonc`). The architecture, status, go-live steps and rollback are in **[DOMAIN-SETUP.md](DOMAIN-SETUP.md)**.
 
 - **Pull requests:** CI runs the full `pnpm check`. PRs from this repo also get a **preview URL** (`pr-<n>-assane-diallo.<subdomain>.workers.dev`), posted as a comment.
-- **Production:** Actions → **Deploy** → *Run workflow*. It reruns every check, then deploys exactly the build that passed (`wrangler deploy`). With `SITE_LIVE=true` (set), it then runs `pnpm verify:domain` against the live domain.
+- **Production:** Actions → **Deploy** → _Run workflow_. It reruns every check, then deploys exactly the build that passed (`wrangler deploy`). With `SITE_LIVE=true` (set), it then runs `pnpm verify:domain` against the live domain.
 - **Rollback:** `pnpm exec wrangler rollback`.
 - **Headers and redirects:** `public/_headers` (HSTS, CSP frame rules, caching) and `public/_redirects` (301s). Scripts and styles are covered by a hash-based CSP that Astro generates per page. The only inline script lives in `src/lib/inline-scripts.ts`.
 - **Secrets:** `CLOUDFLARE_API_TOKEN` (yours, "Edit Cloudflare Workers" scoped to the account and zone) and `CLOUDFLARE_ACCOUNT_ID`.
@@ -65,35 +65,40 @@ The site is in English (`/`) and French (`/fr/`), for African-owned businesses i
 
 ```markdown
 ---
-business: "Business name"
-location: City, ST              # or "Online shop"
-vertical: braiding-salons       # braiding-salons | restaurants | online-shop | other
-status: complete                # or in-progress: hidden in production, shown in PR previews (SHOW_IN_PROGRESS=true)
-homepage: true                  # false keeps it off the home page cards (e.g. online shops)
-summary: "One plain sentence, ≤ 155 characters."
-consent: true                   # required: the build fails without it
-website: https://example.com/   # optional
+business: 'Business name'
+location: City, ST # or "Online shop"
+vertical: braiding-salons # braiding-salons | restaurants | online-shop | other
+status: complete # or in-progress: hidden in production, shown in PR previews (SHOW_IN_PROGRESS=true)
+homepage: true # false keeps it off the home page cards (e.g. online shops)
+summary: 'One plain sentence, ≤ 155 characters.'
+consent: true # required: the build fails without it
+website: https://example.com/ # optional
 services:
   - Google Business Profile
-results:                        # optional: only numbers the owner approved
-  - label: Calls from Google, per month   # example format only
-    value: "12 → 31"
+results: # optional: only numbers the owner approved
+  - label: Calls from Google, per month # example format only
+    value: '12 → 31'
     source: Google Business Profile insights, Jan vs. Apr 2027
-quote:                          # optional: only with permission
-  text: "…"
+quote: # optional: only with permission
+  text: '…'
   author: Name, Business
 image:
   src: ../../../assets/work/<file>.png
-  alt: "What the image shows."
-order: 2                        # position on the home page and the work page
-urlSlug: …                      # optional: a different URL segment for this language
+  alt: 'What the image shows.'
+order: 2 # position on the home page and the work page
+urlSlug: … # optional: a different URL segment for this language
 ---
 
 ## Before
+
 …
+
 ## What I did
+
 …
+
 ## After
+
 …
 ```
 

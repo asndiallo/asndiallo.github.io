@@ -30,30 +30,30 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 
 ## Status
 
-| | Item | By | When |
-| --- | --- | --- | --- |
-| ✅ | Domain registered at Spaceship (expires 2027-10-18); nameservers on Cloudflare | you | before |
-| ✅ | Zone `assane-diallo.com` active on Cloudflare (Free plan) | you | before |
-| ↩️ | Cloudflare Email Routing: enabled, then **removed** at your request to switch to Zoho. Disabling removed its 3 MX, SPF and DKIM records; the `hello@` rule and the Gmail destination were deleted | Claude | 2026-10-18 |
-| ✅ | DMARC Management enabled | Claude | 2026-10-18 |
-| ✅ | GitHub secret `CLOUDFLARE_ACCOUNT_ID` | Claude | 2026-10-18 |
-| ✅ | workers.dev subdomain `assane-diallo` | you | 2026-10-18 |
-| ✅ | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers") | you | 2026-10-18 |
-| ✅ | One DMARC record: `v=DMARC1; p=none; sp=none; adkim=r; aspf=r; rua=` <hello@assane-diallo.com> + Cloudflare DMARC Management; `ruf=` hello@ (duplicate from the Zoho setup merged) | Claude | 2026-10-18 |
-| ✅ | First deploy (one-time, local `wrangler deploy` after `wrangler login`): <https://assane-diallo.assane-diallo.workers.dev> | Claude | 2026-10-18 |
-| ✅ | PR previews working: <https://pr-1-assane-diallo.assane-diallo.workers.dev> | CI | 2026-10-18 |
-| ✅ | Preview reviewed; go-live approved | you | 2026-10-18 |
-| ✅ | **Live**: Custom Domain `assane-diallo.com` on the Worker (Google Trust Services certificate), `workers.dev` off | Claude | 2026-10-18 |
-| ✅ | www → apex 301 (proxied `AAAA www 100::` + Redirect Rule), Always Use HTTPS on, minimum TLS 1.2 | Claude | 2026-10-18 |
-| ✅ | GitHub Pages switched to Actions; `SITE_LIVE=true`; asndiallo.github.io serves the redirect-only build | Claude | 2026-10-18 |
-| ✅ | PR #1 merged; Deploy runs on every push to `develop`; `pnpm verify:domain` 9/9 | Claude | 2026-10-18 |
-| ✅ | Zoho Mail (EU): MX, SPF `include:zohomail.eu`, DKIM, verification | you | 2026-10-18 |
-| ✅ | GitHub Pages removed (no redirect build for asndiallo.github.io); repo renamed to `asndiallo/assane-diallo.com` | Claude | 2026-10-18 |
-| ✅ | GitHub security: Dependabot alerts + security updates + version updates (`.github/dependabot.yml`), secret scanning with push protection, CodeQL, private vulnerability reporting, read-only default token, only GitHub-owned actions + `pnpm/action-setup` allowed with SHA pinning required, ruleset "Protect develop" (PR + passing `check`, no force push/deletion) | Claude | 2026-10-18 |
-| ✅ | Cloudflare Web Analytics (cookieless) in every page; Workers Logs enabled | Claude | 2026-10-18 |
-| ✅ | Zone: Always Use HTTPS, TLS 1.3, HTTP/3 on; minimum TLS 1.2; email obfuscation off; Bot Fight Mode and JavaScript detections off (they challenged CI checks and injected a script the CSP blocks) | Claude + you | 2026-10-18 |
-| ✅ | DNSSEC active (DS record added at Spaceship) | Claude + you | 2026-10-18 |
-| ⏳ | **Access on preview URLs** (drafts): needs Zero Trust enabled once in the dashboard (below) | you | |
+|     | Item                                                                                                                                                                                                                                                                                                                                                                    | By           | When       |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------- |
+| ✅  | Domain registered at Spaceship (expires 2027-10-18); nameservers on Cloudflare                                                                                                                                                                                                                                                                                          | you          | before     |
+| ✅  | Zone `assane-diallo.com` active on Cloudflare (Free plan)                                                                                                                                                                                                                                                                                                               | you          | before     |
+| ↩️  | Cloudflare Email Routing: enabled, then **removed** at your request to switch to Zoho. Disabling removed its 3 MX, SPF and DKIM records; the `hello@` rule and the Gmail destination were deleted                                                                                                                                                                       | Claude       | 2026-10-18 |
+| ✅  | DMARC Management enabled                                                                                                                                                                                                                                                                                                                                                | Claude       | 2026-10-18 |
+| ✅  | GitHub secret `CLOUDFLARE_ACCOUNT_ID`                                                                                                                                                                                                                                                                                                                                   | Claude       | 2026-10-18 |
+| ✅  | workers.dev subdomain `assane-diallo`                                                                                                                                                                                                                                                                                                                                   | you          | 2026-10-18 |
+| ✅  | GitHub secret `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers")                                                                                                                                                                                                                                                                                                        | you          | 2026-10-18 |
+| ✅  | One DMARC record: `v=DMARC1; p=none; sp=none; adkim=r; aspf=r; rua=` <hello@assane-diallo.com> + Cloudflare DMARC Management; `ruf=` hello@ (duplicate from the Zoho setup merged)                                                                                                                                                                                      | Claude       | 2026-10-18 |
+| ✅  | First deploy (one-time, local `wrangler deploy` after `wrangler login`): <https://assane-diallo.assane-diallo.workers.dev>                                                                                                                                                                                                                                              | Claude       | 2026-10-18 |
+| ✅  | PR previews working: <https://pr-1-assane-diallo.assane-diallo.workers.dev>                                                                                                                                                                                                                                                                                             | CI           | 2026-10-18 |
+| ✅  | Preview reviewed; go-live approved                                                                                                                                                                                                                                                                                                                                      | you          | 2026-10-18 |
+| ✅  | **Live**: Custom Domain `assane-diallo.com` on the Worker (Google Trust Services certificate), `workers.dev` off                                                                                                                                                                                                                                                        | Claude       | 2026-10-18 |
+| ✅  | www → apex 301 (proxied `AAAA www 100::` + Redirect Rule), Always Use HTTPS on, minimum TLS 1.2                                                                                                                                                                                                                                                                         | Claude       | 2026-10-18 |
+| ✅  | GitHub Pages switched to Actions; `SITE_LIVE=true`; asndiallo.github.io serves the redirect-only build                                                                                                                                                                                                                                                                  | Claude       | 2026-10-18 |
+| ✅  | PR #1 merged; Deploy runs on every push to `develop`; `pnpm verify:domain` 9/9                                                                                                                                                                                                                                                                                          | Claude       | 2026-10-18 |
+| ✅  | Zoho Mail (EU): MX, SPF `include:zohomail.eu`, DKIM, verification                                                                                                                                                                                                                                                                                                       | you          | 2026-10-18 |
+| ✅  | GitHub Pages removed (no redirect build for asndiallo.github.io); repo renamed to `asndiallo/assane-diallo.com`                                                                                                                                                                                                                                                         | Claude       | 2026-10-18 |
+| ✅  | GitHub security: Dependabot alerts + security updates + version updates (`.github/dependabot.yml`), secret scanning with push protection, CodeQL, private vulnerability reporting, read-only default token, only GitHub-owned actions + `pnpm/action-setup` allowed with SHA pinning required, ruleset "Protect develop" (PR + passing `check`, no force push/deletion) | Claude       | 2026-10-18 |
+| ✅  | Cloudflare Web Analytics (cookieless) in every page; Workers Logs enabled                                                                                                                                                                                                                                                                                               | Claude       | 2026-10-18 |
+| ✅  | Zone: Always Use HTTPS, TLS 1.3, HTTP/3 on; minimum TLS 1.2; email obfuscation off; Bot Fight Mode and JavaScript detections off (they challenged CI checks and injected a script the CSP blocks)                                                                                                                                                                       | Claude + you | 2026-10-18 |
+| ✅  | DNSSEC active (DS record added at Spaceship)                                                                                                                                                                                                                                                                                                                            | Claude + you | 2026-10-18 |
+| ⏳  | **Access on preview URLs** (drafts): needs Zero Trust enabled once in the dashboard (below)                                                                                                                                                                                                                                                                             | you          |            |
 
 ## Remaining dashboard steps
 
@@ -65,7 +65,7 @@ The runbook for how the site is hosted and how the domain and email are wired. T
 
 These need the dashboard: the CLI has no command for 1 and 3, and for 2 you create the secret yourself so it never passes through Claude.
 
-1. **workers.dev subdomain.** Go to **Workers & Pages**, then click **Change** next to *Your subdomain*, and enter `assane-diallo`. URLs look like `<worker>.assane-diallo.workers.dev`, so a bare `assane-diallo.workers.dev` isn't possible. It's used for previews only; it's switched off for the main site at go-live.
+1. **workers.dev subdomain.** Go to **Workers & Pages**, then click **Change** next to _Your subdomain_, and enter `assane-diallo`. URLs look like `<worker>.assane-diallo.workers.dev`, so a bare `assane-diallo.workers.dev` isn't possible. It's used for previews only; it's switched off for the main site at go-live.
 2. **Deploy API token.** Go to **Manage account → Account API tokens → Create Token**:
    - Choose the template **Edit Cloudflare Workers**.
    - Under **Account Resources**, pick your account. Under **Zone Resources**, pick **Specific zone → assane-diallo.com**.
@@ -91,13 +91,13 @@ Each step is shown before it runs.
 
 **Sending as hello@ is not set up.** Email Routing only forwards. Options:
 
-| Option | Cost (as listed 2026-10-18) | Notes |
-| --- | --- | --- |
-| Gmail "Send mail as" with SMTP | Free | **Not recommended.** Google removes "Send as" for non-Google addresses in **January 2027** and may already block new setups. |
-| Google Workspace Business Starter | **$7.00/user/month** ($3.50 introductory, Nov 1 2026 – Feb 1 2027) | A real mailbox with Gmail's interface. Replaces Email Routing (MX → Google). |
-| Spacemail (Spaceship) | about **$0.79–$0.98/mailbox/month**, higher on renewal | Cheapest mailbox. Replaces Email Routing. |
-| Zoho Mail | Free for up to 5 users (not in every region); Mail Lite about **$1/user/month**, billed yearly | Replaces Email Routing. |
-| Cloudflare Email Service (sending) | Workers Paid plan; 3,000 emails/month included, then **$0.35/1,000** | For app or website mail (API/SMTP, beta), not a personal inbox. |
+| Option                             | Cost (as listed 2026-10-18)                                                                    | Notes                                                                                                                        |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Gmail "Send mail as" with SMTP     | Free                                                                                           | **Not recommended.** Google removes "Send as" for non-Google addresses in **January 2027** and may already block new setups. |
+| Google Workspace Business Starter  | **$7.00/user/month** ($3.50 introductory, Nov 1 2026 – Feb 1 2027)                             | A real mailbox with Gmail's interface. Replaces Email Routing (MX → Google).                                                 |
+| Spacemail (Spaceship)              | about **$0.79–$0.98/mailbox/month**, higher on renewal                                         | Cheapest mailbox. Replaces Email Routing.                                                                                    |
+| Zoho Mail                          | Free for up to 5 users (not in every region); Mail Lite about **$1/user/month**, billed yearly | Replaces Email Routing.                                                                                                      |
+| Cloudflare Email Service (sending) | Workers Paid plan; 3,000 emails/month included, then **$0.35/1,000**                           | For app or website mail (API/SMTP, beta), not a personal inbox.                                                              |
 
 If you switch to a mailbox provider: remove Email Routing, follow that provider's DNS steps, and **merge** its `include:` into the one SPF record. Never add a second SPF record.
 
@@ -129,11 +129,11 @@ curl -sI https://www.assane-diallo.com/ | grep -i location   # https://assane-di
 
 ## Rollback
 
-| Problem | What to do |
-| --- | --- |
-| A deploy broke the site | `pnpm exec wrangler rollback` (or in the dashboard, Worker → Deployments → roll back). Previous versions stay available. |
+| Problem                 | What to do                                                                                                                                                       |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A deploy broke the site | `pnpm exec wrangler rollback` (or in the dashboard, Worker → Deployments → roll back). Previous versions stay available.                                         |
 | The domain must go dark | Remove the `routes` entry and run the Deploy workflow, or delete the Custom Domain in the dashboard. Leave Email Routing alone; it's independent of the website. |
-| Email not arriving | Check that the destination shows **Verified** and look at the Email Routing activity log. Disabling the rule stops forwarding without touching the website. |
+| Email not arriving      | Check that the destination shows **Verified** and look at the Email Routing activity log. Disabling the rule stops forwarding without touching the website.      |
 
 ## Troubleshooting
 

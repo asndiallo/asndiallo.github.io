@@ -4,7 +4,7 @@ location: Savannah, GA
 vertical: braiding-salons
 summary: "Claimed and fixed the salon's Google profile, built a fast website, and set up free booking alerts. 450 calls from Google in 3 months."
 consent: true
-disclosure: "Disclosure: Isa, the owner, is my cousin."
+disclosure: 'Disclosure: Isa, the owner, is my cousin.'
 website: https://isabraiding.com/
 services:
   - Claimed and updated the Google Business Profile
@@ -14,16 +14,16 @@ services:
   - Booking requests sent to the owner on Telegram
 results:
   - label: Calls from the Google profile
-    value: "450"
+    value: '450'
     source: Google Business Profile, last 3 months (to Oct 2026)
   - label: Direction requests
-    value: "302"
+    value: '302'
     source: Google Business Profile, last 3 months (to Oct 2026)
   - label: Website clicks
-    value: "223"
+    value: '223'
     source: Google Business Profile, last 3 months (to Oct 2026)
   - label: People who viewed the profile
-    value: "4,723"
+    value: '4,723'
     source: Google Business Profile, last 3 months (to Oct 2026)
 image:
   src: ../../../assets/work/isa-braiding.png

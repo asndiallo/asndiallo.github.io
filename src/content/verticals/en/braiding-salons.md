@@ -1,8 +1,8 @@
 ---
 name: Braiding salons
 order: 1
-title: "Google & booking setup for braiding salons | Assane Diallo"
-description: "Get your braiding salon found on Google with a tuned profile, a simple site, and an easy way to book. Free 15-minute check-up."
+title: 'Google & booking setup for braiding salons | Assane Diallo'
+description: 'Get your braiding salon found on Google with a tuned profile, a simple site, and an easy way to book. Free 15-minute check-up.'
 h1: Get your braiding salon found on Google
 intro: Clients search by style and city. I help your salon show up, show your work and prices, and make booking easy.
 lookFor:
@@ -17,7 +17,7 @@ setup:
   items:
     - A Google profile with the right categories and your best photos
     - A simple page for each major style you want to be found for (for example, knotless braids in your city)
-    - "A booking link that works on a phone"
+    - 'A booking link that works on a phone'
     - A short review request you can send after each appointment
 wontDo:
   h2: What I won't do

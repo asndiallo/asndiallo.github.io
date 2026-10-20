@@ -14,7 +14,7 @@ services:
   - Checkout and product-page conversion
 image:
   src: ../../../assets/work/djidiawax.png
-  alt: "The home page of djidiawax.com: the Djidiawax name over two models wearing jackets with African textile panels, on a stone staircase."
+  alt: 'The home page of djidiawax.com: the Djidiawax name over two models wearing jackets with African textile panels, on a stone staircase.'
 order: 10
 ---
 
