@@ -306,7 +306,7 @@ export const fr: Dictionary = {
       },
       booking: {
         label: "Réservation d'un bilan gratuit",
-        body: "les informations que vous saisissez sur la page de réservation Google Agenda, comme votre nom et votre e-mail.",
+        body: "les informations que vous saisissez sur ma page de réservation Cal.com : votre nom, votre e-mail, votre numéro de téléphone et votre entreprise. Cal.com gère la réservation et l'ajoute à mon agenda.",
       },
       email: {
         label: "E-mail",

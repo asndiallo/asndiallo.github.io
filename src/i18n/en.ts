@@ -303,7 +303,7 @@ export const en = {
       },
       booking: {
         label: "Booking a free check-up",
-        body: "the details you enter on the Google Calendar booking page, such as your name and email.",
+        body: "the details you enter on my Cal.com booking page: your name, email, phone number and business. Cal.com handles the booking and adds it to my calendar.",
       },
       email: {
         label: "Email",

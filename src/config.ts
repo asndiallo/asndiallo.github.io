@@ -23,8 +23,8 @@ export const CF_WEB_ANALYTICS_TOKEN = "6a847fca966e442d9322e847825c4961";
 export const site = {
   /** Business WhatsApp number, digits only, with country code (e.g. "15551234567"). */
   whatsappNumber: "12109605715" as string,
-  /** Booking page for the free 15-minute check-up (Cal.com, Calendly, Google appointment page). */
-  bookingUrl: "https://calendar.app.google/7VsGdzUNf8CynFcd8" as string,
+  /** Booking page for the free 15-minute check-up (Cal.com event type, phone call). */
+  bookingUrl: "https://cal.com/assane-diallo/free-check-up" as string,
   areaServed: "United States",
   social: {
     linkedin: "https://www.linkedin.com/in/assane-diallo/",
