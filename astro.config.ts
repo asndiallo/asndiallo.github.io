@@ -32,7 +32,11 @@ export default defineConfig({
   },
   build: { format: "directory" },
   // External links in markdown open in a new tab (components use components/Link.astro).
-  markdown: { processor: satteri({ hastPlugins: [externalLinksPlugin] }) },
+  // No code blocks on the site, and Shiki's inline styles would conflict with the CSP.
+  markdown: {
+    syntaxHighlight: false,
+    processor: satteri({ hastPlugins: [externalLinksPlugin] }),
+  },
   i18n: {
     locales: [...locales],
     defaultLocale,
