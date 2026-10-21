@@ -25,6 +25,10 @@ results:
   - label: People who viewed the profile
     value: '4,723'
     source: Google Business Profile, last 3 months (to Oct 2026)
+quote:
+  text: "I was amazed by the website Assane built for me. A lot of my clients have told me they booked with me because of how professional my website looks compared to others. One mother who had never been to Savannah told me she chose us for her daughter, who is new to Savannah, because the website made her feel she could trust us. I have received a lot of booking requests from the website, and I am really happy with it."
+  excerpt: "A lot of my clients have told me they booked with me because of how professional my website looks compared to others. One mother who had never been to Savannah told me she chose us for her daughter […] because the website made her feel she could trust us."
+  author: "Isa, owner of Isa's African Hair Braiding"
 image:
   src: ../../../assets/work/isa-braiding.png
   alt: "The home page of isabraiding.com: the salon's name, the headline “Let your hair do the talking,” a Book your appointment button, and the salon's phone number."

@@ -25,6 +25,11 @@ results:
   - label: Personnes ayant vu la fiche
     value: '4 723'
     source: Fiche d'établissement Google, 3 derniers mois (jusqu'à octobre 2026)
+quote:
+  text: "J'ai été épatée par le site qu'Assane a créé pour moi. Beaucoup de mes clients m'ont dit avoir réservé chez moi parce que mon site a l'air bien plus professionnel que les autres. Une mère qui n'était jamais venue à Savannah m'a dit qu'elle nous avait choisis pour sa fille, qui vient d'arriver à Savannah, parce que le site lui avait donné confiance. J'ai reçu beaucoup de demandes de réservation grâce au site, et j'en suis vraiment contente."
+  excerpt: "Beaucoup de mes clients m'ont dit avoir réservé chez moi parce que mon site a l'air bien plus professionnel que les autres. Une mère qui n'était jamais venue à Savannah m'a dit qu'elle nous avait choisis pour sa fille […] parce que le site lui avait donné confiance."
+  author: "Isa, propriétaire d'Isa's African Hair Braiding"
+  translated: true
 image:
   src: ../../../assets/work/isa-braiding.png
   alt: "La page d'accueil d'isabraiding.com : le nom du salon, le titre « Let your hair do the talking », un bouton de réservation et le numéro du salon."
