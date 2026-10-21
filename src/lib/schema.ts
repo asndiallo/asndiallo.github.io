@@ -1,6 +1,9 @@
 import { pricing, SITE_NAME, SITE_URL, site } from "../config.ts";
 
-const sameAs = Object.values(site.social);
+// Each entity claims only its own profiles, so Google doesn't merge the person and the business.
+const { instagram, facebook, linkedin, github } = site.social;
+const personSameAs = [linkedin, github];
+const businessSameAs = [instagram, facebook];
 
 /** Schema.org Person for Assane. Shared by the business and the about page. */
 export const personSchema = {
@@ -10,7 +13,7 @@ export const personSchema = {
   url: `${SITE_URL}/about/`,
   jobTitle: "Local SEO consultant and software engineer",
   knowsLanguage: ["en", "fr"],
-  sameAs,
+  sameAs: personSameAs,
 };
 
 /** ProfessionalService with a service area and no street address. */
@@ -28,6 +31,6 @@ export function professionalServiceSchema(description: string): Record<string, u
     availableLanguage: ["English", "French"],
     priceRange: `$${Math.min(...prices)}–$${Math.max(...prices)} setup`,
     founder: personSchema,
-    sameAs,
+    sameAs: businessSameAs,
   };
 }

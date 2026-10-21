@@ -44,6 +44,7 @@ export const fr: Dictionary = {
       "Référencement local et fiche d'établissement Google pour les entreprises africaines aux États-Unis.",
     engineering: "Mon travail d'ingénieur logiciel (en anglais)",
     privacy: "Confidentialité",
+    social: "Suivre sur les réseaux sociaux",
     languages: "English et français.",
   },
   home: {
