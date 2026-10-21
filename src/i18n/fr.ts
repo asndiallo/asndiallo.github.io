@@ -53,7 +53,7 @@ export const fr: Dictionary = {
         "J'aide les entreprises africaines aux États-Unis à être trouvées sur Google et à recevoir plus d'appels et de réservations. Bilan Google gratuit.",
     },
     hero: {
-      h1: "Soyez visibles sur Google. Recevez plus d'appels et de réservations.",
+      h1: "Soyez visible sur Google. Recevez plus d'appels et de réservations.",
       subhead:
         "J'aide les entreprises africaines aux États-Unis à apparaître quand les clients cherchent près d'elles, et à faciliter les appels, les réservations et les visites.",
       languages: "English et français.",
