@@ -12,6 +12,7 @@ export const fr: Dictionary = {
   lang: "fr",
   money,
   colon: `${nb}:`,
+  quoted: (text) => `«${nb}${text}${nb}»`,
   newTab: "(s'ouvre dans un nouvel onglet)",
   photoAlt: "Assane Diallo, avec des lunettes rondes et un col roulé bleu marine",
   nav: {
@@ -244,6 +245,7 @@ export const fr: Dictionary = {
     results: "Résultats",
     source: "Source",
     inProgress: "En cours",
+    quoteTranslated: "Traduit de l'anglais.",
     inProgressNote:
       "Ce projet est en cours. J'ajouterai les résultats ici quand il y aura assez de données et que le propriétaire les aura validés.",
     home: "Accueil",

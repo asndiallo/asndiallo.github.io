@@ -10,6 +10,8 @@ export const en = {
   money,
   /** Label separator; French puts a non-breaking space before the colon. */
   colon: ":",
+  /** Wraps quoted words in the language's quotation marks. */
+  quoted: (text: string) => `“${text}”`,
   newTab: "(opens in a new tab)",
   photoAlt: "Assane Diallo, wearing round glasses and a navy turtleneck",
   nav: {
@@ -241,6 +243,8 @@ export const en = {
     results: "Results",
     source: "Source",
     inProgress: "In progress",
+    /** Shown under a translated quote. With two locales, the original is always the other one. */
+    quoteTranslated: "Translated from French.",
     inProgressNote:
       "This project is in progress. I'll add results here once there's enough data and the owner approves them.",
     home: "Home",

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import type { Dictionary } from "../i18n/index.ts";
 import { entryPath } from "../lib/content.ts";
+import Testimonial from "./Testimonial.astro";
 
 /**
  * One case study as a wide panel: screenshot beside the story and its approved numbers.
@@ -13,7 +14,7 @@ interface Props {
   entry: CollectionEntry<"work">;
 }
 const { t, entry } = Astro.props;
-const { business, location, summary, image, disclosure, results } = entry.data;
+const { business, location, summary, image, disclosure, results, quote } = entry.data;
 const stats = results.slice(0, 3);
 const source = results[0]?.source;
 // On wide screens the image fills the panel's height (cover), so it renders about 720px wide.
@@ -63,4 +64,15 @@ const imageSizes = "(min-width: 768px) 720px, 100vw";
       >{t.caseStudy.readMore(business)}</a
     >
   </div>
+  {
+    // Full-width row: inside the text column it would make the panel taller and crop the screenshot.
+    // The card already shows the disclosure under the business name.
+    quote?.excerpt && (
+      <div class="border-t border-line p-6 sm:p-8 md:col-span-2">
+        <div class="max-w-3xl">
+          <Testimonial t={t} text={quote.excerpt} author={quote.author} translated={quote.translated} size="sm" />
+        </div>
+      </div>
+    )
+  }
 </article>

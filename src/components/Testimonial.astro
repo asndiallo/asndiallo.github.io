@@ -1,0 +1,27 @@
+---
+import type { Dictionary } from "../i18n/index.ts";
+
+/** A client's own words, with who said it and any personal relationship right beside them. */
+interface Props {
+  t: Dictionary;
+  text: string;
+  author: string;
+  /** Personal relationship with the client; shown in the caption, next to the words. */
+  disclosure?: string | undefined;
+  translated?: boolean | undefined;
+  /** "lg" for the case study page, "sm" inside a card. */
+  size?: "lg" | "sm";
+}
+const { t, text, author, disclosure, translated = false, size = "lg" } = Astro.props;
+---
+
+<figure class:list={["border-l-4 border-sun", size === "lg" ? "measure pl-6" : "pl-4"]} data-testimonial>
+  <blockquote class:list={["font-serif", size === "lg" ? "text-xl leading-relaxed" : "text-lg leading-snug"]}>
+    <p>{t.quoted(text)}</p>
+  </blockquote>
+  <figcaption class="mt-3 text-sm text-muted">
+    <p class="font-semibold text-ink">{author}</p>
+    {disclosure && <p data-disclosure>{disclosure}</p>}
+    {translated && <p>{t.caseStudy.quoteTranslated}</p>}
+  </figcaption>
+</figure>

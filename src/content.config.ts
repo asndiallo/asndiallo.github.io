@@ -28,7 +28,25 @@ const work = defineCollection({
         results: z
           .array(z.object({ label: z.string(), value: z.string(), source: z.string() }))
           .default([]),
-        quote: z.object({ text: z.string(), author: z.string() }).optional(),
+        /** The owner's words, published with their OK on the exact wording (and on any translation). */
+        quote: z
+          .object({
+            text: z.string(),
+            /**
+             * Shorter cut of `text` for the home page. Words may only be left out, marked "[…]";
+             * the build fails if any other part isn't word for word from `text`.
+             */
+            excerpt: z.string().optional(),
+            author: z.string(),
+            /** The text is a translation from the other language; the page says so. */
+            translated: z.boolean().default(false),
+          })
+          .refine(
+            (q) =>
+              !q.excerpt || q.excerpt.split("[…]").every((part) => q.text.includes(part.trim())),
+            { message: "quote.excerpt must be word for word from quote.text, cuts marked […]" },
+          )
+          .optional(),
         image: z.object({ src: image(), alt: z.string().min(10) }).optional(),
         published: z.coerce.date().optional(),
         order: z.number().default(0),
