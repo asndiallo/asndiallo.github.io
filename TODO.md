@@ -16,6 +16,7 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 - [x] Before / what I did / booking (Telegram booking-request alerts) / 3-month results: filled in from your notes and her Google Business Profile performance screen
 - [x] **Confirm the owner is OK with these numbers being public** (calls, directions, website clicks, views, search terms)
 - [x] **Quote** from the owner, optional and only with permission
+- [x] **Isa approved the exact wording** on 2026-10-21: the full quote (case study), the shortened cut (home page), and the French translation of both (`quote` in `src/content/work/{en,fr}/isa-african-hair-braiding.md`)
 - [x] **Confirm** she's OK with the homepage screenshot of isabraiding.com (`src/assets/work/isa-braiding.png`, taken 2026-10-18)
 - [x] Optional: a before/after comparison (e.g. calls in the 3 months after claiming vs. now) would make a stronger story than totals alone
 

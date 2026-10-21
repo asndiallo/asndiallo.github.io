@@ -321,6 +321,22 @@ test("no work-in-progress case study is published", async ({ page }) => {
   }
 });
 
+test("client quotes are shown with the relationship disclosure", async ({ page }) => {
+  // A family quote without "is my cousin" nearby would mislead (FTC endorsement rules).
+  let quotes = 0;
+  for (const path of await sitemapPaths(page)) {
+    await page.goto(path);
+    const missing = await page.locator("[data-testimonial]").evaluateAll((figures) => {
+      // On a card the disclosure sits under the business name; on a case study, in the caption.
+      return figures.filter((f) => !(f.closest("article") ?? f).querySelector("[data-disclosure]"))
+        .length;
+    });
+    quotes += await page.locator("[data-testimonial]").count();
+    expect(missing, path).toBe(0);
+  }
+  expect(quotes).toBeGreaterThan(0);
+});
+
 test("photo of Assane on the about page and the home page, loaded and described", async ({
   page,
 }) => {
