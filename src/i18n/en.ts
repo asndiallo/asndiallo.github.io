@@ -41,6 +41,7 @@ export const en = {
     tagline: "Local SEO and Google Business Profile setup for African-owned businesses in the US.",
     engineering: "My software engineering work",
     privacy: "Privacy",
+    social: "Follow on social media",
     languages: "English et français.",
   },
   home: {

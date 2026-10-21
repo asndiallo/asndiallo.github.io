@@ -26,7 +26,10 @@ export const site = {
   /** Booking page for the free 15-minute check-up (Cal.com, Calendly, Google appointment page). */
   bookingUrl: "https://calendar.app.google/7VsGdzUNf8CynFcd8" as string,
   areaServed: "United States",
+  /** Instagram/Facebook are the business's (pills, business sameAs); LinkedIn/GitHub are Assane's (links, person sameAs). */
   social: {
+    instagram: "https://www.instagram.com/assane.seo/",
+    facebook: "https://www.facebook.com/assane.seo/",
     linkedin: "https://www.linkedin.com/in/assane-diallo/",
     github: "https://github.com/asndiallo",
   },
