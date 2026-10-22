@@ -3,6 +3,7 @@ business: "Isa's African Hair Braiding"
 location: Savannah, GA
 vertical: braiding-salons
 summary: 'Fiche Google revendiquée et corrigée, site rapide et alertes de réservation gratuites pour un salon de tresses. 450 appels via Google en 3 mois.'
+highlight: '450 appels via Google en 3 mois.'
 consent: true
 disclosure: 'Transparence : Isa, la propriétaire, est ma cousine.'
 website: https://isabraiding.com/

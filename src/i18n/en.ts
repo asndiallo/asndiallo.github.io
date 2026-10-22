@@ -133,10 +133,6 @@ export const en = {
         },
       ],
     },
-    expect: {
-      h2: "What to expect",
-      body: "Some fixes, like correcting your hours or phone number, can help quickly. Moving up in Google usually takes a few months. I can't promise you'll be number one, and I won't. I'll show you what changed and what it did.",
-    },
     proof: {
       h2: "My first clients",
       body: `I'm taking my first ${n} projects at a founding-client price. In return, you let me share the results.`,
@@ -236,6 +232,7 @@ export const en = {
     title: (business: string, location: string) => `${business}, ${location}: what changed`,
     metaTitle: (business: string) => `${business}: case study | Assane Diallo`,
     readMore: (business: string) => `Read the ${business} case study`,
+    readShort: "Read the case study",
     visit: (business: string) => `Visit the ${business} website`,
     all: "All client work",
     facts: "Project facts",

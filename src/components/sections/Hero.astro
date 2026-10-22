@@ -1,16 +1,21 @@
 ---
-import type { Dictionary } from "../../i18n/index.ts";
+import type { Dictionary, Locale } from "../../i18n/index.ts";
 import { bookingHref } from "../../lib/contact.ts";
+import { getLocalized } from "../../lib/content.ts";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
 import Link from "../Link.astro";
+import ProofLine from "../ProofLine.astro";
 import Todo from "../Todo.astro";
 
 interface Props {
   t: Dictionary;
+  locale: Locale;
 }
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
 const { hero, listing } = t.home;
 const booking = bookingHref();
+// The best proof belongs next to the promise, not six sections down.
+const [proof] = (await getLocalized("work", locale)).filter((e) => e.data.homepage && e.data.highlight);
 ---
 
 <section aria-labelledby="hero-h" class="overflow-hidden">
@@ -20,6 +25,7 @@ const booking = bookingHref();
     <div>
       <h1 id="hero-h" class="max-w-[18ch]">{hero.h1}</h1>
       <p class="measure mt-6 text-lg text-muted sm:text-xl">{hero.subhead}</p>
+      {proof && <ProofLine t={t} entry={proof} class="mt-6" />}
       <div class="mt-8 flex flex-wrap items-center gap-3">
         <CtaWhatsApp t={t} />
         {
@@ -42,7 +48,7 @@ const booking = bookingHref();
       <!-- A street-grid "map" behind the listing: the point is being found nearby. -->
       <div
         aria-hidden="true"
-        class="map-grid relative rounded-[2rem] bg-wash px-5 pt-16 pb-8 sm:px-8"
+        class="map-grid relative rounded-4xl bg-wash px-5 pt-16 pb-8 sm:px-8"
       >
         <svg
           class="absolute top-4 right-8 h-14 w-14"
@@ -66,7 +72,7 @@ const booking = bookingHref();
           <p class="text-lg font-bold">{listing.name}</p>
           <p class="text-[0.95rem] text-muted">{listing.category}</p>
           <p class="mt-2 flex items-center gap-1 text-[0.95rem]">
-            <span class="tracking-[0.1em] text-sun">★★★★★</span>
+            <span class="tracking-widest text-sun">★★★★★</span>
             <span class="text-muted">{listing.reviews}</span>
           </p>
           <p class="mt-1 text-[0.95rem]">

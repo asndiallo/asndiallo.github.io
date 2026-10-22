@@ -71,6 +71,7 @@ vertical: braiding-salons # braiding-salons | restaurants | online-shop | other
 status: complete # or in-progress: hidden in production, shown in PR previews (SHOW_IN_PROGRESS=true)
 homepage: true # false keeps it off the home page cards (e.g. online shops)
 summary: 'One plain sentence, ≤ 155 characters.'
+highlight: '450 calls from Google in 3 months.' # optional: word for word from summary; shown in the home hero and on the matching vertical page
 consent: true # required: the build fails without it
 website: https://example.com/ # optional
 services:
