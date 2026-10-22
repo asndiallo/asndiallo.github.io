@@ -1,5 +1,5 @@
 import { type CollectionEntry, getCollection } from "astro:content";
-import { SHOW_IN_PROGRESS } from "astro:env/server";
+import { SHOW_DRAFTS } from "astro:env/server";
 import { type Alternates, collectionBase, type Locale } from "../i18n/index.ts";
 
 type Localized = "work" | "verticals";
@@ -14,11 +14,11 @@ const split = (id: string) => {
 };
 
 /**
- * Case studies marked `status: in-progress` stay out of production builds: no page, no listing,
- * no sitemap entry, no link. PR previews set SHOW_IN_PROGRESS=true so drafts can be reviewed.
+ * Case studies marked `draft: true` stay out of production builds: no page, no listing, no sitemap
+ * entry, no link. PR previews set SHOW_DRAFTS=true so drafts can be reviewed.
  */
 const isVisible = (entry: CollectionEntry<Localized>): boolean =>
-  SHOW_IN_PROGRESS || !("status" in entry.data && entry.data.status === "in-progress");
+  SHOW_DRAFTS || !("draft" in entry.data && entry.data.draft);
 
 /** Every visible entry of a collection matching `filter`. All content lookups go through here. */
 export async function getVisible<C extends Localized>(
