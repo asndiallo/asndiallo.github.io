@@ -1,6 +1,6 @@
 ---
 business: Djidiawax
-location: Online shop
+location: Online shop in France
 vertical: online-shop
 status: in-progress
 homepage: false

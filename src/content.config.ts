@@ -10,7 +10,7 @@ const work = defineCollection({
         /** URL segment for this locale; defaults to the file name. (Not `slug`: Astro uses that as the id.) */
         urlSlug: z.string().optional(),
         business: z.string(),
-        /** City and state, or "Online shop". */
+        /** City and state, or "Online shop in <country>". */
         location: z.string(),
         vertical: z.enum(["braiding-salons", "restaurants", "online-shop", "other"]),
         /** in-progress: shows an "In progress" badge and a "results to come" note. */
