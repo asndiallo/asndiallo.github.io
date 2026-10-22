@@ -14,7 +14,8 @@ interface Props {
 const { t, locale } = Astro.props;
 const { hero, listing } = t.home;
 const booking = bookingHref();
-// The best proof belongs next to the promise, not six sections down.
+// The best proof right after the buttons: close to the promise, without pushing the main action
+// off the first screen of a small phone.
 const [proof] = (await getLocalized("work", locale)).filter((e) => e.data.homepage && e.data.highlight);
 ---
 
@@ -25,7 +26,6 @@ const [proof] = (await getLocalized("work", locale)).filter((e) => e.data.homepa
     <div>
       <h1 id="hero-h" class="max-w-[18ch]">{hero.h1}</h1>
       <p class="measure mt-6 text-lg text-muted sm:text-xl">{hero.subhead}</p>
-      {proof && <ProofLine t={t} entry={proof} class="mt-6" />}
       <div class="mt-8 flex flex-wrap items-center gap-3">
         <CtaWhatsApp t={t} />
         {
@@ -42,6 +42,7 @@ const [proof] = (await getLocalized("work", locale)).filter((e) => e.data.homepa
         }
       </div>
       <p class="mt-4 text-muted">{hero.languages}</p>
+      {proof && <ProofLine t={t} entry={proof} class="mt-8" />}
     </div>
 
     <figure class="relative mx-auto w-full max-w-md">

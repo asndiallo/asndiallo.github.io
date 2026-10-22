@@ -30,8 +30,8 @@ const proof = (await getLocalized("work", locale)).filter(
   alternates={alternates}
   jsonLd={[professionalServiceSchema(v.description)]}
 >
-  {proof.map((e) => <ProofLine t={t} entry={e} class="mt-6" />)}
   <div class="mt-8"><CtaWhatsApp t={t} /></div>
+  {proof.map((e) => <ProofLine t={t} entry={e} class="mt-8" />)}
 
   <div class="mt-16 grid gap-12 md:grid-cols-2">
     {

@@ -24,6 +24,8 @@ export const fr: Dictionary = {
   },
   language: {
     switchTo: "English",
+    /** Same, on the narrowest phones. */
+    switchToShort: "EN",
     switchLabel: "Read this page in English",
     switchLang: "en",
   },
@@ -233,7 +235,7 @@ export const fr: Dictionary = {
   caseStudy: {
     title: (business, location) => `${business}, ${location}${nb}: ce qui a changé`,
     metaTitle: (business) => `${business}${nb}: étude de cas | Assane Diallo`,
-    readMore: (business) => `Lire l'étude de cas ${business}`,
+    readMore: (business) => `Voir ce qui a changé pour ${business}`,
     readShort: "Lire l'étude de cas",
     visit: (business) => `Visiter le site de ${business}`,
     all: "Toutes les réalisations",

@@ -23,9 +23,10 @@ const switchHref = alternates[other] ?? staticRoutes.home[other];
 <header class="border-b border-line">
   <!--
     Phones: row 1 = name + language + theme, row 2 = nav. Wider screens: one row.
+    Under 380px the language link shows "FR"/"EN" so row 1 still fits (its aria-label is the full name).
     DOM order (name, nav, controls) is the reading and focus order; only the layout changes.
   -->
-  <div class="container-page flex flex-wrap items-center gap-x-6 gap-y-2 py-3 sm:py-4">
+  <div class="container-page flex flex-wrap items-center gap-x-4 gap-y-2 py-3 sm:gap-x-6 sm:py-4">
     <a
       href={staticRoutes.home[locale]}
       class="order-1 font-serif text-xl font-bold text-ink no-underline hover:text-brand">Assane Diallo</a
@@ -37,14 +38,17 @@ const switchHref = alternates[other] ?? staticRoutes.home[other];
         <li><a href={homeAnchor(locale, "contact")}>{t.nav.contact}</a></li>
       </ul>
     </nav>
-    <div class="order-2 ml-auto flex items-center gap-x-4 sm:order-3 sm:ml-0">
+    <div class="order-2 ml-auto flex items-center gap-x-3 sm:gap-x-4 sm:order-3 sm:ml-0">
       <a
         href={switchHref}
         hreflang={other}
         lang={t.language.switchLang}
         aria-label={t.language.switchLabel}
         data-lang-choice={other}
-        class="text-[0.95rem] font-semibold">{t.language.switchTo}</a
+        class="text-[0.95rem] font-semibold"
+        ><span class="max-[379px]:hidden">{t.language.switchTo}</span><span class="min-[380px]:hidden"
+          >{t.language.switchToShort}</span
+        ></a
       >
       <ThemeToggle t={t} />
     </div>

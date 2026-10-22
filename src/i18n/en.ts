@@ -24,6 +24,8 @@ export const en = {
   language: {
     /** Text of the link to the other language, written in that language. */
     switchTo: "Français",
+    /** Same, on the narrowest phones. */
+    switchToShort: "FR",
     switchLabel: "Lire cette page en français",
     switchLang: "fr",
   },
@@ -231,7 +233,7 @@ export const en = {
   caseStudy: {
     title: (business: string, location: string) => `${business}, ${location}: what changed`,
     metaTitle: (business: string) => `${business}: case study | Assane Diallo`,
-    readMore: (business: string) => `Read the ${business} case study`,
+    readMore: (business: string) => `See what changed for ${business}`,
     readShort: "Read the case study",
     visit: (business: string) => `Visit the ${business} website`,
     all: "All client work",

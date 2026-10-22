@@ -1,11 +1,13 @@
 ---
 import type { Dictionary } from "../../i18n/index.ts";
+import CtaWhatsApp from "../CtaWhatsApp.astro";
 import Section from "../Section.astro";
 
 interface Props {
   t: Dictionary;
 }
-const { steps } = Astro.props.t.home;
+const { t } = Astro.props;
+const { steps } = t.home;
 ---
 
 <Section id="how" heading={steps.h2}>
@@ -24,4 +26,6 @@ const { steps } = Astro.props.t.home;
       ))
     }
   </ol>
+  <!-- Step 1 is the free check-up: the next action, without scrolling to the end of the page. -->
+  <div class="mt-10"><CtaWhatsApp t={t} /></div>
 </Section>
