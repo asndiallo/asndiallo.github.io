@@ -4,7 +4,6 @@ import Base from "../layouts/Base.astro";
 import { professionalServiceSchema } from "../lib/schema.ts";
 import AboutShort from "./sections/AboutShort.astro";
 import Contact from "./sections/Contact.astro";
-import Expect from "./sections/Expect.astro";
 import Faq from "./sections/Faq.astro";
 import Hero from "./sections/Hero.astro";
 import Pricing from "./sections/Pricing.astro";
@@ -30,12 +29,11 @@ const { meta } = t.home;
   detectLanguage={locale === defaultLocale}
   jsonLd={[professionalServiceSchema(meta.description)]}
 >
-  <Hero t={t} />
+  <Hero t={t} locale={locale} />
   <WhoFor t={t} locale={locale} />
   <Problem t={t} />
   <Services t={t} locale={locale} />
   <Steps t={t} />
-  <Expect t={t} />
   <Proof t={t} locale={locale} />
   <Pricing t={t} />
   <AboutShort t={t} locale={locale} />

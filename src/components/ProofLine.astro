@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { Dictionary } from "../i18n/index.ts";
+import { entryPath } from "../lib/content.ts";
+
+/** One case study's headline result, with its disclosure and a link to the full story. */
+interface Props {
+  t: Dictionary;
+  entry: CollectionEntry<"work">;
+  class?: string;
+}
+const { t, entry, class: className } = Astro.props;
+const { business, location, highlight, disclosure } = entry.data;
+---
+
+<!-- data-highlight: a test checks that the disclosure travels with the number. -->
+<div class:list={["measure border-l-4 border-sun pl-4", className]} data-highlight>
+  <p><strong>{highlight}</strong> <span class="text-muted">{business}, {location}.</span> <a href={entryPath("work", entry)}>{t.caseStudy.readShort}</a></p>
+  {disclosure && <p class="mt-1 text-sm text-muted" data-disclosure>{disclosure}</p>}
+</div>

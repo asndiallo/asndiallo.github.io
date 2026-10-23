@@ -2,9 +2,10 @@
 import type { CollectionEntry } from "astro:content";
 import { getDictionary, homeAnchor } from "../../i18n/index.ts";
 import Page from "../../layouts/Page.astro";
-import { entryAlternates, entryLocale } from "../../lib/content.ts";
+import { entryAlternates, entryKey, entryLocale, getLocalized } from "../../lib/content.ts";
 import { professionalServiceSchema } from "../../lib/schema.ts";
 import CtaWhatsApp from "../CtaWhatsApp.astro";
+import ProofLine from "../ProofLine.astro";
 import TodoText from "../TodoText.astro";
 
 interface Props {
@@ -15,6 +16,9 @@ const v = entry.data;
 const locale = entryLocale(entry);
 const t = getDictionary(locale);
 const alternates = await entryAlternates("verticals", entry);
+const proof = (await getLocalized("work", locale)).filter(
+  (e) => e.data.vertical === entryKey(entry) && e.data.highlight,
+);
 ---
 
 <Page
@@ -27,6 +31,7 @@ const alternates = await entryAlternates("verticals", entry);
   jsonLd={[professionalServiceSchema(v.description)]}
 >
   <div class="mt-8"><CtaWhatsApp t={t} /></div>
+  {proof.map((e) => <ProofLine t={t} entry={e} class="mt-8" />)}
 
   <div class="mt-16 grid gap-12 md:grid-cols-2">
     {
