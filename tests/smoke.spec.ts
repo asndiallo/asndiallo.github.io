@@ -338,10 +338,10 @@ test("client quotes and results are shown with the relationship disclosure", asy
   expect(quotes).toBeGreaterThan(0);
 });
 
-test("the headline result shows on the home page and its vertical page, linked to the case study", async ({
+test("the headline result shows on its vertical page, linked to the case study", async ({
   page,
 }) => {
-  for (const path of ["/", "/fr/", "/for/braiding-salons/", "/fr/pour/salons-de-tresses/"]) {
+  for (const path of ["/for/braiding-salons/", "/fr/pour/salons-de-tresses/"]) {
     await page.goto(path);
     const link = page.locator("[data-highlight] a").first();
     await expect(link, path).toBeVisible();

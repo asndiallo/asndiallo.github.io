@@ -19,7 +19,7 @@ const work = defineCollection({
         /** Card + meta description. Plain language, no numbers that the owner hasn't approved. */
         summary: z.string().max(155),
         /**
-         * The headline result in one short sentence, for the home hero and the vertical page.
+         * The headline result in one short sentence, shown on the matching vertical page.
          * Word for word from `summary`, so it's already approved; the build checks.
          */
         highlight: z.string().optional(),
