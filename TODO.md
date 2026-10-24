@@ -24,7 +24,10 @@ The site shouldn't go live (manual deploy) until the **Before launch** section i
 
 - [x] **Confirm the owner agreed** to be named and shown (case study marked "in progress", no numbers)
 - [x] Results later: only numbers the owner approves, each with a source
-- [x] Confirm the screenshot of djidiawax.com is OK (`src/assets/work/djidiawax.png`, taken 2026-10-18)
+- [x] Confirm the screenshot of djidiawax.com is OK (old `djidiawax.png`, replaced 2026-10-22, taken 2026-10-18)
+- [ ] **Merge the relaunch PR only once the new shop is live** (planned for the weekend of 2026-10-24). Check that "How it went live" still matches what happened.
+- [ ] Confirm she's OK with the before/after screenshots (`src/assets/work/djidiawax/`, taken 2026-10-22) and the speed figures (6–9 MB → about 0.6 MB, 127 → 73 files)
+- [ ] After launch: re-measure page weight on the live shop, and add results she approves once there's enough data
 
 ### French version
 

@@ -45,8 +45,8 @@ export default defineConfig({
   env: {
     // All optional: an unset variable switches its feature off.
     schema: {
-      // Build-time only: include case studies marked `status: in-progress` (PR previews).
-      SHOW_IN_PROGRESS: envField.boolean({ context: "server", access: "public", default: false }),
+      // Build-time only: include case studies marked `draft: true` (PR previews).
+      SHOW_DRAFTS: envField.boolean({ context: "server", access: "public", default: false }),
       PUBLIC_FORM_ENDPOINT: envField.string({
         context: "client",
         access: "public",

@@ -313,11 +313,11 @@ test("prices read with spaces, in both languages", async ({ page }) => {
   }
 });
 
-test("no work-in-progress case study is published", async ({ page }) => {
-  // Production builds leave out status: in-progress entries (only PR previews include them).
+test("no draft case study is published", async ({ page }) => {
+  // Production builds leave out draft: true entries (only PR previews include them).
   for (const path of await sitemapPaths(page)) {
     await page.goto(path);
-    await expect(page.locator('[data-status="in-progress"]'), path).toHaveCount(0);
+    await expect(page.locator("[data-draft]"), path).toHaveCount(0);
   }
 });
 

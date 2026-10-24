@@ -42,7 +42,7 @@ Port 4321 is often taken by another local project. Tests use 4399.
 - The email address never appears in the served HTML (no text, no `mailto:`, no JSON-LD). Use `EmailLink.astro`.
 - The domain lives only in `src/config.ts` (`SITE_URL`, `SITE_NAME`, `CONTACT_EMAIL`). Never hard-code a domain elsewhere; a test fails if `github.io` appears in pages, sitemap or robots. Cloudflare changes (DNS, routes, email) are made with the signed-in `cf` CLI only with the owner's explicit approval for each step. Never ask for or handle tokens/passwords: the owner sets secrets with `gh secret set`. DOMAIN-SETUP.md is the runbook and status log.
 - Links: use `components/Link.astro` for any link that may leave the site (external = other host over http/https: new tab, rel=noopener, screen-reader hint). Markdown gets the same from `src/lib/markdown-external-links.ts`.
-- Drafts: case studies with `status: in-progress` never reach production (one filter in `src/lib/content.ts`); PR previews set `SHOW_IN_PROGRESS=true`.
+- Drafts: case studies with `draft: true` never reach production (one filter in `src/lib/content.ts`); PR previews set `SHOW_DRAFTS=true`. `status: in-progress` only adds the "In progress" badge and note.
 - Language: `/` redirects French devices to `/fr/` (inline script in `src/lib/inline-scripts.ts`); a choice made with the header switch wins.
 - Security: hash-based CSP (Astro `security.csp`). Never add an `is:inline` script other than `src/lib/inline-scripts.ts` (it is hashed in astro.config.ts); use bundled `<script>` instead. Headers live in `public/_headers`, redirects in `public/_redirects`.
 - Market: US businesses only, in English and French. Online shops are a quiet side line ("audits by request"), never in the main pitch or home proof cards.

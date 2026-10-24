@@ -12,10 +12,11 @@ interface Props {
   eager?: boolean;
 }
 const { t, entry, headingLevel: Heading = "h3", eager = false } = Astro.props;
-const { business, location, summary, image, status, disclosure } = entry.data;
+const { business, location, summary, image, status, draft, disclosure } = entry.data;
 ---
 
-<article class="flex flex-col overflow-hidden rounded-2xl border border-line bg-paper">
+<!-- data-draft: a test checks that no draft reaches production. -->
+<article class="flex flex-col overflow-hidden rounded-2xl border border-line bg-paper" data-draft={draft || undefined}>
   {
     image && (
       <Image

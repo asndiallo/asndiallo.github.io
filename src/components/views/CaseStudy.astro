@@ -13,7 +13,7 @@ interface Props {
   entry: CollectionEntry<"work">;
 }
 const { entry } = Astro.props;
-const { business, location, summary, website, services, results, quote, image, status, disclosure } =
+const { business, location, summary, website, services, results, quote, image, status, draft, disclosure } =
   entry.data;
 const locale = entryLocale(entry);
 const t = getDictionary(locale);
@@ -72,6 +72,7 @@ const breadcrumbs = {
     <aside
       class="order-first space-y-6 self-start rounded-2xl bg-wash p-6 lg:order-none"
       aria-label={t.caseStudy.facts}
+      data-draft={draft || undefined}
     >
       {
         status === "in-progress" && (

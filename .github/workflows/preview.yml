@@ -23,8 +23,8 @@ jobs:
       PUBLIC_FORM_ENDPOINT: ${{ vars.PUBLIC_FORM_ENDPOINT }}
       PUBLIC_ANALYTICS: ${{ vars.PUBLIC_ANALYTICS }}
       PUBLIC_PLAUSIBLE_DOMAIN: ${{ vars.PUBLIC_PLAUSIBLE_DOMAIN }}
-      # Previews also show case studies still marked in-progress; production never does.
-      SHOW_IN_PROGRESS: "true"
+      # Previews also show draft case studies; production never does.
+      SHOW_DRAFTS: "true"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/setup
