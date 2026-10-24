@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { getImage, Image } from "astro:assets";
 import { type CollectionEntry, render } from "astro:content";
 import { SITE_URL } from "../../config.ts";
 import { getDictionary, staticRoutes } from "../../i18n/index.ts";
@@ -22,6 +22,10 @@ const alternates = await entryAlternates("work", entry);
 // When every result has the same source, say it once under the list instead of under each number.
 const sources = [...new Set(results.map((r) => r.source))];
 const sharedSource = sources.length === 1 ? sources[0] : undefined;
+// Link previews (WhatsApp, where referrals happen) show the client's site instead of the default card.
+const ogImage =
+  image &&
+  (await getImage({ src: image.src, width: 1200, height: 630, fit: "cover", position: "top", format: "jpg" })).src;
 
 const breadcrumbs = {
   "@context": "https://schema.org",
@@ -42,6 +46,7 @@ const breadcrumbs = {
   locale={locale}
   alternates={alternates}
   ogType="article"
+  {...(ogImage && { ogImage })}
   jsonLd={[breadcrumbs]}
 >
   {disclosure && <p class="measure mt-3 text-muted" data-disclosure>{disclosure}</p>}

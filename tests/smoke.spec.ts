@@ -76,10 +76,10 @@ test("every page has one h1, unique title and description, canonical, and no con
       "href",
       `${SITE}${path}`,
     );
-    await expect(page.locator('meta[property="og:image"]'), path).toHaveAttribute(
-      "content",
-      /og-default\.png$/,
-    );
+    // Link preview: the default card, or a case study's own screenshot. Either way, it loads.
+    const ogImage = (await page.locator('meta[property="og:image"]').getAttribute("content")) ?? "";
+    expect(ogImage, path).toMatch(new RegExp(`^${SITE}/.+\\.(png|jpg)$`));
+    expect((await page.request.get(ogImage.slice(SITE.length))).status(), path).toBe(200);
 
     // Every image has alt text (empty alt is allowed for decorative images, missing is not).
     expect(await page.locator("img:not([alt])").count(), `${path} img without alt`).toBe(0);
@@ -321,20 +321,34 @@ test("no draft case study is published", async ({ page }) => {
   }
 });
 
-test("client quotes are shown with the relationship disclosure", async ({ page }) => {
-  // A family quote without "is my cousin" nearby would mislead (FTC endorsement rules).
+test("client quotes and results are shown with the relationship disclosure", async ({ page }) => {
+  // A family quote or result without "is my cousin" nearby would mislead (FTC endorsement rules).
   let quotes = 0;
+  const proof = "[data-testimonial], [data-highlight]";
   for (const path of await sitemapPaths(page)) {
     await page.goto(path);
-    const missing = await page.locator("[data-testimonial]").evaluateAll((figures) => {
-      // On a card the disclosure sits under the business name; on a case study, in the caption.
+    const missing = await page.locator(proof).evaluateAll((figures) => {
+      // On a card the disclosure sits under the business name; elsewhere, inside the element.
       return figures.filter((f) => !(f.closest("article") ?? f).querySelector("[data-disclosure]"))
         .length;
     });
-    quotes += await page.locator("[data-testimonial]").count();
+    quotes += await page.locator(proof).count();
     expect(missing, path).toBe(0);
   }
   expect(quotes).toBeGreaterThan(0);
+});
+
+test("the headline result shows on its vertical page, linked to the case study", async ({
+  page,
+}) => {
+  for (const path of ["/for/braiding-salons/", "/fr/pour/salons-de-tresses/"]) {
+    await page.goto(path);
+    const link = page.locator("[data-highlight] a").first();
+    await expect(link, path).toBeVisible();
+    expect((await page.request.get((await link.getAttribute("href")) ?? "")).status(), path).toBe(
+      200,
+    );
+  }
 });
 
 test("photo of Assane on the about page and the home page, loaded and described", async ({

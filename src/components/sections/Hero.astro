@@ -42,7 +42,7 @@ const booking = bookingHref();
       <!-- A street-grid "map" behind the listing: the point is being found nearby. -->
       <div
         aria-hidden="true"
-        class="map-grid relative rounded-[2rem] bg-wash px-5 pt-16 pb-8 sm:px-8"
+        class="map-grid relative rounded-4xl bg-wash px-5 pt-16 pb-8 sm:px-8"
       >
         <svg
           class="absolute top-4 right-8 h-14 w-14"
@@ -66,7 +66,7 @@ const booking = bookingHref();
           <p class="text-lg font-bold">{listing.name}</p>
           <p class="text-[0.95rem] text-muted">{listing.category}</p>
           <p class="mt-2 flex items-center gap-1 text-[0.95rem]">
-            <span class="tracking-[0.1em] text-sun">★★★★★</span>
+            <span class="tracking-widest text-sun">★★★★★</span>
             <span class="text-muted">{listing.reviews}</span>
           </p>
           <p class="mt-1 text-[0.95rem]">

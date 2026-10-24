@@ -24,6 +24,8 @@ export const fr: Dictionary = {
   },
   language: {
     switchTo: "English",
+    /** Same, on the narrowest phones. */
+    switchToShort: "EN",
     switchLabel: "Read this page in English",
     switchLang: "en",
   },
@@ -135,10 +137,6 @@ export const fr: Dictionary = {
         },
       ],
     },
-    expect: {
-      h2: "À quoi vous attendre",
-      body: "Certaines corrections, comme vos horaires ou votre numéro, peuvent aider rapidement. Monter dans Google prend en général quelques mois. Je ne peux pas vous promettre la première place, et je ne le ferai pas. Je vous montrerai ce qui a changé et ce que ça a donné.",
-    },
     proof: {
       h2: "Mes premiers clients",
       body: `Je prends mes ${n} premiers projets à un tarif «${nb}client fondateur${nb}». En échange, vous me laissez partager les résultats.`,
@@ -237,7 +235,8 @@ export const fr: Dictionary = {
   caseStudy: {
     title: (business, location) => `${business}, ${location}${nb}: ce qui a changé`,
     metaTitle: (business) => `${business}${nb}: étude de cas | Assane Diallo`,
-    readMore: (business) => `Lire l'étude de cas ${business}`,
+    readMore: (business) => `Voir ce qui a changé pour ${business}`,
+    readShort: "Lire l'étude de cas",
     visit: (business) => `Visiter le site de ${business}`,
     all: "Toutes les réalisations",
     facts: "Le projet en bref",

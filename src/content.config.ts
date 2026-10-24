@@ -21,6 +21,11 @@ const work = defineCollection({
         homepage: z.boolean().default(true),
         /** Card + meta description. Plain language, no numbers that the owner hasn't approved. */
         summary: z.string().max(155),
+        /**
+         * The headline result in one short sentence, shown on the matching vertical page.
+         * Word for word from `summary`, so it's already approved; the build checks.
+         */
+        highlight: z.string().optional(),
         /** The owner agreed to be named and to have this page published. Required to publish. */
         consent: z.literal(true),
         /** Any personal relationship with the client, shown on the card and the page. */
@@ -54,7 +59,11 @@ const work = defineCollection({
         published: z.coerce.date().optional(),
         order: z.number().default(0),
       })
-      .strict(),
+      .strict()
+      .refine((d) => !d.highlight || d.summary.includes(d.highlight), {
+        message: "highlight must be word for word from summary",
+        path: ["highlight"],
+      }),
 });
 
 const verticals = defineCollection({
